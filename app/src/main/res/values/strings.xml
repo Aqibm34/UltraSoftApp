@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UltraSoft</string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">okay</string>
+    <string name="image">image</string>
+    <string name="search__">Search...</string>
+</resources>
