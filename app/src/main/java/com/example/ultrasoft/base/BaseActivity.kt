@@ -29,10 +29,13 @@ abstract class BaseActivity<VB : ViewBinding>(
         if (_binding == null) {
             throw IllegalArgumentException("Binding cannot be null.")
         }
+        installTheme()
         setContentView(binding.root)
         setUpViews()
         observeView()
     }
+
+    open fun installTheme(){}
 
     open fun setUpViews() {}
     open fun observeView() {}
