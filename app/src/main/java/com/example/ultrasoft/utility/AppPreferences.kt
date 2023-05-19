@@ -47,7 +47,8 @@ class AppPreferences(context: Context) {
 
 
     //Wallet
-    private val WalletToken = "token"
+    private val token = "token"
+    private val loggedIn = "loggedIn"
     private val defaultValue = "NA"
 
 
@@ -59,13 +60,21 @@ class AppPreferences(context: Context) {
         }
     }
 
-    fun setWalletToken(token: String) {
-        mEditor?.putString(WalletToken, token)
+    fun setToken(token: String) {
+        mEditor?.putString(this.token, token)
         mEditor?.apply()
     }
 
-    fun getWalletToken(): String {
-        return mPreferences.getString(WalletToken, defaultValue)!!
+    fun getToken(): String {
+        return mPreferences.getString(token, defaultValue)!!
     }
 
+    fun setIsLoggedIn(value: String) {
+        mEditor?.putString(this.loggedIn, token)
+        mEditor?.apply()
+    }
+
+    fun getIsLoggedIn(): String {
+        return mPreferences.getString(loggedIn, defaultValue)!!
+    }
 }
