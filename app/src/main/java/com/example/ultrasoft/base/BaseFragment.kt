@@ -52,6 +52,8 @@ abstract class BaseFragment<VB : ViewBinding>(
     open fun setUpViews() {}
     open fun observeView() {}
 
+    fun setUpToolBar(view:View){}
+
     val permissionsResultCallback = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {

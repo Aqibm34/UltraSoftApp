@@ -7,12 +7,17 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.ultrasoft.LoginFragment"
+        android:name="com.example.ultrasoft.ui.fragment.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_dashBoardFragment"
+            app:destination="@id/dashBoardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/dashBoardFragment"
-        android:name="com.example.ultrasoft.DashBoardFragment"
+        android:name="com.example.ultrasoft.ui.fragment.dash.DashBoardFragment"
         android:label="fragment_dash_board"
         tools:layout="@layout/fragment_dash_board" />
+
 </navigation>

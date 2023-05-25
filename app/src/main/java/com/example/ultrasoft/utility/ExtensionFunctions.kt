@@ -442,6 +442,7 @@ fun String.formatTime(format: String = "HH:mm:ss"): String {
     }
 }
 
+
 fun String.formatIstDateTime(): String {
     val dateArray = this.split(" ")
     val date = "${dateArray[0]} ${dateArray[1]} ${dateArray[2]}"
