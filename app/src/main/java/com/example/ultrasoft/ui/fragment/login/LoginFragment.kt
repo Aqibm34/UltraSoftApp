@@ -1,12 +1,16 @@
 package com.example.ultrasoft.ui.fragment.login
 
+import android.util.Log
 import android.widget.RadioButton
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
+import com.example.ultrasoft.data.model.login.LoginRequest
+import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentLoginBinding
-import com.example.ultrasoft.utility.toast
+import com.example.ultrasoft.utility.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,17 +20,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun setUpViews() {
         validation()
         binding.btnLogin.setOnClickListener {
-            requireContext().toast("Login")
-            viewModel.login(
-                binding.tilUserName.editText?.text.toString(),
-                binding.tilPassword.editText?.text.toString(),
-                getCheckedRole()
+            viewModel.callApiLogin(
+                LoginRequest(
+                    binding.tilUserName.editText?.text.toString(),
+                    binding.tilPassword.editText?.text.toString(),
+                    getCheckedRole()
+                )
             )
         }
     }
 
     private fun getCheckedRole() =
-        binding.rgRole.findViewById<RadioButton>(binding.rgRole.checkedRadioButtonId).text.toString()
+        binding.rgRole.findViewById<RadioButton>(binding.rgRole.checkedRadioButtonId).text.toString().uppercase()
 
 
     private fun validation() {
@@ -65,7 +70,27 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     override fun observeView() {
+        viewModel.loginResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        appPreferences.setToken(it.data.data.authToken)
+                        appPreferences.setName(it.data.data.name)
+                        appPreferences.setRole(it.data.data.role)
+                        findNavController().navigate(R.id.action_loginFragment_to_dashBoardFragment)
+                    } else {
+                        showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    showAlert(it.message, AppConstants.AlertType.ERROR) {}
+                }
 
+            }
+        }
     }
 
 

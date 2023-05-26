@@ -1,7 +1,7 @@
 package com.example.ultrasoft.di
 
 import android.content.Context
-import androidx.viewbinding.BuildConfig
+import com.example.ultrasoft.BuildConfig
 import com.example.ultrasoft.data.network.ApiInterface
 import com.example.ultrasoft.data.network.CustomLoggingInterceptor
 import com.example.ultrasoft.data.network.ServiceGenerator

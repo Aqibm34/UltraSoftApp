@@ -20,8 +20,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.viewbinding.BuildConfig
 import com.bumptech.glide.Glide
+import com.example.ultrasoft.BuildConfig
 import com.example.ultrasoft.R
 import com.example.ultrasoft.databinding.CustomAlertDialogBinding
 import com.google.android.material.snackbar.Snackbar
@@ -118,13 +118,12 @@ fun Context.prepareFilePart(partName: String, file: File): MultipartBody.Part {
 
 
 fun Fragment.showAlert(
-    context: Context,
-    title: String,
     contentText: String?,
     alertType: AppConstants.AlertType,
+    title: String = "",
     listener: (response: AppConstants.AlertResponseType) -> Unit
 ) {
-    val builder = AlertDialog.Builder(context, R.style.CustomAlertDialog).create()
+    val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialog).create()
     val v = layoutInflater.inflate(R.layout.custom_alert_dialog, null)
     val btnConfirm: TextView = v.findViewById(R.id.btnConfirm)
     val btnCancel: TextView = v.findViewById(R.id.btnCancel)
@@ -132,19 +131,27 @@ fun Fragment.showAlert(
     val tvText: TextView = v.findViewById(R.id.tvText)
     val iv: ImageView = v.findViewById(R.id.iv)
 
-    tvTitle.text = title
-    tvText.text = contentText
+    var finalTitle = title
     when (alertType) {
         AppConstants.AlertType.SUCCESS -> {
+            if (title.isEmpty()) {
+                finalTitle = "Success"
+            }
             iv.setBackgroundResource(R.drawable.ic_success)
         }
         AppConstants.AlertType.ERROR -> {
+            if (title.isEmpty()) {
+                finalTitle = "Error"
+            }
             iv.setBackgroundResource(R.drawable.ic_error)
         }
         AppConstants.AlertType.INFO -> {
             iv.setBackgroundResource(R.drawable.ic_info)
         }
     }
+
+    tvTitle.text = finalTitle
+    tvText.text = contentText
 
     builder.setView(v)
     btnConfirm.setOnClickListener {
@@ -369,7 +376,7 @@ fun View.showSnackBar(
             R.color.red
         }
         SnackTypes.Info -> {
-            textColor = R.color.black
+            textColor = R.color.text_black
             R.color.yellow
         }
     }

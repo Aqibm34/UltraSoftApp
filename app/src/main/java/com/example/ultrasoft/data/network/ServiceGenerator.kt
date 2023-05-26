@@ -11,7 +11,7 @@ class ServiceGenerator @Inject constructor() {
         private lateinit var retrofit: Retrofit
         fun getRetroFit(client: OkHttpClient): ApiInterface {
             retrofit = Retrofit.Builder()
-                .baseUrl(AppConstants.BaseWalletUrl)
+                .baseUrl(AppConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

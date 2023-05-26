@@ -4,9 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/margin_horizontal"
     android:theme="@style/Theme.UltraSoft"
     tools:context=".ui.fragment.login.LoginFragment">
+
+    <ImageView
+        android:layout_width="700dp"
+        android:layout_height="380dp"
+        android:layout_marginTop="-200dp"
+        android:layout_marginStart="-100dp"
+        android:background="@drawable/login_bg"
+        android:contentDescription="@string/image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -17,36 +26,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin16dp"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin24dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/login_to_continue"
-        android:textColor="@color/primary"
+        android:textColor="@color/secondary"
+        app:layout_constraintBottom_toBottomOf="@id/ivLogo"
         android:textSize="@dimen/text24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
+        app:layout_constraintTop_toTopOf="@id/ivLogo" />
 
     <TextView
         android:id="@+id/tvRole"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin16dp"
+        android:layout_marginStart="@dimen/margin_horizontal"
+        android:layout_marginTop="@dimen/margin32dp"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/select_role"
-        android:textColor="@color/black"
+        android:textColor="@color/text_black"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLogin" />
+        app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
 
     <RadioGroup
         android:id="@+id/rgRole"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin10dp"
         android:checkedButton="@id/rbAdmin"
         android:orientation="horizontal"
@@ -86,6 +100,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin10dp"
         android:hint="@string/username"
         app:boxCornerRadiusBottomEnd="@dimen/til_radius"
@@ -108,6 +123,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin10dp"
         android:hint="@string/password"
         app:boxCornerRadiusBottomEnd="@dimen/til_radius"
@@ -131,9 +147,11 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/btn_height"
         android:layout_marginTop="@dimen/margin24dp"
+        android:layout_marginEnd="@dimen/margin_horizontal"
         android:background="@drawable/btn_selector"
         android:drawableEnd="@drawable/ic_arrow_forward_24"
         android:drawablePadding="@dimen/padding3dp"
+        android:enabled="false"
         android:paddingHorizontal="@dimen/padding16dp"
         android:text="@string/login"
         android:textSize="@dimen/text12sp"

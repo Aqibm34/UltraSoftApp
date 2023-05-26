@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:paddingVertical="@dimen/padding5dp"
         android:textSize="@dimen/text12sp"
-        android:textColor="@color/black"
+        android:textColor="@color/text_black"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 

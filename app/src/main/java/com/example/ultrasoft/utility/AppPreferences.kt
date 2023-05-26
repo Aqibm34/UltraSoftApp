@@ -48,8 +48,9 @@ class AppPreferences(context: Context) {
 
     //Wallet
     private val token = "token"
-    private val loggedIn = "loggedIn"
     private val defaultValue = "NA"
+    private val name = "name"
+    private val role = "role"
 
 
     fun clearPreferences() {
@@ -69,12 +70,21 @@ class AppPreferences(context: Context) {
         return mPreferences.getString(token, defaultValue)!!
     }
 
-    fun setIsLoggedIn(value: String) {
-        mEditor?.putString(this.loggedIn, token)
+    fun setName(value: String) {
+        mEditor?.putString(name, token)
         mEditor?.apply()
     }
 
-    fun getIsLoggedIn(): String {
-        return mPreferences.getString(loggedIn, defaultValue)!!
+    fun getName(): String {
+        return mPreferences.getString(name, defaultValue)!!
+    }
+
+    fun setRole(value: String) {
+        mEditor?.putString(role, token)
+        mEditor?.apply()
+    }
+
+    fun getRole(): String {
+        return mPreferences.getString(role, defaultValue)!!
     }
 }

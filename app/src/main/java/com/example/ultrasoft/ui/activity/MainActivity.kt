@@ -21,7 +21,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.nav_graph)
 
-        if (appPreferences.getIsLoggedIn() == "NA") {
+        if (appPreferences.getToken() == "NA") {
             graph.setStartDestination(R.id.loginFragment)
         } else {
             graph.setStartDestination(R.id.dashBoardFragment)
