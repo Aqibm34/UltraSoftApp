@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ultrasoft.data.model.login.LoginRequest
 import com.example.ultrasoft.data.model.login.LoginResponse
+import com.example.ultrasoft.data.model.login.LogoutResponse
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.data.repository.DashRepository
 import com.example.ultrasoft.utility.SingleLiveEvent
@@ -15,8 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class DashViewModel @Inject constructor(private val repository: DashRepository) : ViewModel() {
 
-    private val _logoutResponse = SingleLiveEvent<Resource<LoginResponse>>()
-    val logoutResponse: LiveData<Resource<LoginResponse>>
+    private val _logoutResponse = SingleLiveEvent<Resource<LogoutResponse>>()
+    val logoutResponse: LiveData<Resource<LogoutResponse>>
         get() = _logoutResponse
 
     fun callApiLogout(token: String) {

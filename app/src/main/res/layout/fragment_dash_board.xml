@@ -31,7 +31,7 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin12dp"
+        android:layout_marginTop="@dimen/margin5dp"
         android:textColor="@color/black_d"
         android:textSize="@dimen/text13sp"
         android:textStyle="bold"
@@ -67,55 +67,45 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:columnCount="4"
+        android:paddingVertical="@dimen/padding20dp"
         android:rowCount="2"
-        app:layout_constraintTop_toBottomOf="@id/ivBg">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBg"
+        app:layout_constraintVertical_bias="0">
 
         <TextView
             android:id="@+id/tvCreateUser"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginVertical="@dimen/margin10dp"
             android:layout_marginStart="@dimen/margin10dp"
-            android:layout_marginTop="@dimen/margin10dp"
             android:layout_marginEnd="@dimen/margin10dp"
-            android:background="@color/primary_light"
-            android:paddingVertical="@dimen/padding16dp"
+            android:background="@drawable/card_bg"
+            android:elevation="5dp"
             android:gravity="center"
-            android:text="Create User"
-            android:drawableTop="@drawable/ic_user"
-            android:textSize="@dimen/text10sp"
-            android:textStyle="bold" />
+            android:paddingVertical="@dimen/padding16dp"
+            android:text="@string/users"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:drawableTopCompat="@drawable/ic_user" />
 
         <TextView
             android:id="@+id/tvCreateAsset"
             android:layout_width="0dp"
             android:layout_height="80dp"
+            android:layout_rowWeight="1"
             android:layout_columnWeight="1"
-            android:layout_marginTop="@dimen/margin10dp"
-            android:background="@color/primary"
-            android:textSize="@dimen/text10sp" />
+            android:layout_marginVertical="@dimen/margin10dp"
+            android:background="@drawable/card_bg"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:paddingVertical="@dimen/padding16dp"
+            android:text="@string/create_asset"
+            android:textSize="@dimen/text12sp"
+            app:drawableTopCompat="@drawable/ic_user" />
 
-        <TextView
-            android:id="@+id/tvComplaint"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_columnWeight="1"
-            android:layout_marginStart="@dimen/margin10dp"
-            android:layout_marginTop="@dimen/margin10dp"
-            android:layout_marginEnd="@dimen/margin10dp"
-            android:background="@color/primary_light"
-            android:textSize="@dimen/text10sp" />
-
-        <TextView
-            android:id="@+id/tvComplain"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_columnWeight="1"
-            android:layout_marginStart="@dimen/margin10dp"
-            android:layout_marginTop="@dimen/margin10dp"
-            android:layout_marginEnd="@dimen/margin10dp"
-            android:background="@color/primary" />
 
     </GridLayout>
 

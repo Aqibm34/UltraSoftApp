@@ -19,4 +19,19 @@
     <string name="logout">Logout</string>
     <string name="are_you_sure_you_want_to_logout">Are you sure you want to logout ?</string>
     <string name="logged_out_successfully">Logged out successfully.</string>
+    <string name="create">Create</string>
+    <string name="create_user">Create User</string>
+    <string name="all_users">All Users</string>
+    <string name="name">Name</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email">Email</string>
+    <string name="description">Description</string>
+    <string name="select_user_type">Select User Type</string>
+    <string name="submit">Submit</string>
+    <string name="enter_valid_name">Enter valid name</string>
+    <string name="enter_valid_mobile">Enter valid mobile</string>
+    <string name="enter_valid_email">Enter valid email</string>
+    <string name="enter_valid_desc">Enter valid description</string>
+    <string name="users">Users</string>
+    <string name="create_asset">Create Asset</string>
 </resources>

@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.viewbinding.ViewBinding
 import com.example.ultrasoft.R
 import com.example.ultrasoft.databinding.LayoutDialogSearchBinding
+import com.example.ultrasoft.databinding.ToolbarLayoutBinding
 import com.example.ultrasoft.utility.AppPreferences
 import com.example.ultrasoft.utility.redirectToPermissionSettings
 import com.example.ultrasoft.utility.toast
@@ -176,6 +178,12 @@ abstract class BaseFragment<VB : ViewBinding>(
         hideLoading()
     }
 
+    fun ToolbarLayoutBinding.setUpToolbar(title:String=""){
+        this.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        this.tvTitle.text = title
+    }
 
     private fun stopLocationUpdates() {
 //        fusedLocationProviderClient?.removeLocationUpdates(locationObject)

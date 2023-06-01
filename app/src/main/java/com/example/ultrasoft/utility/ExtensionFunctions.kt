@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
 import android.os.Build.VERSION_CODES.Q
 import android.util.Log
+import android.util.Patterns
 import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -456,6 +457,9 @@ fun String.formatIstDateTime(): String {
     val time = dateArray[3]
     return "$date, ${time.formatTime()}"
 }
+
+fun String.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
 
 
 

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin8dp"
+    android:layout_marginVertical="@dimen/margin5dp"
+    android:background="@drawable/card_bg"
+    android:elevation="5dp"
+    android:paddingHorizontal="@dimen/padding10dp"
+    android:paddingVertical="@dimen/padding8dp">
+
+    <TextView
+        android:id="@+id/tvId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_black"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvId"
+        app:layout_constraintTop_toTopOf="@id/tvId" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/padding3dp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_user"
+        app:layout_constraintTop_toBottomOf="@id/tvId" />
+
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin3dp"
+        android:drawablePadding="@dimen/padding3dp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_baseline_smartphone_24"
+        app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin3dp"
+        android:drawablePadding="@dimen/padding3dp"
+        android:gravity="center_vertical"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_baseline_email_24"
+        app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:drawablePadding="@dimen/padding3dp"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        android:gravity="center_vertical"
+        app:drawableStartCompat="@drawable/ic_baseline_work_24"
+        app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

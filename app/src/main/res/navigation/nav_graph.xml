@@ -35,6 +35,43 @@
             app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/dashBoardFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_usersFragment"
+            app:destination="@id/usersFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
+    <fragment
+        android:id="@+id/allUsersFragment"
+        android:name="com.example.ultrasoft.ui.fragment.user.all.AllUsersFragment"
+        android:label="fragment_all_users"
+        tools:layout="@layout/fragment_all_users" />
+    <fragment
+        android:id="@+id/usersFragment"
+        android:name="com.example.ultrasoft.ui.fragment.user.UsersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_allUsersFragment"
+            app:destination="@id/allUsersFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_usersFragment_to_createUserFragment"
+            app:destination="@id/createUserFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createUserFragment"
+        android:name="com.example.ultrasoft.ui.fragment.user.create.CreateUserFragment"
+        android:label="fragment_create_user"
+        tools:layout="@layout/fragment_create_user" />
 
 </navigation>

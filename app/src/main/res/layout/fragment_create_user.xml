@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:theme="@style/Theme.UltraSoft"
+    tools:context=".ui.fragment.user.create.CreateUserFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding50dp">
+
+        <include
+            android:id="@+id/tb"
+            layout="@layout/toolbar_layout" />
+
+        <TextView
+            android:id="@+id/tvUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin16dp"
+            android:text="@string/select_user_type"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tb" />
+
+        <RadioGroup
+            android:id="@+id/rgUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:checkedButton="@id/rbAdmin"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvUser">
+
+            <RadioButton
+                android:id="@+id/rbAdmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/admin"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/rbCustomer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/customer"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbEngineer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/engineer"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/name"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/rgUser">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilMobile"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/mobile_number"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/tilName">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilEmail"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/email"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/tilMobile">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDesc"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/description"
+            android:visibility="gone"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/tilEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:gravity="start"
+                android:imeOptions="actionNext"
+                android:inputType="text|textMultiLine"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin16dp"
+            android:background="@drawable/btn_selector"
+            android:enabled="false"
+            android:text="@string/submit"
+            app:layout_constraintTop_toBottomOf="@id/tilDesc" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

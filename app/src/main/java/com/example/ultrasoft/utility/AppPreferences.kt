@@ -71,7 +71,7 @@ class AppPreferences(context: Context) {
     }
 
     fun setName(value: String) {
-        mEditor?.putString(name, token)
+        mEditor?.putString(name, value)
         mEditor?.apply()
     }
 
@@ -80,7 +80,7 @@ class AppPreferences(context: Context) {
     }
 
     fun setRole(value: String) {
-        mEditor?.putString(role, token)
+        mEditor?.putString(role, value)
         mEditor?.apply()
     }
 

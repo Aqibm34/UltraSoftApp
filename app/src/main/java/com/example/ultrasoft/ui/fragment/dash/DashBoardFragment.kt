@@ -26,6 +26,7 @@ class DashBoardFragment :
         binding.tvName.text = appPreferences.getName()
         binding.tvRole.text = appPreferences.getRole()
         binding.tvLogOut.setOnClickListener { logOut()}
+        binding.tvCreateUser.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_usersFragment) }
     }
 
     private fun logOut() {
