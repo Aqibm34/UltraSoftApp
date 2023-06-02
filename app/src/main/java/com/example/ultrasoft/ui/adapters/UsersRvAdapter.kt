@@ -13,6 +13,7 @@ import com.example.ultrasoft.data.model.user.admin.AdminData
 import com.example.ultrasoft.data.model.user.customer.CustomerData
 import com.example.ultrasoft.data.model.user.engineer.EngineerData
 import com.example.ultrasoft.databinding.UsersListItemBinding
+import com.example.ultrasoft.utility.AppConstants
 
 class UsersRvAdapter(
     private var list: List<Any>,
@@ -46,9 +47,11 @@ class UsersRvAdapter(
                 holder.binding.tvPhone.text = data.phoneNumber
                 holder.binding.tvEmail.text = data.emailId
                 holder.binding.tvStatus.text = data.activeStatus
-                setActiveColor(data.activeStatus, holder.binding.tvStatus)
+                setUpActiveViews(data.activeStatus, holder.binding.tvStatus, holder.binding.tvBlock)
                 holder.binding.tvDesc.visibility = View.GONE
-
+                holder.binding.tvBlock.setOnClickListener {
+                    listener(data)
+                }
             }
             is CustomerData -> {
                 val data = list[position] as CustomerData
@@ -57,8 +60,11 @@ class UsersRvAdapter(
                 holder.binding.tvPhone.text = data.customerMobile
                 holder.binding.tvEmail.text = data.customerEmail
                 holder.binding.tvStatus.text = data.activeStatus
-                setActiveColor(data.activeStatus, holder.binding.tvStatus)
+                setUpActiveViews(data.activeStatus, holder.binding.tvStatus, holder.binding.tvBlock)
                 holder.binding.tvDesc.visibility = View.GONE
+                holder.binding.tvBlock.setOnClickListener {
+                    listener(data)
+                }
             }
             is EngineerData -> {
                 val data = list[position] as EngineerData
@@ -67,20 +73,24 @@ class UsersRvAdapter(
                 holder.binding.tvPhone.text = data.engineerMobile
                 holder.binding.tvEmail.text = data.engineerEmailId
                 holder.binding.tvStatus.text = data.activeStatus
-                setActiveColor(data.activeStatus, holder.binding.tvStatus)
+                setUpActiveViews(data.activeStatus, holder.binding.tvStatus, holder.binding.tvBlock)
                 holder.binding.tvDesc.text = data.engineerWorkDiscription
                 holder.binding.tvDesc.visibility = View.VISIBLE
+                holder.binding.tvBlock.setOnClickListener {
+                    listener(data)
+                }
             }
         }
     }
 
-    private fun setActiveColor(status: String, tv: TextView) {
-        val color = if (status == "ACTIVE") {
-            ContextCompat.getColor(context, R.color.green)
+    private fun setUpActiveViews(status: String, tv: TextView, tvBlock: TextView) {
+        if (status == AppConstants.STATUS.ACTIVE.name) {
+            tv.setTextColor(ContextCompat.getColor(context, R.color.green))
+            tvBlock.backgroundTintList = ContextCompat.getColorStateList(context, R.color.red)
         } else {
-            ContextCompat.getColor(context, R.color.red)
+            tv.setTextColor(ContextCompat.getColor(context, R.color.red))
+            tvBlock.backgroundTintList = ContextCompat.getColorStateList(context, R.color.green)
         }
-        tv.setTextColor(color)
     }
 
 

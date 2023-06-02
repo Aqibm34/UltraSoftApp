@@ -42,6 +42,12 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"/>
+        <action
+            android:id="@+id/action_dashBoardFragment_to_complainOptionsFragment"
+            app:destination="@id/complainOptionsFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_assetOptionsFragment"
+            app:destination="@id/assetOptionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/allUsersFragment"
@@ -73,5 +79,41 @@
         android:name="com.example.ultrasoft.ui.fragment.user.create.CreateUserFragment"
         android:label="fragment_create_user"
         tools:layout="@layout/fragment_create_user" />
+    <fragment
+        android:id="@+id/assetOptionsFragment"
+        android:name="com.example.ultrasoft.ui.fragment.asset.AssetOptionsFragment"
+        android:label="fragment_asset_options"
+        tools:layout="@layout/fragment_asset_options" >
+        <action
+            android:id="@+id/action_assetOptionsFragment_to_createAssetFragment"
+            app:destination="@id/createAssetFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAssetFragment"
+        android:name="com.example.ultrasoft.ui.fragment.asset.attr.CreateAssetAttrFragment"
+        android:label="fragment_create_asset"
+        tools:layout="@layout/fragment_create_asset_attr" />
+    <fragment
+        android:id="@+id/createComplainFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.CreateComplainFragment"
+        android:label="fragment_create_complain"
+        tools:layout="@layout/fragment_create_complain" />
+    <fragment
+        android:id="@+id/allComplainFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.AllComplainFragment"
+        android:label="fragment_all_complain"
+        tools:layout="@layout/fragment_all_complain" />
+    <fragment
+        android:id="@+id/complainOptionsFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.ComplainOptionsFragment"
+        android:label="fragment_complain_options"
+        tools:layout="@layout/fragment_complain_options" >
+        <action
+            android:id="@+id/action_complainOptionsFragment_to_allComplainFragment"
+            app:destination="@id/allComplainFragment" />
+        <action
+            android:id="@+id/action_complainOptionsFragment_to_createComplainFragment"
+            app:destination="@id/createComplainFragment" />
+    </fragment>
 
 </navigation>

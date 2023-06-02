@@ -25,8 +25,10 @@ class DashBoardFragment :
     override fun setUpViews() {
         binding.tvName.text = appPreferences.getName()
         binding.tvRole.text = appPreferences.getRole()
-        binding.tvLogOut.setOnClickListener { logOut()}
+        binding.tvLogOut.setOnClickListener { logOut() }
         binding.tvCreateUser.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_usersFragment) }
+        binding.tvCreateAsset.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_assetOptionsFragment) }
+        binding.tvComplain.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_complainOptionsFragment) }
     }
 
     private fun logOut() {

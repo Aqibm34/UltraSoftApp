@@ -14,8 +14,8 @@
         android:id="@+id/tvId"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_black"
         android:layout_marginStart="@dimen/margin5dp"
+        android:textColor="@color/text_black"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvStatus"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,10 +72,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:drawablePadding="@dimen/padding3dp"
+        android:gravity="center_vertical"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
-        android:gravity="center_vertical"
         app:drawableStartCompat="@drawable/ic_baseline_work_24"
         app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+
+    <TextView
+        android:id="@+id/tvBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin3dp"
+        android:background="@drawable/card_bg"
+        android:backgroundTint="@color/green"
+        android:paddingHorizontal="@dimen/padding8dp"
+        android:paddingVertical="@dimen/padding3dp"
+        android:text="@string/unblock"
+        android:textColor="@color/black_d"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDesc" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,4 +34,21 @@
     <string name="enter_valid_desc">Enter valid description</string>
     <string name="users">Users</string>
     <string name="create_asset">Create Asset</string>
+    <string name="block">Block</string>
+    <string name="unblock">UnBlock</string>
+    <string name="create_asset_fields">Create Asset Attributes</string>
+    <string name="asset_status">Asset Status</string>
+    <string name="asset_type">Asset Type</string>
+    <string name="asset_category">Asset Category</string>
+    <string name="select_type">Select Type</string>
+    <string name="all_complains">All Complains</string>
+    <string name="asset">Asset</string>
+    <string name="complain" >Complain</string>
+    <string name="compressing_video">Compressing Video</string>
+    <string name="remarks">Remarks</string>
+    <string name="upload">Upload</string>
+    <string name="video">Video</string>
+    <string name="gallery">Gallery</string>
+    <string name="cameraC">Camera</string>
+    <string name="camera">Camera</string>
 </resources>

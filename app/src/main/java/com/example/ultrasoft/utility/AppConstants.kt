@@ -2,6 +2,7 @@ package com.example.ultrasoft.utility
 
 class AppConstants {
     enum class AlertResponseType { YES, NO }
+    enum class STATUS { ACTIVE, INACTIVE }
     enum class AlertType { SUCCESS, ERROR, INFO }
     enum class UserTypes {  ADMIN, CUSTOMER, ENGINEER }
     enum class ComplaintStatus { INPROCESS, RESOLVED }

@@ -3,6 +3,7 @@ package com.example.ultrasoft.data.network
 import com.example.ultrasoft.data.model.login.LoginRequest
 import com.example.ultrasoft.data.model.login.LoginResponse
 import com.example.ultrasoft.data.model.login.LogoutResponse
+import com.example.ultrasoft.data.model.user.BlockResponse
 import com.example.ultrasoft.data.model.user.admin.AllAdminResponse
 import com.example.ultrasoft.data.model.user.admin.CreateAdminRequest
 import com.example.ultrasoft.data.model.user.admin.CreateAdminResponse
@@ -14,10 +15,7 @@ import com.example.ultrasoft.data.model.user.engineer.CreateEngineerRequest
 import com.example.ultrasoft.data.model.user.engineer.CreateEngineerResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiInterface {
@@ -59,6 +57,15 @@ interface ApiInterface {
     suspend fun callApiGetAllEngineer(
         @Header("X-AUTH-TOKEN") token: String,
     ): Response<AllEngineerResponse>
+
+    @GET("/admin/block/unblock/{id}")
+    suspend fun callApiBlockUser(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Path("id") id: String,
+        @Query("role") role: String,
+        @Query("action") action: String,
+    ): Response<BlockResponse>
+
 
 
 }

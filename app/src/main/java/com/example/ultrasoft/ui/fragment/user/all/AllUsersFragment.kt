@@ -20,10 +20,7 @@ import com.example.ultrasoft.data.model.user.engineer.EngineerData
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentAllUsersBinding
 import com.example.ultrasoft.ui.adapters.UsersRvAdapter
-import com.example.ultrasoft.utility.AppConstants
-import com.example.ultrasoft.utility.SingleLiveEvent
-import com.example.ultrasoft.utility.logE
-import com.example.ultrasoft.utility.showAlert
+import com.example.ultrasoft.utility.*
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -35,6 +32,7 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
     private var adminList: List<AdminData> = ArrayList()
     private var customerList: List<CustomerData> = ArrayList()
     private var engineerList: List<EngineerData> = ArrayList()
+    private var selectedUser = ""
 
     override fun setUpViews() {
         binding.tb.setUpToolbar("All Users")
@@ -52,7 +50,7 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                 when (tab?.position) {
                     0 -> {
                         binding.rv.adapter = UsersRvAdapter(adminList, requireContext()) {
-                            val data = (it as AdminData)
+                            setUpListener(it)
                         }
                     }
                     1 -> {
@@ -60,7 +58,7 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                             viewModel.callApiGetAllCustomer(appPreferences.getToken())
                         } else {
                             binding.rv.adapter = UsersRvAdapter(customerList, requireContext()) {
-                                val data = (it as CustomerData)
+                                setUpListener(it)
                             }
                         }
                     }
@@ -69,7 +67,7 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                             viewModel.callApiGetAllEngineer(appPreferences.getToken())
                         } else {
                             binding.rv.adapter = UsersRvAdapter(engineerList, requireContext()) {
-                                val data = (it as EngineerData)
+                                setUpListener(it)
                             }
                         }
                     }
@@ -92,7 +90,9 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                     hideLoading()
                     if (it.data?.status_code == 1) {
                         adminList = it.data.data
-                        binding.rv.adapter = UsersRvAdapter(adminList, requireContext()) {}
+                        binding.rv.adapter = UsersRvAdapter(adminList, requireContext()) { it1 ->
+                            setUpListener(it1)
+                        }
                     } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
@@ -111,7 +111,9 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                     hideLoading()
                     if (it.data?.status_code == 1) {
                         customerList = it.data.data
-                        binding.rv.adapter = UsersRvAdapter(customerList, requireContext()) {}
+                        binding.rv.adapter = UsersRvAdapter(customerList, requireContext()) { it1 ->
+                            setUpListener(it1)
+                        }
                     } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
@@ -130,7 +132,9 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                     hideLoading()
                     if (it.data?.status_code == 1) {
                         engineerList = it.data.data
-                        binding.rv.adapter = UsersRvAdapter(engineerList, requireContext()) {}
+                        binding.rv.adapter = UsersRvAdapter(engineerList, requireContext()) { it1 ->
+                            setUpListener(it1)
+                        }
                     } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
@@ -139,6 +143,67 @@ class AllUsersFragment : BaseFragment<FragmentAllUsersBinding>(FragmentAllUsersB
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}
                 }
+            }
+        }
+
+        viewModel.blockResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                        when (selectedUser) {
+                            AppConstants.UserTypes.ADMIN.name -> viewModel.callApiGetAllAdmin(
+                                appPreferences.getToken()
+                            )
+                            AppConstants.UserTypes.CUSTOMER.name -> viewModel.callApiGetAllCustomer(
+                                appPreferences.getToken()
+                            )
+                            AppConstants.UserTypes.ENGINEER.name -> viewModel.callApiGetAllEngineer(
+                                appPreferences.getToken()
+                            )
+                        }
+                    } else {
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                }
+            }
+        }
+    }
+
+    private fun setUpListener(data: Any) {
+        when (data) {
+            is AdminData -> {
+                selectedUser = AppConstants.UserTypes.ADMIN.name
+                viewModel.callApiBlockUser(
+                    appPreferences.getToken(),
+                    data.adminId,
+                    selectedUser,
+                    if (data.activeStatus == AppConstants.STATUS.ACTIVE.name) AppConstants.STATUS.INACTIVE.name else AppConstants.STATUS.ACTIVE.name
+                )
+            }
+            is CustomerData -> {
+                selectedUser = AppConstants.UserTypes.CUSTOMER.name
+                viewModel.callApiBlockUser(
+                    appPreferences.getToken(),
+                    data.customerId,
+                    selectedUser,
+                    if (data.activeStatus == AppConstants.STATUS.ACTIVE.name) AppConstants.STATUS.INACTIVE.name else AppConstants.STATUS.ACTIVE.name
+                )
+            }
+            is EngineerData -> {
+                selectedUser = AppConstants.UserTypes.ENGINEER.name
+                viewModel.callApiBlockUser(
+                    appPreferences.getToken(),
+                    data.engineerId,
+                    selectedUser,
+                    if (data.activeStatus == AppConstants.STATUS.ACTIVE.name) AppConstants.STATUS.INACTIVE.name else AppConstants.STATUS.ACTIVE.name
+                )
             }
         }
     }

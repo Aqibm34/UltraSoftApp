@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ultrasoft.data.model.user.BlockResponse
 import com.example.ultrasoft.data.model.user.admin.AllAdminResponse
 import com.example.ultrasoft.data.model.user.admin.CreateAdminRequest
 import com.example.ultrasoft.data.model.user.admin.CreateAdminResponse
@@ -36,6 +37,10 @@ class AllUsersViewModel @Inject constructor(private val repository: UsersReposit
     val allEngineerResponse: LiveData<Resource<AllEngineerResponse>>
         get() = _allEngineerResponse
 
+    private val _blockResponse = SingleLiveEvent<Resource<BlockResponse>>()
+    val blockResponse: LiveData<Resource<BlockResponse>>
+        get() = _blockResponse
+
 
     fun callApiGetAllAdmin(token: String) {
         _allAdminResponse.value = Resource.loading()
@@ -58,5 +63,11 @@ class AllUsersViewModel @Inject constructor(private val repository: UsersReposit
         }
     }
 
+    fun callApiBlockUser(token: String, id: String, role: String, action: String) {
+        _blockResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _blockResponse.value = repository.callApiBlockUser(token,id,role, action)
+        }
+    }
 
 }

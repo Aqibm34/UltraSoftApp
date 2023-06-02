@@ -36,4 +36,9 @@ class UsersRepository @Inject constructor(private val apiInterface: ApiInterface
         apiInterface.callApiGetAllEngineer(token)
     }
 
+    suspend fun callApiBlockUser(token: String, id: String, role: String, action: String) =
+        safeApiCall {
+            apiInterface.callApiBlockUser(token,id,role,action)
+        }
+
 }

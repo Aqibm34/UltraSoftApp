@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.UltraSoft"
+    tools:context=".ui.fragment.asset.attr.CreateAssetAttrFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding50dp">
+
+        <include
+            android:id="@+id/tb"
+            layout="@layout/toolbar_layout" />
+
+        <TextView
+            android:id="@+id/tvAsset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin16dp"
+            android:text="@string/select_type"
+            android:textColor="@color/text_black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tb" />
+
+        <RadioGroup
+            android:id="@+id/rgAsset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:checkedButton="@id/rbAdmin"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tvAsset">
+
+            <RadioButton
+                android:id="@+id/rbAssetType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/asset_type"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold"
+                tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
+
+            <RadioButton
+                android:id="@+id/rbAssetStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/asset_status"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbCategory"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/asset_category"
+                android:textSize="@dimen/text12sp"
+                android:textStyle="bold" />
+        </RadioGroup>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/name"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/rgAsset">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="textCapWords"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin16dp"
+            android:background="@drawable/btn_selector"
+            android:enabled="false"
+            android:text="@string/submit"
+            app:layout_constraintTop_toBottomOf="@id/tilName" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
