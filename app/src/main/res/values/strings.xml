@@ -31,6 +31,7 @@
     <string name="enter_valid_name">Enter valid name</string>
     <string name="enter_valid_mobile">Enter valid mobile</string>
     <string name="enter_valid_email">Enter valid email</string>
+    <string name="enter_valid_remarks">Enter valid remarks</string>
     <string name="enter_valid_desc">Enter valid description</string>
     <string name="users">Users</string>
     <string name="create_asset">Create Asset</string>
@@ -43,7 +44,7 @@
     <string name="select_type">Select Type</string>
     <string name="all_complains">All Complains</string>
     <string name="asset">Asset</string>
-    <string name="complain" >Complain</string>
+    <string name="complain">Complain</string>
     <string name="compressing_video">Compressing Video</string>
     <string name="remarks">Remarks</string>
     <string name="upload">Upload</string>
@@ -51,4 +52,11 @@
     <string name="gallery">Gallery</string>
     <string name="cameraC">Camera</string>
     <string name="camera">Camera</string>
+    <string name="no_data_availabe">No data available !</string>
+    <string name="resolved">Resolved</string>
+    <string name="pending">pending</string>
+    <string name="chats">Chats</string>
+    <string name="send_reply">Send reply</string>
+    <string name="unable_to_process">Unable to process</string>
+    <string name="please_select_a_file_to_upload">Please select a file to upload</string>
 </resources>

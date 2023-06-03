@@ -1,8 +1,10 @@
 package com.example.ultrasoft.data.network
 
 import android.content.Context
+import android.content.Intent
 import android.os.Handler
 import android.os.Looper
+import com.example.ultrasoft.ui.activity.MainActivity
 import com.example.ultrasoft.utility.logE
 import com.example.ultrasoft.utility.toast
 import okhttp3.Interceptor
@@ -36,18 +38,18 @@ class CustomLoggingInterceptor @Inject constructor(val context: Context) : Inter
 
         try {
             if (JSONObject(responseLog).getString("message")
-                    .equals("Invalid authentication token", ignoreCase = true)
+                    .equals("Invalid session", ignoreCase = true)
             ) {
                 Handler(Looper.getMainLooper()).post {
-                    context.toast("Invalid authentication token")
+                    context.toast("Invalid session")
                 }
                 context.getSharedPreferences("app_prefs_ultrasoft", Context.MODE_PRIVATE)
                     .edit().clear().apply()
-//                context.startActivity(
-//                    Intent(context, LoginActivity::class.java)
-//                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                )
+                context.startActivity(
+                    Intent(context, MainActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                )
             }
         } catch (ignored: Exception) {
             logE("Redirect Exception", ignored.message)

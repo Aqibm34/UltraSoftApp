@@ -13,6 +13,8 @@ import com.example.ultrasoft.data.model.user.customer.CreateCustomerResponse
 import com.example.ultrasoft.data.model.user.engineer.AllEngineerResponse
 import com.example.ultrasoft.data.model.user.engineer.CreateEngineerRequest
 import com.example.ultrasoft.data.model.user.engineer.CreateEngineerResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -64,6 +66,14 @@ interface ApiInterface {
         @Path("id") id: String,
         @Query("role") role: String,
         @Query("action") action: String,
+    ): Response<BlockResponse>
+
+    @Multipart
+    @POST("/customer/create/complaint")
+    suspend fun callApiCreateComplaint(
+        @Header("X-AUTH-TOKEN") token: String,
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part file: MultipartBody.Part,
     ): Response<BlockResponse>
 
 

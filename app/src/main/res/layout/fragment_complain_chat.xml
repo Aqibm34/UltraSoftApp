@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.complain.chat.ComplainChatFragment">
+
+
+    <TextView
+        android:id="@+id/tvDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:gravity="center"
+        android:elevation="5dp"
+        android:paddingVertical="@dimen/padding8dp"
+        android:text="@string/chats"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginHorizontal="@dimen/margin8dp"
+        android:contentDescription="@string/image"
+        android:src="@drawable/ic_baseline_chevron_left_24"
+        app:layout_constraintBottom_toBottomOf="@id/tvDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvDetails" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChats"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/margin8dp"
+        android:layout_marginBottom="@dimen/margin16dp"
+        app:layout_constraintBottom_toTopOf="@id/etReply"
+        app:layout_constraintTop_toBottomOf="@id/tvDetails" />
+
+    <ProgressBar
+        android:id="@+id/pb"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:layout_marginEnd="@dimen/margin8dp"
+        android:indeterminateTint="@color/primary"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/etReply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etReply" />
+
+    <TextView
+        android:id="@+id/tvPb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:textSize="@dimen/text11sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/pb"
+        app:layout_constraintEnd_toEndOf="@id/pb"
+        app:layout_constraintStart_toStartOf="@id/pb"
+        app:layout_constraintTop_toTopOf="@id/pb" />
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin6dp"
+        android:background="@drawable/btn_selector"
+        android:contentDescription="@string/image"
+        android:drawableTop="@drawable/ic_send"
+        android:enabled="false"
+        android:paddingTop="@dimen/padding6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etReply" />
+
+    <com.example.ultrasoft.ui.module.popupmenu.MenuEditText
+        android:id="@+id/etReply"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_margin="6dp"
+        android:layout_marginStart="@dimen/margin6dp"
+        android:layout_marginEnd="@dimen/margin8dp"
+        android:background="@drawable/border_gray"
+        android:backgroundTint="@color/light_blue_bg"
+        android:fadeScrollbars="true"
+        android:hint="@string/send_reply"
+        android:maxLines="6"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingStart="16dp"
+        android:paddingTop="@dimen/padding12dp"
+        android:paddingEnd="@dimen/padding48dp"
+        android:paddingBottom="@dimen/padding12dp"
+        android:scrollbars="vertical"
+        android:textSize="@dimen/text12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivPreview"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/image"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/btnSend"
+        app:layout_constraintStart_toEndOf="@id/etReply"
+        app:layout_constraintTop_toTopOf="@id/etReply"
+        app:srcCompat="@drawable/image_placeholder" />
+
+    <TextView
+        android:id="@+id/tvMenu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="@dimen/margin8dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/image"
+        android:gravity="center"
+        android:paddingTop="@dimen/padding2dp"
+        android:rotation="-50"
+        app:drawableTopCompat="@drawable/ic_attachment"
+        app:layout_constraintBottom_toBottomOf="@id/etReply"
+        app:layout_constraintEnd_toEndOf="@id/etReply"
+        app:layout_constraintTop_toTopOf="@id/etReply" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

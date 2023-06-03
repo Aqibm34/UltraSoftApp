@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin8dp"
+    android:layout_marginTop="@dimen/margin10dp"
+    android:background="@drawable/list_item_border_bg"
+    android:paddingHorizontal="@dimen/padding5dp"
+    android:paddingVertical="@dimen/padding10dp">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:contentDescription="@string/image"
+        android:scaleType="fitXY"
+        app:shapeAppearanceOverlay="@style/roundedCornersImageView"
+        android:src="@drawable/image_placeholder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:paddingHorizontal="@dimen/padding6dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/text11sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/margin2dp"
+        android:paddingVertical="@dimen/padding1dp"
+        android:background="@drawable/round_bg"
+        android:backgroundTint="@color/green"
+        app:layout_constraintEnd_toEndOf="@id/iv"
+        app:layout_constraintStart_toStartOf="@id/iv"
+        app:layout_constraintTop_toBottomOf="@id/iv" />
+
+
+    <TextView
+        android:id="@+id/tvCreatedBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toTopOf="@id/iv" />
+
+
+    <TextView
+        android:id="@+id/tvCreatedOn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textSize="@dimen/text11sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvCreatedBy" />
+
+
+    <TextView
+        android:id="@+id/tvComplainId"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvCreatedOn" />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/primary"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvComplainId" />
+
+    <TextView
+        android:id="@+id/tvService"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/yellow"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvName" />
+
+
+    <TextView
+        android:id="@+id/tvSeen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:layout_marginTop="@dimen/margin2dp"
+        android:drawablePadding="@dimen/padding2dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:gravity="center_vertical|end"
+        android:textColor="@color/green"
+        android:textSize="@dimen/text11sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:drawableEndCompat="@drawable/ic_seen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvService" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

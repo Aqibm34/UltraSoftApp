@@ -17,6 +17,7 @@ class ComplainOptionsFragment :
     BaseFragment<FragmentComplainOptionsBinding>(FragmentComplainOptionsBinding::inflate) {
 
     override fun setUpViews() {
+        binding.tb.setUpToolbar()
         binding.tvCreate.setOnClickListener { findNavController().navigate(R.id.action_complainOptionsFragment_to_createComplainFragment) }
         binding.tvList.setOnClickListener { findNavController().navigate(R.id.action_complainOptionsFragment_to_allComplainFragment) }
     }

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin12dp"
+    android:layout_marginEnd="@dimen/margin60dp"
+    android:background="@drawable/card_bg"
+    android:backgroundTint="@color/light_green"
+    android:paddingBottom="@dimen/padding8dp">
+
+    <ImageView
+        android:id="@+id/ivAttachment"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:contentDescription="@string/image"
+        android:scaleType="fitXY"
+        android:src="@drawable/image_placeholder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedTopCornersImageView" />
+
+
+    <TextView
+        android:id="@+id/tvUser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin8dp"
+        android:layout_marginTop="@dimen/margin8dp"
+        android:drawablePadding="@dimen/padding3dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text13sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_user"
+        app:drawableTint="@color/green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivAttachment" />
+
+    <TextView
+        android:id="@+id/tvResolvedBy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin36dp"
+        android:layout_marginTop="-2dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text11sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvUser" />
+
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin8dp"
+        android:layout_marginTop="@dimen/margin2dp"
+        android:background="@drawable/list_item_border_bg"
+        android:backgroundTint="#B3FBB9"
+        android:paddingHorizontal="@dimen/padding13dp"
+        android:paddingVertical="@dimen/padding5dp"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvResolvedBy" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin8dp"
+        android:layout_marginTop="@dimen/margin2dp"
+        android:textAlignment="textEnd"
+        android:textSize="@dimen/text10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDescription"
+        app:layout_goneMarginTop="@dimen/margin2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

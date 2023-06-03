@@ -95,14 +95,18 @@
         tools:layout="@layout/fragment_create_asset_attr" />
     <fragment
         android:id="@+id/createComplainFragment"
-        android:name="com.example.ultrasoft.ui.fragment.complain.CreateComplainFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.create.CreateComplainFragment"
         android:label="fragment_create_complain"
         tools:layout="@layout/fragment_create_complain" />
     <fragment
         android:id="@+id/allComplainFragment"
-        android:name="com.example.ultrasoft.ui.fragment.complain.AllComplainFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.all.AllComplainFragment"
         android:label="fragment_all_complain"
-        tools:layout="@layout/fragment_all_complain" />
+        tools:layout="@layout/fragment_all_complain" >
+        <action
+            android:id="@+id/action_allComplainFragment_to_complainChatFragment"
+            app:destination="@id/complainChatFragment" />
+    </fragment>
     <fragment
         android:id="@+id/complainOptionsFragment"
         android:name="com.example.ultrasoft.ui.fragment.complain.ComplainOptionsFragment"
@@ -115,5 +119,10 @@
             android:id="@+id/action_complainOptionsFragment_to_createComplainFragment"
             app:destination="@id/createComplainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/complainChatFragment"
+        android:name="com.example.ultrasoft.ui.fragment.complain.chat.ComplainChatFragment"
+        android:label="fragment_complain_chat"
+        tools:layout="@layout/fragment_complain_chat" />
 
 </navigation>
