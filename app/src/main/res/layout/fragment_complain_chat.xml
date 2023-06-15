@@ -68,18 +68,6 @@
         app:layout_constraintStart_toStartOf="@id/pb"
         app:layout_constraintTop_toTopOf="@id/pb" />
 
-    <Button
-        android:id="@+id/btnSend"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="@dimen/margin6dp"
-        android:background="@drawable/btn_selector"
-        android:contentDescription="@string/image"
-        android:drawableTop="@drawable/ic_send"
-        android:enabled="false"
-        android:paddingTop="@dimen/padding6dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/etReply" />
 
     <com.example.ultrasoft.ui.module.popupmenu.MenuEditText
         android:id="@+id/etReply"
@@ -104,18 +92,6 @@
         app:layout_constraintEnd_toStartOf="@+id/ivPreview"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/ivPreview"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/image"
-        android:visibility="gone"
-        app:layout_constraintEnd_toStartOf="@id/btnSend"
-        app:layout_constraintStart_toEndOf="@id/etReply"
-        app:layout_constraintTop_toTopOf="@id/etReply"
-        app:srcCompat="@drawable/image_placeholder" />
-
     <TextView
         android:id="@+id/tvMenu"
         android:layout_width="30dp"
@@ -130,6 +106,32 @@
         app:layout_constraintBottom_toBottomOf="@id/etReply"
         app:layout_constraintEnd_toEndOf="@id/etReply"
         app:layout_constraintTop_toTopOf="@id/etReply" />
+
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="@dimen/margin6dp"
+        android:background="@drawable/btn_selector"
+        android:contentDescription="@string/image"
+        android:drawableTop="@drawable/ic_send"
+        android:enabled="false"
+        android:paddingTop="@dimen/padding12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etReply" />
+
+    <ImageView
+        android:id="@+id/ivPreview"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:contentDescription="@string/image"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/btnSend"
+        app:layout_constraintStart_toEndOf="@id/etReply"
+        app:layout_constraintTop_toTopOf="@id/etReply"
+        app:srcCompat="@drawable/image_placeholder" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

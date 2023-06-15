@@ -257,7 +257,7 @@ class CreateComplainFragment :
             val map: HashMap<String, RequestBody> = HashMap()
             map["remark"] = createPartFromString(binding.tilRemarks.editText?.text.toString())
 
-            viewModel.createComplain(
+            viewModel.callApiCreateComplaint(
                 appPreferences.getToken(),
                 map,
                 filePart
@@ -274,7 +274,7 @@ class CreateComplainFragment :
                 Resource.Status.SUCCESS -> {
                     hideLoading()
                     if (it.data?.status_code == 1) {
-                        showAlert(it.message, AppConstants.AlertType.ERROR) {
+                        showAlert(it.message, AppConstants.AlertType.SUCCESS) {
                             findNavController().popBackStack()
                         }
                     } else {

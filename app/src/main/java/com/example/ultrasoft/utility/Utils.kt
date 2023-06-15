@@ -18,6 +18,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 import com.example.ultrasoft.R
 import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Utils {
@@ -189,29 +191,29 @@ class Utils {
         }
 
 
-//        fun parseDateWithTimeZone(time: String, format: String = ""): String {
-//            return try {
-//                var frmt = "yyyy-MM-dd'T'HH:mm:ss.SSS+SSSS"
-//                if (format.isNotEmpty()) {
-//                    frmt = format
-//                }
-//
-//                var dateFormatter =
-//                    SimpleDateFormat(frmt, Locale.getDefault())
-//                dateFormatter.timeZone = TimeZone.getTimeZone("UTC")
-//                val utcDate = dateFormatter.parse(time)
-//
-//                dateFormatter = SimpleDateFormat("dd MMM yy, hh:mm a", Locale.getDefault())
-//                dateFormatter.timeZone = TimeZone.getDefault()
-//                if (utcDate != null) {
-//                    dateFormatter.format(utcDate)
-//                } else {
-//                    "NA"
-//                }
-//            } catch (e: java.lang.Exception) {
-//                e.message.toString()
-//            }
-//        }
+        fun parseDateWithTimeZone(time: String, format: String = ""): String {
+            return try {
+                var frmt = "yyyy-MM-dd'T'HH:mm:ss.SSS+SSSS"
+                if (format.isNotEmpty()) {
+                    frmt = format
+                }
+
+                var dateFormatter =
+                    SimpleDateFormat(frmt, Locale.getDefault())
+                dateFormatter.timeZone = TimeZone.getTimeZone("UTC")
+                val utcDate = dateFormatter.parse(time)
+
+                dateFormatter = SimpleDateFormat("dd MMM yy, hh:mm a", Locale.getDefault())
+                dateFormatter.timeZone = TimeZone.getDefault()
+                if (utcDate != null) {
+                    dateFormatter.format(utcDate)
+                } else {
+                    "NA"
+                }
+            } catch (e: java.lang.Exception) {
+                e.message.toString()
+            }
+        }
 //
 //        fun formatDate(time: String, format: String = ""): String {
 //            return try {

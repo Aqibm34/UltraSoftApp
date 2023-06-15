@@ -11,11 +11,26 @@ import javax.inject.Inject
 class ComplainRepository @Inject constructor(private val apiInterface: ApiInterface) :
     BaseRepository() {
 
-    suspend fun createComplain(
+    suspend fun callApiCreateComplaint(
         token: String,
         params: Map<String, RequestBody>,
         file: MultipartBody.Part,
     ) = safeApiCall {
         apiInterface.callApiCreateComplaint(token,params,file)
+    }
+
+    suspend fun callApiReplyComplaint(
+        token: String,
+        params: Map<String, RequestBody>,
+        file: MultipartBody.Part?,
+    ) = safeApiCall {
+        apiInterface.callApiReplyComplaint(token,params,file)
+    }
+
+
+    suspend fun callApiGetAllComplaint(
+        token: String,
+    ) = safeApiCall {
+        apiInterface.callApiGetAllComplaint(token)
     }
 }

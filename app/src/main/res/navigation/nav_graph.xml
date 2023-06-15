@@ -106,6 +106,9 @@
         <action
             android:id="@+id/action_allComplainFragment_to_complainChatFragment"
             app:destination="@id/complainChatFragment" />
+        <action
+            android:id="@+id/action_allComplainFragment_to_previewFragment"
+            app:destination="@id/previewFragment" />
     </fragment>
     <fragment
         android:id="@+id/complainOptionsFragment"
@@ -123,6 +126,23 @@
         android:id="@+id/complainChatFragment"
         android:name="com.example.ultrasoft.ui.fragment.complain.chat.ComplainChatFragment"
         android:label="fragment_complain_chat"
-        tools:layout="@layout/fragment_complain_chat" />
+        tools:layout="@layout/fragment_complain_chat" >
+        <argument
+            android:name="data"
+            app:argType="com.example.ultrasoft.data.model.complain.ComplainData" />
+        <action
+            android:id="@+id/action_complainChatFragment_to_previewFragment"
+            app:destination="@id/previewFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/previewFragment"
+        android:name="com.example.ultrasoft.ui.fragment.PreviewFragment"
+        android:label="fragment_preview"
+        tools:layout="@layout/fragment_preview" >
+
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

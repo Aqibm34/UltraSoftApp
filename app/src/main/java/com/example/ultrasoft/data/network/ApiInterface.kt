@@ -1,5 +1,7 @@
 package com.example.ultrasoft.data.network
 
+import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
+import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.model.login.LoginRequest
 import com.example.ultrasoft.data.model.login.LoginResponse
 import com.example.ultrasoft.data.model.login.LogoutResponse
@@ -74,8 +76,21 @@ interface ApiInterface {
         @Header("X-AUTH-TOKEN") token: String,
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part file: MultipartBody.Part,
-    ): Response<BlockResponse>
+    ): Response<CreateComplainResponse>
 
+    @Multipart
+    @POST("/customer/reply/complaint")
+    suspend fun callApiReplyComplaint(
+        @Header("X-AUTH-TOKEN") token: String,
+        @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part file: MultipartBody.Part?,
+    ): Response<CreateComplainResponse>
+
+
+    @GET("/customer/getall/complaint")
+    suspend fun callApiGetAllComplaint(
+        @Header("X-AUTH-TOKEN") token: String,
+    ): Response<AllComplaintsResponse>
 
 
 }

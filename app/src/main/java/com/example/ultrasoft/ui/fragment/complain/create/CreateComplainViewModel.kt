@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.ultrasoft.data.model.user.BlockResponse
+import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
+import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.data.repository.ComplainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,17 +18,23 @@ import javax.inject.Inject
 class CreateComplainViewModel @Inject constructor(private val repository: ComplainRepository) :
     ViewModel() {
 
-    private val _createComplainResponse = MutableLiveData<Resource<BlockResponse>>()
-    val createComplainResponse: LiveData<Resource<BlockResponse>>
+    private val _createComplainResponse = MutableLiveData<Resource<CreateComplainResponse>>()
+    val createComplainResponse: LiveData<Resource<CreateComplainResponse>>
         get() = _createComplainResponse
 
-    fun createComplain(
+
+    fun callApiCreateComplaint(
         token: String, params: Map<String, RequestBody>,
         file: MultipartBody.Part,
     ) {
         _createComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _createComplainResponse.value = repository.createComplain(token, params, file)
+            _createComplainResponse.value = repository.callApiCreateComplaint(token, params, file)
         }
     }
+
+
+
+
+
 }
