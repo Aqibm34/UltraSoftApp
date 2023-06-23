@@ -56,9 +56,9 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
         token: String,
         complainId: String,
     ) {
-        _singleComplainResponse.value = Resource.loading()
+        _closeComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _singleComplainResponse.value = repository.callApiEngCloseComplaint(token,complainId)
+            _closeComplainResponse.value = repository.callApiEngCloseComplaint(token,complainId)
         }
     }
 

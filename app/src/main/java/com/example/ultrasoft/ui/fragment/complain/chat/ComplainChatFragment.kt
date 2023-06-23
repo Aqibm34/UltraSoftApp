@@ -84,24 +84,24 @@ class ComplainChatFragment :
         }
         binding.btnSend.setOnClickListener {
             toggleMenu()
-//            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-//                showAlertWithButtonConfig(
-//                    requireContext(),
-//                    "Close Complain ?",
-//                    "Do you want to mark this complain as closed.",
-//                    AppConstants.AlertType.INFO,
-//                    "No",
-//                    "Yes",
-//
-//                    ) {
-//                    if (it == AppConstants.AlertResponseType.YES) {
-//                        engineerReplyType = AppConstants.ComplaintStatus.CLOSED
-//                    }
             prepareFileToUpload()
-//                }
-//            } else {
-//                prepareFileToUpload()
-//            }
+        }
+        binding.ivClose.setOnClickListener {
+            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+                showAlertWithButtonConfig(
+                    requireContext(),
+                    "Close Complain ?",
+                    "Do you want to close this complain.",
+                    AppConstants.AlertType.INFO,
+                    "No",
+                    "Yes",
+                ) {
+                    viewModel.callApiEngCloseComplaint(
+                        appPreferences.getToken(),
+                        args.data.complaintId
+                    )
+                }
+            }
         }
     }
 
@@ -229,7 +229,10 @@ class ComplainChatFragment :
                 if (mimeType != null) {
                     if (mimeType.contains("image")) {
                         val compressedFile =
-                            Utils.compressImageFile(File(selectedFileUri?.path!!), requireContext())
+                            Utils.compressImageFile(
+                                File(selectedFileUri?.path!!),
+                                requireContext()
+                            )
                         callApiReply(compressedFile)
                     } else {
                         startCompression(listOf(selectedFileUri!!))
@@ -413,9 +416,6 @@ class ComplainChatFragment :
                         chatList.add(it.data.data.chats[it.data.data.chats.size - 1])
                         chatAdapter?.updateList(chatList)
                         binding.rvChats.scrollToPosition(chatList.size - 1)
-//                        if (engineerReplyType == AppConstants.ComplaintStatus.CLOSED) {
-//                            findNavController().popBackStack()
-//                        }
                     } else {
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
@@ -429,20 +429,20 @@ class ComplainChatFragment :
 
         viewModel.closeComplainResponse.observe(viewLifecycleOwner) {
             when (it.status) {
-                Resource.Status.LOADING -> {}
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
                 Resource.Status.SUCCESS -> {
-                    hideProgress()
+                    hideLoading()
                     if (it.data?.status_code == 1) {
                         binding.root.showSnackBar(it.data.message, SnackTypes.Success)
-                        if (engineerReplyType == AppConstants.ComplaintStatus.CLOSED) {
-                            findNavController().popBackStack()
-                        }
+                        findNavController().popBackStack()
                     } else {
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
                 }
                 Resource.Status.ERROR -> {
-                    hideProgress()
+                    hideLoading()
                     binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                 }
             }
