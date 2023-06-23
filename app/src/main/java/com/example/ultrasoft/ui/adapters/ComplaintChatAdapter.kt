@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ultrasoft.data.model.complain.Chat
 import com.example.ultrasoft.databinding.ComplaintChatLayoutBinding
 import com.example.ultrasoft.databinding.ComplaintChatLayoutUserBinding
+import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.Utils
 import com.example.ultrasoft.utility.logE
 
@@ -65,7 +66,7 @@ class ComplaintChatAdapter(
                 0 -> {
                     (holder as ViewHolder)
                     Utils.loadPicture(
-                        context, list[position].attachment,
+                        context, AppConstants.ATTACHMENT_URL + list[position].attachment,
                         holder.binding.ivAttachment
                     )
 
@@ -98,7 +99,7 @@ class ComplaintChatAdapter(
                     (holder as ViewHolderUser)
                     Utils.loadPicture(
                         context,
-                        list[position].attachment,
+                        AppConstants.ATTACHMENT_URL + list[position].attachment,
                         holder.binding.ivAttachment
                     )
 

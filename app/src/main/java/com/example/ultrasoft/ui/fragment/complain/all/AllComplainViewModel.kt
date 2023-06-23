@@ -24,11 +24,12 @@ class AllComplainViewModel @Inject constructor(private val repository: ComplainR
 
 
     fun callApiGetAllComplaint(
+        url: String,
         token: String
     ) {
         _allComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _allComplainResponse.value = repository.callApiGetAllComplaint(token)
+            _allComplainResponse.value = repository.callApiGetAllComplaint(url,token)
         }
     }
 

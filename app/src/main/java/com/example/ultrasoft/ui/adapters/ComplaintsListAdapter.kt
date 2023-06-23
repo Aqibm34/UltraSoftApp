@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ultrasoft.data.model.complain.ComplainData
 import com.example.ultrasoft.databinding.ComplaintListItemBinding
+import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.Utils
 import com.example.ultrasoft.utility.capitalizeWords
 
@@ -33,11 +34,11 @@ class ComplaintsListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        Utils.loadPicture(
-//            context,
-//            list[position].chats[0].attachment,
-//            holder.binding.iv
-//        )
+        Utils.loadPicture(
+            context,
+            ATTACHMENT_URL + list[position].chats[0].attachment,
+            holder.binding.iv
+        )
         holder.binding.tvCreatedBy.text = String.format(
             "Created By ~ %s (%s)",
             list[position].createdByCustomerName.trim().capitalizeWords(),

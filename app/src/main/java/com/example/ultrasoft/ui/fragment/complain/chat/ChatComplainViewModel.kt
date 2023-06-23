@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ultrasoft.data.model.complain.CreateComplainResponse
+import com.example.ultrasoft.data.model.complain.SingleComplainResponse
 import com.example.ultrasoft.data.model.user.BlockResponse
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.data.repository.ComplainRepository
@@ -22,16 +23,31 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     val replyResponse: LiveData<Resource<CreateComplainResponse>>
         get() = _replyResponse
 
+    private val _singleComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
+    val singleComplainResponse: LiveData<Resource<SingleComplainResponse>>
+        get() = _singleComplainResponse
+
     fun callApiReplyComplaint(
+        url: String,
         token: String, params: Map<String, RequestBody>,
         file: MultipartBody.Part?,
     ) {
         _replyResponse.value = Resource.loading()
         viewModelScope.launch {
-            _replyResponse.value = repository.callApiReplyComplaint(token, params, file)
+            _replyResponse.value = repository.callApiReplyComplaint(url,token, params, file)
         }
     }
 
+
+    fun callApiGetComplaintById(
+        url: String,
+        token: String,
+    ) {
+        _singleComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _singleComplainResponse.value = repository.callApiGetComplaintById(url,token)
+        }
+    }
 
 
 }

@@ -5,7 +5,7 @@ class AppConstants {
     enum class STATUS { ACTIVE, INACTIVE }
     enum class AlertType { SUCCESS, ERROR, INFO }
     enum class UserTypes { ADMIN, CUSTOMER, ENGINEER }
-    enum class ComplaintStatus { INPROCESS, RESOLVED }
+    enum class ComplaintStatus { OPEN, ENGINEER_ASSIGNED, IN_PROCESS, CLOSED }
 
 
     companion object {
@@ -21,7 +21,17 @@ class AppConstants {
 //        private const val NODE_UAT = "https://uatapionboarding.yourmudra.com/v1/"
 //        private const val NODE_PROD = "https://liveapionboarding.yourmudra.com/v1/"
 //        private const val EMP_PROD = "https://ymapi.yourmudra.com/ymemployee/"
+        const val ATTACHMENT_URL = "https://complaints.ultrasoftsys.com/assets/"
         const val BASE_URL = "https://complaints.ultrasoftsys.com/"
+
+        const val REPLY_COMPLAIN_URL = BASE_URL + "customer/reply/complaint"
+        const val ALL_COMPLAIN_URL = BASE_URL + "customer/getall/complaint"
+        const val COMPLAIN_BY_ID_URL = BASE_URL + "customer/get/complaint/"
+
+        const val ENG_REPLY_COMPLAIN_URL = BASE_URL + "engineer/reply/complaint"
+        const val ENG_ALL_COMPLAIN_URL = BASE_URL + "engineer/get/all/complaint"
+        const val ENG_COMPLAIN_BY_ID_URL = BASE_URL + "engineer/get/eng/complaint/"
+
 
 
     }

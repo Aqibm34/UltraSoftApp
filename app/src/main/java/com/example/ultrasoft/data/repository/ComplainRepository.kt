@@ -16,21 +16,30 @@ class ComplainRepository @Inject constructor(private val apiInterface: ApiInterf
         params: Map<String, RequestBody>,
         file: MultipartBody.Part,
     ) = safeApiCall {
-        apiInterface.callApiCreateComplaint(token,params,file)
+        apiInterface.callApiCreateComplaint(token, params, file)
     }
 
     suspend fun callApiReplyComplaint(
+        url: String,
         token: String,
         params: Map<String, RequestBody>,
         file: MultipartBody.Part?,
     ) = safeApiCall {
-        apiInterface.callApiReplyComplaint(token,params,file)
+        apiInterface.callApiReplyComplaint(url,token, params, file)
     }
 
 
     suspend fun callApiGetAllComplaint(
+        url: String,
         token: String,
     ) = safeApiCall {
-        apiInterface.callApiGetAllComplaint(token)
+        apiInterface.callApiGetAllComplaint(url,token)
+    }
+
+    suspend fun callApiGetComplaintById(
+        url: String,
+        token: String,
+    ) = safeApiCall {
+        apiInterface.callApiGetComplaintById(url,token)
     }
 }

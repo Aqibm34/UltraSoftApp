@@ -8,7 +8,9 @@ import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentAllComplainBinding
 import com.example.ultrasoft.ui.adapters.ComplaintsListAdapter
 import com.example.ultrasoft.utility.AppConstants
+import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.showAlert
+import com.example.ultrasoft.utility.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,8 +20,13 @@ class AllComplainFragment :
     private val viewModel: AllComplainViewModel by viewModels()
 
     override fun setUpViews() {
-        binding.tb.setUpToolbar()
-        viewModel.callApiGetAllComplaint(appPreferences.getToken())
+        binding.tb.setUpToolbar("All Complaints")
+        val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+            AppConstants.ENG_ALL_COMPLAIN_URL
+        } else {
+            AppConstants.ALL_COMPLAIN_URL
+        }
+        viewModel.callApiGetAllComplaint(url, appPreferences.getToken())
         binding.rvComplaints.layoutManager = LinearLayoutManager(requireContext())
     }
 
@@ -43,8 +50,10 @@ class AllComplainFragment :
                                         )
                                     }
                                     ComplaintsListAdapter.ClickType.IMAGE -> {
-                                        AllComplainFragmentDirections.actionAllComplainFragmentToPreviewFragment(
-                                             item.chats[0].attachment
+                                        findNavController().navigate(
+                                            AllComplainFragmentDirections.actionAllComplainFragmentToPreviewFragment(
+                                                ATTACHMENT_URL + item.chats[0].attachment
+                                            )
                                         )
                                     }
                                 }

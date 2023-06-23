@@ -5,6 +5,7 @@ import android.net.Uri
 import android.view.View
 import android.widget.PopupWindow
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -40,7 +41,7 @@ class ComplainChatFragment :
     private var chatAdapter: ComplaintChatAdapter? = null
     private var chatList: MutableList<Chat> = ArrayList()
     private var isFromPreview = false
-    private var adminReplyType = AppConstants.ComplaintStatus.INPROCESS
+    private var engineerReplyType = AppConstants.ComplaintStatus.IN_PROCESS
 
     override fun setUpViews() {
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
@@ -83,24 +84,24 @@ class ComplainChatFragment :
         }
         binding.btnSend.setOnClickListener {
             toggleMenu()
-//                if (appPreferences.getUserType() == LoginActivity.UserTypes.Admin.name) {
-            showAlertWithButtonConfig(
-                requireContext(),
-                "Mark Resolved ?",
-                "Do you want to mark this complaint as resolved.",
-                AppConstants.AlertType.INFO,
-                "No",
-                "Yes",
+            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+                showAlertWithButtonConfig(
+                    requireContext(),
+                    "Close Complain ?",
+                    "Do you want to mark this complain as closed.",
+                    AppConstants.AlertType.INFO,
+                    "No",
+                    "Yes",
 
-                ) {
-                if (it == AppConstants.AlertResponseType.YES) {
-                    adminReplyType = AppConstants.ComplaintStatus.RESOLVED
+                    ) {
+                    if (it == AppConstants.AlertResponseType.YES) {
+                        engineerReplyType = AppConstants.ComplaintStatus.CLOSED
+                    }
+                    prepareFileToUpload()
                 }
+            } else {
                 prepareFileToUpload()
             }
-//                } else {
-//                    prepareFileToUpload()
-//                }
         }
     }
 
@@ -129,7 +130,7 @@ class ComplainChatFragment :
                 isFromPreview = true
                 findNavController().navigate(
                     ComplainChatFragmentDirections.actionComplainChatFragmentToPreviewFragment(
-                        it.attachment
+                        AppConstants.ATTACHMENT_URL + it.attachment
                     )
                 )
             }
@@ -259,20 +260,18 @@ class ComplainChatFragment :
             map["complainId"] = createPartFromString(args.data.complaintId)
 
 
-//            if (appPreferences.getUserType() == LoginActivity.UserTypes.Admin.name) {
+            val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+                AppConstants.ENG_REPLY_COMPLAIN_URL
+            } else {
+                AppConstants.REPLY_COMPLAIN_URL
+            }
 
             viewModel.callApiReplyComplaint(
+                url,
                 appPreferences.getToken(),
                 map,
                 filePart
             )
-//            } else {
-//                viewModel.callApiReplyComplaint(
-//                    appPreferences.getToken(),
-//                    map,
-//                    filePart
-//                )
-//            }
         } catch (e: Exception) {
             logE(TAG, e.message)
         }
@@ -358,6 +357,18 @@ class ComplainChatFragment :
         }
     }
 
+    private fun resetViews() {
+        selectedFileUri = null
+        binding.etReply.setText("")
+        binding.ivPreview.visibility = View.GONE
+        binding.ivPreview.setImageDrawable(
+            ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.image_placeholder
+            )
+        )
+    }
+
 
     override fun observeView() {
         viewModel.replyResponse.observe(viewLifecycleOwner) {
@@ -366,9 +377,44 @@ class ComplainChatFragment :
                     showProgress()
                 }
                 Resource.Status.SUCCESS -> {
+                    if (it.data?.status_code == 1) {
+                        val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+                            AppConstants.ENG_COMPLAIN_BY_ID_URL
+                        } else {
+                            AppConstants.COMPLAIN_BY_ID_URL
+                        }
+
+                        viewModel.callApiGetComplaintById(
+                            url + args.data.complaintId,
+                            appPreferences.getToken()
+                        )
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                    } else {
+                        hideProgress()
+                        resetViews()
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    hideProgress()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                }
+            }
+        }
+
+        viewModel.singleComplainResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {}
+                Resource.Status.SUCCESS -> {
                     hideProgress()
                     if (it.data?.status_code == 1) {
-                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                        resetViews()
+                        chatList.add(it.data.data.chats[it.data.data.chats.size - 1])
+                        chatAdapter?.updateList(chatList)
+                        binding.rvChats.scrollToPosition(chatList.size - 1)
+                        if (engineerReplyType == AppConstants.ComplaintStatus.CLOSED) {
+                            findNavController().popBackStack()
+                        }
                     } else {
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
