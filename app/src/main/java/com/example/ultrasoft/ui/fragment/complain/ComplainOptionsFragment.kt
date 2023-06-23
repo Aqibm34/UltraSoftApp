@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
 import com.example.ultrasoft.databinding.FragmentComplainOptionsBinding
+import com.example.ultrasoft.utility.AppConstants
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -18,6 +19,9 @@ class ComplainOptionsFragment :
 
     override fun setUpViews() {
         binding.tb.setUpToolbar()
+        if(appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name){
+            binding.tvCreate.visibility = View.GONE
+        }
         binding.tvCreate.setOnClickListener { findNavController().navigate(R.id.action_complainOptionsFragment_to_createComplainFragment) }
         binding.tvList.setOnClickListener { findNavController().navigate(R.id.action_complainOptionsFragment_to_allComplainFragment) }
     }

@@ -27,6 +27,10 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     val singleComplainResponse: LiveData<Resource<SingleComplainResponse>>
         get() = _singleComplainResponse
 
+    private val _closeComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
+    val closeComplainResponse: LiveData<Resource<SingleComplainResponse>>
+        get() = _closeComplainResponse
+
     fun callApiReplyComplaint(
         url: String,
         token: String, params: Map<String, RequestBody>,
@@ -46,6 +50,15 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
         _singleComplainResponse.value = Resource.loading()
         viewModelScope.launch {
             _singleComplainResponse.value = repository.callApiGetComplaintById(url,token)
+        }
+    }
+    fun callApiEngCloseComplaint(
+        token: String,
+        complainId: String,
+    ) {
+        _singleComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _singleComplainResponse.value = repository.callApiEngCloseComplaint(token,complainId)
         }
     }
 

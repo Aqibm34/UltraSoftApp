@@ -26,7 +26,7 @@ class AllComplainFragment :
         } else {
             AppConstants.ALL_COMPLAIN_URL
         }
-        viewModel.callApiGetAllComplaint(url, appPreferences.getToken())
+        viewModel.callApiGetAllComplaint(url, appPreferences.getToken(),AppConstants.ComplaintStatus.OPEN.name)
         binding.rvComplaints.layoutManager = LinearLayoutManager(requireContext())
     }
 

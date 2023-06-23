@@ -84,24 +84,24 @@ class ComplainChatFragment :
         }
         binding.btnSend.setOnClickListener {
             toggleMenu()
-            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-                showAlertWithButtonConfig(
-                    requireContext(),
-                    "Close Complain ?",
-                    "Do you want to mark this complain as closed.",
-                    AppConstants.AlertType.INFO,
-                    "No",
-                    "Yes",
-
-                    ) {
-                    if (it == AppConstants.AlertResponseType.YES) {
-                        engineerReplyType = AppConstants.ComplaintStatus.CLOSED
-                    }
-                    prepareFileToUpload()
-                }
-            } else {
-                prepareFileToUpload()
-            }
+//            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+//                showAlertWithButtonConfig(
+//                    requireContext(),
+//                    "Close Complain ?",
+//                    "Do you want to mark this complain as closed.",
+//                    AppConstants.AlertType.INFO,
+//                    "No",
+//                    "Yes",
+//
+//                    ) {
+//                    if (it == AppConstants.AlertResponseType.YES) {
+//                        engineerReplyType = AppConstants.ComplaintStatus.CLOSED
+//                    }
+            prepareFileToUpload()
+//                }
+//            } else {
+//                prepareFileToUpload()
+//            }
         }
     }
 
@@ -378,11 +378,12 @@ class ComplainChatFragment :
                 }
                 Resource.Status.SUCCESS -> {
                     if (it.data?.status_code == 1) {
-                        val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-                            AppConstants.ENG_COMPLAIN_BY_ID_URL
-                        } else {
-                            AppConstants.COMPLAIN_BY_ID_URL
-                        }
+                        val url =
+                            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
+                                AppConstants.ENG_COMPLAIN_BY_ID_URL
+                            } else {
+                                AppConstants.COMPLAIN_BY_ID_URL
+                            }
 
                         viewModel.callApiGetComplaintById(
                             url + args.data.complaintId,
@@ -412,6 +413,27 @@ class ComplainChatFragment :
                         chatList.add(it.data.data.chats[it.data.data.chats.size - 1])
                         chatAdapter?.updateList(chatList)
                         binding.rvChats.scrollToPosition(chatList.size - 1)
+//                        if (engineerReplyType == AppConstants.ComplaintStatus.CLOSED) {
+//                            findNavController().popBackStack()
+//                        }
+                    } else {
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+                Resource.Status.ERROR -> {
+                    hideProgress()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                }
+            }
+        }
+
+        viewModel.closeComplainResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {}
+                Resource.Status.SUCCESS -> {
+                    hideProgress()
+                    if (it.data?.status_code == 1) {
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
                         if (engineerReplyType == AppConstants.ComplaintStatus.CLOSED) {
                             findNavController().popBackStack()
                         }

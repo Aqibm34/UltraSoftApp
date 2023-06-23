@@ -93,6 +93,7 @@ interface ApiInterface {
     suspend fun callApiGetAllComplaint(
         @Url url: String,
         @Header("X-AUTH-TOKEN") token: String,
+        @Query("status") status:String,
     ): Response<AllComplaintsResponse>
 
     @GET
@@ -101,7 +102,7 @@ interface ApiInterface {
         @Header("X-AUTH-TOKEN") token: String,
     ): Response<SingleComplainResponse>
 
-  @GET("engineer/close/complaint")
+  @POST("engineer/close/complaint/{complaintId}")
     suspend fun callApiEngCloseComplaint(
         @Header("X-AUTH-TOKEN") token: String,
         @Path("complaintId") complaintId: String
