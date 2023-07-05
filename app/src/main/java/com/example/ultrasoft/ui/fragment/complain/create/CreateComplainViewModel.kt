@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ultrasoft.data.model.asset.AllAssetCategoryResponse
 import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
 import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.network.Resource
@@ -22,6 +23,10 @@ class CreateComplainViewModel @Inject constructor(private val repository: Compla
     val createComplainResponse: LiveData<Resource<CreateComplainResponse>>
         get() = _createComplainResponse
 
+    private val _allAssetCategoryResponse = MutableLiveData<Resource<AllAssetCategoryResponse>>()
+    val allAssetCategoryResponse: LiveData<Resource<AllAssetCategoryResponse>>
+        get() = _allAssetCategoryResponse
+
 
     fun callApiCreateComplaint(
         token: String, params: Map<String, RequestBody>,
@@ -33,8 +38,12 @@ class CreateComplainViewModel @Inject constructor(private val repository: Compla
         }
     }
 
-
-
+    fun callApiGetAllAssetsCategory() {
+        _allAssetCategoryResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _allAssetCategoryResponse.value = repository.callApiGetAllAssetsCategory()
+        }
+    }
 
 
 }

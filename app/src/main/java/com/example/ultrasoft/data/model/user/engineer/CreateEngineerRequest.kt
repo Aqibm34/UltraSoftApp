@@ -4,5 +4,6 @@ data class CreateEngineerRequest(
     val engineerEmailId: String,
     val engineerName: String,
     val engineerMobile: String,
-    val engineerWorkDiscription: String
+    val engineerWorkDiscription: String,
+    val engineerPassword: String
 )

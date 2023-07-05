@@ -5,7 +5,7 @@ class AppConstants {
     enum class STATUS { ACTIVE, INACTIVE }
     enum class AlertType { SUCCESS, ERROR, INFO }
     enum class UserTypes { ADMIN, CUSTOMER, ENGINEER }
-    enum class ComplaintStatus { OPEN, ENGINEER_ASSIGNED, IN_PROCESS, CLOSED }
+    enum class ComplaintStatus { UN_ASSIGNED, RESOLVED, IN_PROGRESS, CLOSED }
 
 
     companion object {
@@ -31,7 +31,6 @@ class AppConstants {
         const val ENG_REPLY_COMPLAIN_URL = BASE_URL + "engineer/reply/complaint"
         const val ENG_ALL_COMPLAIN_URL = BASE_URL + "engineer/get/all/complaint"
         const val ENG_COMPLAIN_BY_ID_URL = BASE_URL + "engineer/get/eng/complaint/"
-
 
 
     }

@@ -32,11 +32,13 @@ class CreateUserFragment :
                     enableButton()
                     validation()
                 }
+
                 R.id.rbCustomer -> {
                     binding.tilDesc.visibility = View.GONE
                     enableButton()
                     validation()
                 }
+
                 R.id.rbEngineer -> {
                     binding.tilDesc.visibility = View.VISIBLE
                     enableButton()
@@ -51,7 +53,8 @@ class CreateUserFragment :
                     CreateAdminRequest(
                         binding.tilEmail.editText?.text.toString(),
                         binding.tilName.editText?.text.toString(),
-                        binding.tilMobile.editText?.text.toString()
+                        binding.tilMobile.editText?.text.toString(),
+                        binding.tilPassword.editText?.text.toString()
                     )
                 )
             } else if (binding.rbCustomer.isChecked) {
@@ -60,7 +63,8 @@ class CreateUserFragment :
                     CreateCustomerRequest(
                         binding.tilEmail.editText?.text.toString(),
                         binding.tilName.editText?.text.toString(),
-                        binding.tilMobile.editText?.text.toString()
+                        binding.tilMobile.editText?.text.toString(),
+                        binding.tilPassword.editText?.text.toString()
                     )
                 )
             } else {
@@ -70,7 +74,8 @@ class CreateUserFragment :
                         binding.tilEmail.editText?.text.toString(),
                         binding.tilName.editText?.text.toString(),
                         binding.tilMobile.editText?.text.toString(),
-                        binding.tilDesc.editText?.text.toString()
+                        binding.tilDesc.editText?.text.toString(),
+                        binding.tilPassword.editText?.text.toString()
                     )
                 )
             }
@@ -108,6 +113,15 @@ class CreateUserFragment :
                 binding.tilEmail.error = resources.getString(R.string.enter_valid_email)
             }
         }
+        binding.tilPassword.editText?.doOnTextChanged { _, _, _, _ ->
+            if (validatePassword()) {
+                binding.tilPassword.clearError()
+                enableButton()
+            } else {
+                binding.btnSubmit.isEnabled = false
+                binding.tilPassword.error = resources.getString(R.string.enter_valid_email)
+            }
+        }
 
         if (binding.tilDesc.visibility == View.VISIBLE) {
             binding.tilDesc.editText?.doOnTextChanged { _, _, _, _ ->
@@ -126,6 +140,7 @@ class CreateUserFragment :
         binding.btnSubmit.isEnabled = validateUserName()
                 && validateMobile()
                 && validateEmail()
+                && validatePassword()
                 && if (binding.tilDesc.visibility == View.VISIBLE) validateDesc() else true
     }
 
@@ -136,6 +151,7 @@ class CreateUserFragment :
             && binding.tilMobile.editText?.text.toString().length == 10
 
     private fun validateEmail() = binding.tilEmail.editText?.text.toString().isValidEmail()
+    private fun validatePassword() = binding.tilPassword.editText?.text.toString().isNotEmpty()
 
     private fun validateDesc() = binding.tilDesc.editText?.text.toString().isNotEmpty()
             && binding.tilDesc.editText?.text.toString().length > 3
@@ -164,6 +180,7 @@ class CreateUserFragment :
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}
@@ -182,6 +199,7 @@ class CreateUserFragment :
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}
@@ -200,6 +218,7 @@ class CreateUserFragment :
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}

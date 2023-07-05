@@ -61,4 +61,5 @@
     <string name="please_select_a_file_to_upload">Please select a file to upload</string>
     <string name="something_went_wrong_unable_to_process_video">Somthing went wroing unable to process the video.</string>
     <string name="please_attach_file_from_gallery">Please select file from gallery</string>
+    <string name="select_category">Select Category</string>
 </resources>

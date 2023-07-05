@@ -41,7 +41,7 @@ class ComplainChatFragment :
     private var chatAdapter: ComplaintChatAdapter? = null
     private var chatList: MutableList<Chat> = ArrayList()
     private var isFromPreview = false
-    private var engineerReplyType = AppConstants.ComplaintStatus.IN_PROCESS
+    private var engineerReplyType = AppConstants.ComplaintStatus.IN_PROGRESS
 
     override fun setUpViews() {
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
@@ -62,9 +62,11 @@ class ComplainChatFragment :
                 "Image" -> {
                     photoIntent()
                 }
+
                 "Video" -> {
                     videoIntent()
                 }
+
                 "Gallery" -> {
                     if (hasWritePermission()) {
                         galleryPickCallback.launch(MediaUtils.IMAGE_VIDEO_MIME)
@@ -87,21 +89,52 @@ class ComplainChatFragment :
             prepareFileToUpload()
         }
         binding.ivClose.setOnClickListener {
-            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-                showAlertWithButtonConfig(
+            when (appPreferences.getRole()) {
+                AppConstants.UserTypes.CUSTOMER.name ->
+                    showAlertWithButtonConfig(
+                        requireContext(),
+                        "Resolve Complain ?",
+                        "Do you want to close this complain.",
+                        AppConstants.AlertType.INFO,
+                        "No",
+                        "Yes",
+                    ) {
+                        viewModel.callApiEngResolveComplaint(
+                            appPreferences.getToken(),
+                            args.data.complaintId
+                        )
+                    }
+
+                AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
                     requireContext(),
-                    "Close Complain ?",
+                    "Resolve Complain ?",
                     "Do you want to close this complain.",
                     AppConstants.AlertType.INFO,
                     "No",
                     "Yes",
                 ) {
-                    viewModel.callApiEngCloseComplaint(
+                    viewModel.callApiEngResolveComplaint(
                         appPreferences.getToken(),
                         args.data.complaintId
                     )
                 }
+
+                AppConstants.UserTypes.CUSTOMER.name ->
+                    showAlertWithButtonConfig(
+                        requireContext(),
+                        "Resolve Complain ?",
+                        "Do you want to close this complain.",
+                        AppConstants.AlertType.INFO,
+                        "No",
+                        "Yes",
+                    ) {
+                        viewModel.callApiEngResolveComplaint(
+                            appPreferences.getToken(),
+                            args.data.complaintId
+                        )
+                    }
             }
+
         }
     }
 
@@ -116,17 +149,6 @@ class ComplainChatFragment :
                 args.data.createdByCustomerName,
                 requireContext()
             ) {
-//                if (args.complaintData.seen == "FALSE") {
-//                    if (appPreferences.getUserType() == LoginActivity.UserTypes.Admin.name) {
-//                        viewModel.callApiGetAdminComplaintSeen(
-//                            AppConstants.ADMIN_COMPLAINTS_SEEN_URL,
-//                            AppConstants.ymId,
-//                            AppConstants.ymSecret,
-//                            getAdminSupportUrl(),
-//                            args.complaintData.complaintId
-//                        )
-//                    }
-//                }
                 isFromPreview = true
                 findNavController().navigate(
                     ComplainChatFragmentDirections.actionComplainChatFragmentToPreviewFragment(
@@ -379,6 +401,7 @@ class ComplainChatFragment :
                 Resource.Status.LOADING -> {
                     showProgress()
                 }
+
                 Resource.Status.SUCCESS -> {
                     if (it.data?.status_code == 1) {
                         val url =
@@ -399,6 +422,7 @@ class ComplainChatFragment :
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgress()
                     binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
@@ -420,6 +444,7 @@ class ComplainChatFragment :
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideProgress()
                     binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
@@ -432,6 +457,7 @@ class ComplainChatFragment :
                 Resource.Status.LOADING -> {
                     showLoading()
                 }
+
                 Resource.Status.SUCCESS -> {
                     hideLoading()
                     if (it.data?.status_code == 1) {
@@ -441,6 +467,7 @@ class ComplainChatFragment :
                         binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     binding.root.showSnackBar(it.data?.message, SnackTypes.Error)

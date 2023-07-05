@@ -1,7 +1,8 @@
 package com.example.ultrasoft.data.network
 
+import com.example.ultrasoft.data.model.CommonResponse
+import com.example.ultrasoft.data.model.asset.AllAssetCategoryResponse
 import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
-import com.example.ultrasoft.data.model.complain.ComplainData
 import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.model.complain.SingleComplainResponse
 import com.example.ultrasoft.data.model.login.LoginRequest
@@ -19,7 +20,6 @@ import com.example.ultrasoft.data.model.user.engineer.CreateEngineerRequest
 import com.example.ultrasoft.data.model.user.engineer.CreateEngineerResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -93,7 +93,7 @@ interface ApiInterface {
     suspend fun callApiGetAllComplaint(
         @Url url: String,
         @Header("X-AUTH-TOKEN") token: String,
-        @Query("status") status:String,
+        @Query("status") status: String,
     ): Response<AllComplaintsResponse>
 
     @GET
@@ -102,11 +102,23 @@ interface ApiInterface {
         @Header("X-AUTH-TOKEN") token: String,
     ): Response<SingleComplainResponse>
 
-  @POST("engineer/close/complaint/{complaintId}")
-    suspend fun callApiEngCloseComplaint(
+    @POST("engineer/resolve/complaint")
+    suspend fun callApiEngResolveComplaint(
         @Header("X-AUTH-TOKEN") token: String,
-        @Path("complaintId") complaintId: String
+        @Query("complaintId") complaintId: String
     ): Response<SingleComplainResponse>
+
+    @GET("admin/getall/category")
+    suspend fun callApiGetAllAssetsCategory(): Response<AllAssetCategoryResponse>
+
+    //ADMIN
+    @GET("admin/assigntoeng/admin/complaint")
+    suspend fun callAdminApiAssignComplain(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Query("complainId") complainId: String,
+        @Query("engineerId") engineerId: String,
+    ): Response<CommonResponse>
+
 
 
 }

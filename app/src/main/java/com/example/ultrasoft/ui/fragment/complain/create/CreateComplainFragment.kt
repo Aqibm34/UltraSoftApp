@@ -17,6 +17,7 @@ import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentCreateComplainBinding
 import com.example.ultrasoft.utility.*
 import com.example.ultrasoft.utility.contracts.PickFromGalleryActivityContract
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.RequestBody
 import java.io.File
@@ -42,6 +43,7 @@ class CreateComplainFragment :
                         )
                     )
                 }
+
                 R.id.rbVideo -> {
                     binding.ivPreview.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -79,18 +81,37 @@ class CreateComplainFragment :
         }
 
         validation()
+        viewModel.callApiGetAllAssetsCategory()
+
     }
 
     private fun validation() {
+        binding.tilCategory.editText?.doOnTextChanged { _, _, _, _ ->
+            if (validateCategory()) {
+                binding.tilCategory.clearError()
+                enableButton()
+            } else {
+                binding.tilCategory.error = resources.getString(R.string.enter_valid_remarks)
+                binding.btnSubmit.isEnabled = false
+            }
+        }
+
         binding.tilRemarks.editText?.doOnTextChanged { _, _, _, _ ->
             if (validateRemarks()) {
                 binding.tilRemarks.clearError()
-                binding.btnSubmit.isEnabled = true
+                enableButton()
             } else {
                 binding.tilRemarks.error = resources.getString(R.string.enter_valid_remarks)
                 binding.btnSubmit.isEnabled = false
             }
         }
+    }
+
+    private fun validateCategory() = binding.tilCategory.editText?.text.toString().isNotEmpty()
+    private fun validateRemarks() = binding.tilRemarks.editText?.text.toString().isNotEmpty()
+
+    private fun enableButton() {
+        binding.btnSubmit.isEnabled = validateCategory() && validateRemarks()
     }
 
     private fun validateFile(): Boolean {
@@ -104,11 +125,9 @@ class CreateComplainFragment :
         }
     }
 
-    private fun validateRemarks() = binding.tilRemarks.editText?.text.toString().isNotEmpty()
-
     private fun videoIntent() {
         if (hasCameraPermission(requireContext())) {
-            val fileName = "ymvideo_complain" + System.currentTimeMillis()
+            val fileName = "video_complain" + System.currentTimeMillis()
             val photoUriList = Utils.setCaptureFileUri(
                 requireContext(),
                 fileName,
@@ -256,6 +275,8 @@ class CreateComplainFragment :
             val filePart = requireContext().prepareFilePart("file", file)
             val map: HashMap<String, RequestBody> = HashMap()
             map["remark"] = createPartFromString(binding.tilRemarks.editText?.text.toString())
+            map["complainCategory"] =
+                createPartFromString(binding.tilCategory.editText?.text.toString())
 
             viewModel.callApiCreateComplaint(
                 appPreferences.getToken(),
@@ -281,9 +302,32 @@ class CreateComplainFragment :
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}
+                }
+            }
+        }
+
+        viewModel.allAssetCategoryResponse.observe(viewLifecycleOwner) { response ->
+            when (response.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (response.data?.status_code == 1) {
+                        val array = response.data.data.map { it.assetCategoryName }.toTypedArray()
+                        (binding.tilCategory.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(
+                            array
+                        )
+                    } else {
+                        showAlert(response.data?.message, AppConstants.AlertType.ERROR) {}
+                    }
+                }
+
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    showAlert(response.message, AppConstants.AlertType.ERROR) {}
                 }
             }
         }

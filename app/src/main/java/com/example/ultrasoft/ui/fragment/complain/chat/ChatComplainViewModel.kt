@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.model.complain.SingleComplainResponse
-import com.example.ultrasoft.data.model.user.BlockResponse
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.data.repository.ComplainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -52,13 +51,13 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
             _singleComplainResponse.value = repository.callApiGetComplaintById(url,token)
         }
     }
-    fun callApiEngCloseComplaint(
+    fun callApiEngResolveComplaint(
         token: String,
         complainId: String,
     ) {
         _closeComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _closeComplainResponse.value = repository.callApiEngCloseComplaint(token,complainId)
+            _closeComplainResponse.value = repository.callApiEngResolveComplaint(token,complainId)
         }
     }
 

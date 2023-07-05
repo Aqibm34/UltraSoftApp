@@ -138,6 +138,30 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPassword"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_horizontal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:hint="@string/password"
+            app:boxCornerRadiusBottomEnd="@dimen/til_radius"
+            app:boxCornerRadiusBottomStart="@dimen/til_radius"
+            app:boxCornerRadiusTopEnd="@dimen/til_radius"
+            app:boxCornerRadiusTopStart="@dimen/til_radius"
+            app:layout_constraintTop_toBottomOf="@id/tilEmail">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:textSize="@dimen/text12sp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilDesc"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -150,7 +174,7 @@
             app:boxCornerRadiusBottomStart="@dimen/til_radius"
             app:boxCornerRadiusTopEnd="@dimen/til_radius"
             app:boxCornerRadiusTopStart="@dimen/til_radius"
-            app:layout_constraintTop_toBottomOf="@id/tilEmail">
+            app:layout_constraintTop_toBottomOf="@id/tilPassword">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
