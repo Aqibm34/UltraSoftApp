@@ -52,4 +52,10 @@ class ComplainRepository @Inject constructor(private val apiInterface: ApiInterf
     suspend fun callApiGetAllAssetsCategory() = safeApiCall {
         apiInterface.callApiGetAllAssetsCategory()
     }
+    suspend fun callApiCustomerCloseComplain(
+        token: String,
+        complainId: String,
+    ) = safeApiCall {
+        apiInterface.callApiCustomerCloseComplain(token, complainId)
+    }
 }

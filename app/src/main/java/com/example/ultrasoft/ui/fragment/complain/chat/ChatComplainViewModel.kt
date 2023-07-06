@@ -26,6 +26,10 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     val singleComplainResponse: LiveData<Resource<SingleComplainResponse>>
         get() = _singleComplainResponse
 
+    private val _resolveComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
+    val resolveComplainResponse: LiveData<Resource<SingleComplainResponse>>
+        get() = _resolveComplainResponse
+
     private val _closeComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
     val closeComplainResponse: LiveData<Resource<SingleComplainResponse>>
         get() = _closeComplainResponse
@@ -37,7 +41,7 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     ) {
         _replyResponse.value = Resource.loading()
         viewModelScope.launch {
-            _replyResponse.value = repository.callApiReplyComplaint(url,token, params, file)
+            _replyResponse.value = repository.callApiReplyComplaint(url, token, params, file)
         }
     }
 
@@ -48,16 +52,27 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     ) {
         _singleComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _singleComplainResponse.value = repository.callApiGetComplaintById(url,token)
+            _singleComplainResponse.value = repository.callApiGetComplaintById(url, token)
         }
     }
+
     fun callApiEngResolveComplaint(
+        token: String,
+        complainId: String,
+    ) {
+        _resolveComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _resolveComplainResponse.value = repository.callApiEngResolveComplaint(token, complainId)
+        }
+    }
+
+    fun callApiCustomerCloseComplain(
         token: String,
         complainId: String,
     ) {
         _closeComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _closeComplainResponse.value = repository.callApiEngResolveComplaint(token,complainId)
+            _closeComplainResponse.value = repository.callApiCustomerCloseComplain(token, complainId)
         }
     }
 

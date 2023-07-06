@@ -5,7 +5,7 @@ class AppConstants {
     enum class STATUS { ACTIVE, INACTIVE }
     enum class AlertType { SUCCESS, ERROR, INFO }
     enum class UserTypes { ADMIN, CUSTOMER, ENGINEER }
-    enum class ComplaintStatus { UN_ASSIGNED, RESOLVED, IN_PROGRESS, CLOSED }
+    enum class ComplaintStatus { UN_ASSIGNED, RESOLVED, IN_PROGRESS, CLOSED, PENDING }
 
 
     companion object {
@@ -25,12 +25,14 @@ class AppConstants {
         const val BASE_URL = "https://complaints.ultrasoftsys.com/"
 
         const val REPLY_COMPLAIN_URL = BASE_URL + "customer/reply/complaint"
-        const val ALL_COMPLAIN_URL = BASE_URL + "customer/getall/complaint"
+        const val CUST_ALL_COMPLAIN_URL = BASE_URL + "customer/getall/complaint/pending/resolved"
         const val COMPLAIN_BY_ID_URL = BASE_URL + "customer/get/complaint/"
 
         const val ENG_REPLY_COMPLAIN_URL = BASE_URL + "engineer/reply/complaint"
-        const val ENG_ALL_COMPLAIN_URL = BASE_URL + "engineer/get/all/complaint"
+        const val ENG_ALL_COMPLAIN_URL = BASE_URL + "engineer/get/all/complaint/pending/resolved"
         const val ENG_COMPLAIN_BY_ID_URL = BASE_URL + "engineer/get/eng/complaint/"
+
+        const val ADMIN_ALL_COMPLAIN_URL = BASE_URL + "admin/getall/admin/pending/resolved/complaint"
 
 
     }

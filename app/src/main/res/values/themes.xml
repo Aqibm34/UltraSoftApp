@@ -36,4 +36,12 @@
     <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
+
+<!--    <style name="RoundedTabLayoutStyle" parent="Widget.Design.TabLayout">-->
+<!--        <item name="tabBackground">@drawable/tab_selector</item>-->
+<!--        <item name="tabIndicator">@null</item>-->
+<!--        <item name="android:background">@drawable/tablayout_bg</item>-->
+<!--        <item name="tabSelectedTextColor">@color/black_d</item>-->
+<!--        <item name="tabTextColor">@color/white</item>-->
+<!--    </style>-->
 </resources>

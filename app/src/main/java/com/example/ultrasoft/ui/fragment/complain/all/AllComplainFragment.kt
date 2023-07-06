@@ -1,16 +1,19 @@
 package com.example.ultrasoft.ui.fragment.complain.all
 
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
+import com.example.ultrasoft.data.model.complain.ComplainData
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentAllComplainBinding
 import com.example.ultrasoft.ui.adapters.ComplaintsListAdapter
 import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.showAlert
-import com.example.ultrasoft.utility.toast
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,13 +24,41 @@ class AllComplainFragment :
 
     override fun setUpViews() {
         binding.tb.setUpToolbar("All Complaints")
-        val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-            AppConstants.ENG_ALL_COMPLAIN_URL
-        } else {
-            AppConstants.ALL_COMPLAIN_URL
+        val url = when (appPreferences.getRole()) {
+            AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_ALL_COMPLAIN_URL
+            AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_ALL_COMPLAIN_URL
+            AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_ALL_COMPLAIN_URL
+            else -> ""
         }
-        viewModel.callApiGetAllComplaint(url, appPreferences.getToken(),AppConstants.ComplaintStatus.OPEN.name)
+
+        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.pending)))
+        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.resolved)))
+        binding.tbl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val status = when (tab?.position) {
+                    0 -> AppConstants.ComplaintStatus.PENDING.name
+                    1 -> AppConstants.ComplaintStatus.RESOLVED.name
+                    else -> ""
+                }
+                viewModel.callApiGetAllComplaint(
+                    url,
+                    appPreferences.getToken(),
+                    status
+                )
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+
+        })
+
         binding.rvComplaints.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.callApiGetAllComplaint(
+            url,
+            appPreferences.getToken(),
+            AppConstants.ComplaintStatus.PENDING.name
+        )
     }
 
     override fun observeView() {
@@ -36,38 +67,51 @@ class AllComplainFragment :
                 Resource.Status.LOADING -> {
                     showLoading()
                 }
+
                 Resource.Status.SUCCESS -> {
                     hideLoading()
                     if (it.data?.status_code == 1) {
-                        binding.rvComplaints.adapter =
-                            ComplaintsListAdapter(it.data.data, requireContext()) { item, type ->
-                                when (type) {
-                                    ComplaintsListAdapter.ClickType.CHAT -> {
-                                        findNavController().navigate(
-                                            AllComplainFragmentDirections.actionAllComplainFragmentToComplainChatFragment(
-                                                item
-                                            )
-                                        )
-                                    }
-                                    ComplaintsListAdapter.ClickType.IMAGE -> {
-                                        findNavController().navigate(
-                                            AllComplainFragmentDirections.actionAllComplainFragmentToPreviewFragment(
-                                                ATTACHMENT_URL + item.chats[0].attachment
-                                            )
-                                        )
-                                    }
-                                }
-                            }
+                        showData(it.data.data)
                     } else {
-                        showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
+                        showData(message = it.data?.message)
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
-                    showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
+                    showData(message = it.message)
                 }
             }
         }
+    }
+
+    private fun showData(data: List<ComplainData>? = null, message: String? = null) {
+        if (data.isNullOrEmpty()) {
+            binding.tvNoData.visibility = View.VISIBLE
+            binding.tvNoData.text = message
+            return
+        }
+        binding.tvNoData.visibility = View.GONE
+        binding.rvComplaints.adapter =
+            ComplaintsListAdapter(data, requireContext()) { item, type ->
+                when (type) {
+                    ComplaintsListAdapter.ClickType.CHAT -> {
+                        findNavController().navigate(
+                            AllComplainFragmentDirections.actionAllComplainFragmentToComplainChatFragment(
+                                item
+                            )
+                        )
+                    }
+
+                    ComplaintsListAdapter.ClickType.IMAGE -> {
+                        findNavController().navigate(
+                            AllComplainFragmentDirections.actionAllComplainFragmentToPreviewFragment(
+                                ATTACHMENT_URL + item.chats[0].attachment
+                            )
+                        )
+                    }
+                }
+            }
     }
 
 }

@@ -128,7 +128,7 @@ class ComplainChatFragment :
                         "No",
                         "Yes",
                     ) {
-                        viewModel.callApiEngResolveComplaint(
+                        viewModel.callApiCustomerCloseComplain(
                             appPreferences.getToken(),
                             args.data.complaintId
                         )
@@ -447,6 +447,29 @@ class ComplainChatFragment :
 
                 Resource.Status.ERROR -> {
                     hideProgress()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                }
+            }
+        }
+
+        viewModel.resolveComplainResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
+
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                        findNavController().popBackStack()
+                    } else {
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+
+                Resource.Status.ERROR -> {
+                    hideLoading()
                     binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                 }
             }

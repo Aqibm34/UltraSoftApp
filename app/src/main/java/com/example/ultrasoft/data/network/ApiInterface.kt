@@ -29,8 +29,8 @@ interface ApiInterface {
     @POST("user/login")
     suspend fun callApiLogin(@Body body: LoginRequest): Response<LoginResponse>
 
-    @POST("user/logout")
-    suspend fun callApiLogout(@Header("X-AUTH-TOKE") token: String): Response<LogoutResponse>
+    @GET("user/logout")
+    suspend fun callApiLogout(@Header("X-AUTH-TOKEN") token: String): Response<LogoutResponse>
 
     @POST("admin/create/admin")
     suspend fun callApiCreateAdmin(
@@ -111,6 +111,12 @@ interface ApiInterface {
     @GET("admin/getall/category")
     suspend fun callApiGetAllAssetsCategory(): Response<AllAssetCategoryResponse>
 
+    @GET("customer/close/complaint")
+    suspend fun callApiCustomerCloseComplain(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Query("complaintId") complaintId: String
+    ): Response<SingleComplainResponse>
+
     //ADMIN
     @GET("admin/assigntoeng/admin/complaint")
     suspend fun callAdminApiAssignComplain(
@@ -118,7 +124,6 @@ interface ApiInterface {
         @Query("complainId") complainId: String,
         @Query("engineerId") engineerId: String,
     ): Response<CommonResponse>
-
 
 
 }

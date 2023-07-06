@@ -11,80 +11,16 @@
         android:id="@+id/tb"
         layout="@layout/toolbar_layout" />
 
-    <LinearLayout
-        android:id="@+id/ll"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin5dp"
-        android:layout_marginTop="@dimen/margin10dp"
-        android:background="@drawable/card_bg"
-        android:backgroundTint="@color/primary"
-        android:elevation="5dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/padding5dp"
-        android:paddingVertical="@dimen/padding8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tb">
-
-        <TextView
-            android:id="@+id/tvPending"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/card_bg"
-            android:backgroundTint="@color/black_d"
-            android:gravity="center"
-            android:paddingVertical="@dimen/padding4dp"
-            android:text="Open"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text10sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvResolved"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/card_bg"
-            android:backgroundTint="@color/primary"
-            android:gravity="center"
-            android:paddingVertical="@dimen/padding4dp"
-            android:text="InProcess"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text10sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tvAssigned"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/card_bg"
-            android:backgroundTint="@color/primary"
-            android:gravity="center"
-            android:paddingVertical="@dimen/padding4dp"
-            android:text="Eng Assigned"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text10sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tvClosed"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/card_bg"
-            android:backgroundTint="@color/primary"
-            android:gravity="center"
-            android:paddingVertical="@dimen/padding4dp"
-            android:text="Closed"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text10sp"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
-
+        android:layout_marginTop="@dimen/margin5dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/tb"
+        app:tabSelectedTextColor="@color/primary"
+        app:tabTextColor="@color/black_d"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvComplaints"
@@ -94,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll" />
+        app:layout_constraintTop_toBottomOf="@id/tbl" />
 
     <TextView
         android:id="@+id/tvNoData"
