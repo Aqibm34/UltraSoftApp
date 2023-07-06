@@ -5,14 +5,15 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ComplainData(
-    val assignedByAdminId: String?,
-    val assignedByAdminName: String?,
-    val assignedToEngineerId: String?,
-    val assignedToEngineerName: String?,
-    val chats: List<Chat>,
-    val complaintId: String,
-    val createdByCustomerId: String,
-    val createdByCustomerName: String,
+    val complainId: String,
+    val status: String,
+    val assetCategory: AssetCategoryData,
+    val assignedByAdmin: AssignedByAdminData?,
+    val assignedToEngineer: AssignedToEngineerData?,
+    val createdByCUstomer: CreatedByCustomerData,
+    val complaintChats: List<Chat>,
     val createdDate: String,
-    val status: String
+    val ticketClosedDate: String?,
+    val engineerAssignedDate: String?,
+    val updatedDate: String
 ) : Parcelable

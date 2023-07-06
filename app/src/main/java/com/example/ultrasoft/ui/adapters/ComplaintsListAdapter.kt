@@ -36,20 +36,23 @@ class ComplaintsListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Utils.loadPicture(
             context,
-            ATTACHMENT_URL + list[position].chats[0].attachment,
+            ATTACHMENT_URL + list[position].complaintChats[0].attachment,
             holder.binding.iv
         )
         holder.binding.tvCreatedBy.text = String.format(
             "Created By ~ %s (%s)",
-            list[position].createdByCustomerName.trim().capitalizeWords(),
-            list[position].createdByCustomerId
+            list[position].createdByCUstomer.customerName.trim().capitalizeWords(),
+            list[position].createdByCUstomer.customerId
         )
 
-        holder.binding.tvName.text = String.format(
-            "%s (%s)",
-            list[position].assignedByAdminName.toString().trim().capitalizeWords(),
-            list[position].assignedByAdminId
-        )
+        list[position].assignedByAdmin?.let {
+            holder.binding.tvName.text = String.format(
+                "%s (%s)",
+                it.name?.trim()?.capitalizeWords(),
+                it.adminId
+            )
+        }
+
 
         holder.binding.tvCreatedOn.text =
             String.format(
@@ -68,8 +71,8 @@ class ComplaintsListAdapter(
 //                    )
 //                }
 //            }
-            if (list[position].chats.size > 1) {
-                holder.binding.tvCount.text = (list[position].chats.size - 1).toString()
+            if (list[position].complaintChats.size > 1) {
+                holder.binding.tvCount.text = (list[position].complaintChats.size - 1).toString()
             } else {
                 holder.binding.tvCount.visibility = View.GONE
             }
@@ -78,9 +81,9 @@ class ComplaintsListAdapter(
             holder.binding.tvSeen.visibility = View.GONE
         }
 
-        holder.binding.tvService.text = "Service"
+        holder.binding.tvService.text = String.format("Asset Category: %s",list[position].assetCategory.assetCategoryName)
         holder.binding.tvComplainId.text =
-            String.format("Complain ID: %s", list[position].complaintId)
+            String.format("Complain ID: %s", list[position].complainId)
         holder.binding.clRoot.setOnClickListener {
             listener(list[position], ClickType.CHAT)
         }

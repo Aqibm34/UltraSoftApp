@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ultrasoft.data.model.complain.AssignedByAdminData
+import com.example.ultrasoft.data.model.complain.AssignedToEngineerData
 import com.example.ultrasoft.data.model.complain.Chat
+import com.example.ultrasoft.data.model.complain.CreatedByCustomerData
 import com.example.ultrasoft.databinding.ComplaintChatLayoutBinding
 import com.example.ultrasoft.databinding.ComplaintChatLayoutUserBinding
 import com.example.ultrasoft.utility.AppConstants
@@ -14,7 +17,9 @@ import com.example.ultrasoft.utility.logE
 
 class ComplaintChatAdapter(
     private var list: MutableList<Chat>,
-    private var createdBy: String,
+    private var customerData: CreatedByCustomerData,
+    private var engineerData: AssignedToEngineerData?,
+    private var adminData: AssignedByAdminData?,
     private val context: Context,
     private val listener: (item: Chat) -> Unit
 ) :
@@ -45,6 +50,7 @@ class ComplaintChatAdapter(
                     )
                 )
             }
+
             1 -> {
                 return ViewHolderUser(
                     ComplaintChatLayoutUserBinding.inflate(
@@ -54,6 +60,7 @@ class ComplaintChatAdapter(
                     )
                 )
             }
+
             else -> {
                 throw Exception("Invalid ViewHolder Chat View Type")
             }
@@ -70,31 +77,35 @@ class ComplaintChatAdapter(
                         holder.binding.ivAttachment
                     )
 
-                    holder.binding.tvUser.text = list[position].messageBy
-                    if (list[position].engName.isNullOrEmpty() && list[position].engId.isNullOrEmpty()) {
-                        holder.binding.tvResolvedBy.visibility = View.GONE
-                    } else {
-                        holder.binding.tvResolvedBy.visibility = View.VISIBLE
-                        holder.binding.tvResolvedBy.text = String.format(
-                            "%s ~ %s@ultrasoft.in",
-                            list[position].engName,
-                            list[position].engId?.let {
-                                it.substring(0, it.indexOf("@"))
-                            })
+                    holder.binding.tvUser.text = customerData.customerName
+                    engineerData?.let {
+
+                        if (it.engineerName.isEmpty() && it.engineerId.isEmpty()) {
+                            holder.binding.tvResolvedBy.visibility = View.GONE
+                        } else {
+                            holder.binding.tvResolvedBy.visibility = View.VISIBLE
+                            holder.binding.tvResolvedBy.text = String.format(
+                                "%s ~ %s@ultrasoft.in",
+                                it.engineerName,
+                                it.engineerId.substring(0, it.engineerId.indexOf("@"))
+                            )
+                        }
                     }
+
 //                    holder.binding.tvDate.text = list[position].createdDate.let {
 //                        Utils.parseDateWithTimeZone(
 //                            it
 //                        )
 //                    }
-                    holder.binding.tvDescription.text = list[position].remarks
+                    holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
-                        if (list[position].attachment.isNullOrEmpty()) View.GONE else View.VISIBLE
+                        if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE
                     holder.binding.ivAttachment.setOnClickListener {
                         listener(list[position])
                     }
 
                 }
+
                 1 -> {
                     (holder as ViewHolderUser)
                     Utils.loadPicture(
@@ -103,29 +114,32 @@ class ComplaintChatAdapter(
                         holder.binding.ivAttachment
                     )
 
-                    holder.binding.tvUser.text = createdBy
-                    if (list[position].engName.isNullOrEmpty() && list[position].engId.isNullOrEmpty()) {
-                        holder.binding.tvResolvedBy.visibility = View.GONE
-                    } else {
-                        holder.binding.tvResolvedBy.visibility = View.VISIBLE
-                        holder.binding.tvResolvedBy.text = String.format(
-                            "%s ~ %s",
-                            list[position].engName,
-                            list[position].engId
-                        )
+                    holder.binding.tvUser.text = customerData.customerName
+                    engineerData?.let {
+                        if (it.engineerName.isEmpty() && it.engineerId.isEmpty()) {
+                            holder.binding.tvResolvedBy.visibility = View.GONE
+                        } else {
+                            holder.binding.tvResolvedBy.visibility = View.VISIBLE
+                            holder.binding.tvResolvedBy.text = String.format(
+                                "%s ~ %s",
+                                it.engineerName,
+                                it.engineerId
+                            )
+                        }
                     }
 //                    holder.binding.tvDate.text = list[position].createdDate.let {
 //                        Utils.parseDateWithTimeZone(
 //                            it
 //                        )
 //                    }
-                    holder.binding.tvDescription.text = list[position].remarks
+                    holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
-                        if (list[position].attachment.isNullOrEmpty()) View.GONE else View.VISIBLE
+                        if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE
                     holder.binding.ivAttachment.setOnClickListener {
                         listener(list[position])
                     }
                 }
+
                 else -> {
                     throw Exception("Invalid Chat View Type")
                 }
@@ -143,7 +157,9 @@ class ComplaintChatAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (list[position].messageBy == "ADMIN") {
+        return if (list[position].role == AppConstants.UserTypes.ADMIN.name
+            || list[position].role == AppConstants.UserTypes.ENGINEER.name
+        ) {
             0
         } else {
             1

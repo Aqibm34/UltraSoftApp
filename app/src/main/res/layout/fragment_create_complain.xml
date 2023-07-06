@@ -39,12 +39,14 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
                     android:textSize="@dimen/text12sp"
+                    android:clickable="false"
                     tools:ignore="LabelFor" />
+
 
             </com.google.android.material.textfield.TextInputLayout>
 

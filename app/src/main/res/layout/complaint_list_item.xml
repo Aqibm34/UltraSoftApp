@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin5dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/yellow"
+        android:textColor="@color/primary"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

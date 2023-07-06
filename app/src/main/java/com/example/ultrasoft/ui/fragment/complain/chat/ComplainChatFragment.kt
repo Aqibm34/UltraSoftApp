@@ -21,8 +21,20 @@ import com.example.ultrasoft.databinding.FragmentComplainChatBinding
 import com.example.ultrasoft.ui.adapters.ComplaintChatAdapter
 import com.example.ultrasoft.ui.module.popupmenu.MenuEditText
 import com.example.ultrasoft.ui.module.popupmenu.SoftKeyBoardPopup
-import com.example.ultrasoft.utility.*
+import com.example.ultrasoft.utility.AppConstants
+import com.example.ultrasoft.utility.MediaUtils
+import com.example.ultrasoft.utility.SnackTypes
+import com.example.ultrasoft.utility.Utils
 import com.example.ultrasoft.utility.contracts.PickFromGalleryActivityContract
+import com.example.ultrasoft.utility.createPartFromString
+import com.example.ultrasoft.utility.hasCameraPermission
+import com.example.ultrasoft.utility.hasWritePermission
+import com.example.ultrasoft.utility.loadImageOrVideoPreview
+import com.example.ultrasoft.utility.logE
+import com.example.ultrasoft.utility.prepareFilePart
+import com.example.ultrasoft.utility.showAlertWithButtonConfig
+import com.example.ultrasoft.utility.showSnackBar
+import com.example.ultrasoft.utility.toast
 import dagger.hilt.android.AndroidEntryPoint
 import okhttp3.RequestBody
 import java.io.File
@@ -101,7 +113,7 @@ class ComplainChatFragment :
                     ) {
                         viewModel.callApiEngResolveComplaint(
                             appPreferences.getToken(),
-                            args.data.complaintId
+                            args.data.complainId
                         )
                     }
 
@@ -115,7 +127,7 @@ class ComplainChatFragment :
                 ) {
                     viewModel.callApiEngResolveComplaint(
                         appPreferences.getToken(),
-                        args.data.complaintId
+                        args.data.complainId
                     )
                 }
 
@@ -130,7 +142,7 @@ class ComplainChatFragment :
                     ) {
                         viewModel.callApiCustomerCloseComplain(
                             appPreferences.getToken(),
-                            args.data.complaintId
+                            args.data.complainId
                         )
                     }
             }
@@ -141,12 +153,14 @@ class ComplainChatFragment :
     private fun showComplaintData() {
         try {
             if (!isFromPreview) {
-                chatList = args.data.chats.toMutableList()
+                chatList = args.data.complaintChats.toMutableList()
             }
             binding.rvChats.layoutManager = LinearLayoutManager(requireContext())
             chatAdapter = ComplaintChatAdapter(
                 chatList,
-                args.data.createdByCustomerName,
+                args.data.createdByCUstomer,
+                args.data.assignedToEngineer,
+                args.data.assignedByAdmin,
                 requireContext()
             ) {
                 isFromPreview = true
@@ -282,7 +296,7 @@ class ComplainChatFragment :
             }
             val map: HashMap<String, RequestBody> = HashMap()
             map["remark"] = createPartFromString(binding.etReply.text.toString())
-            map["complainId"] = createPartFromString(args.data.complaintId)
+            map["complainId"] = createPartFromString(args.data.complainId)
 
 
             val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
@@ -412,7 +426,7 @@ class ComplainChatFragment :
                             }
 
                         viewModel.callApiGetComplaintById(
-                            url + args.data.complaintId,
+                            url + args.data.complainId,
                             appPreferences.getToken()
                         )
                         binding.root.showSnackBar(it.data.message, SnackTypes.Success)
@@ -437,7 +451,7 @@ class ComplainChatFragment :
                     hideProgress()
                     if (it.data?.status_code == 1) {
                         resetViews()
-                        chatList.add(it.data.data.chats[it.data.data.chats.size - 1])
+                        chatList.add(it.data.data.complaintChats[it.data.data.complaintChats.size - 1])
                         chatAdapter?.updateList(chatList)
                         binding.rvChats.scrollToPosition(chatList.size - 1)
                     } else {

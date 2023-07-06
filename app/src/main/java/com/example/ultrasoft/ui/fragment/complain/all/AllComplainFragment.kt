@@ -89,6 +89,7 @@ class AllComplainFragment :
         if (data.isNullOrEmpty()) {
             binding.tvNoData.visibility = View.VISIBLE
             binding.tvNoData.text = message
+            binding.rvComplaints.adapter = ComplaintsListAdapter(ArrayList(),requireContext()){ _, _ ->}
             return
         }
         binding.tvNoData.visibility = View.GONE
@@ -106,7 +107,7 @@ class AllComplainFragment :
                     ComplaintsListAdapter.ClickType.IMAGE -> {
                         findNavController().navigate(
                             AllComplainFragmentDirections.actionAllComplainFragmentToPreviewFragment(
-                                ATTACHMENT_URL + item.chats[0].attachment
+                                ATTACHMENT_URL + item.complaintChats[0].attachment
                             )
                         )
                     }
