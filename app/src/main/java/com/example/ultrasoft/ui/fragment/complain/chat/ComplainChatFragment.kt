@@ -58,17 +58,14 @@ class ComplainChatFragment :
     override fun setUpViews() {
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         showComplaintData()
-        if (args.data.status == "RESOLVED") {
+        if (args.data.status == AppConstants.ComplaintStatus.RESOLVED.name || args.data.status == AppConstants.ComplaintStatus.CLOSED.name) {
             binding.etReply.visibility = View.GONE
             binding.btnSend.visibility = View.GONE
+            binding.ivClose.visibility = View.GONE
         }
         binding.etReply.popupListener = this
         menuKeyboard = SoftKeyBoardPopup(
-            requireContext(),
-            binding.root,
-            binding.etReply,
-            binding.etReply,
-            binding.tvMenu
+            requireContext(), binding.root, binding.etReply, binding.etReply, binding.tvMenu
         ) {
             when (it) {
                 "Image" -> {
@@ -102,22 +99,7 @@ class ComplainChatFragment :
         }
         binding.ivClose.setOnClickListener {
             when (appPreferences.getRole()) {
-                AppConstants.UserTypes.CUSTOMER.name ->
-                    showAlertWithButtonConfig(
-                        requireContext(),
-                        "Resolve Complain ?",
-                        "Do you want to close this complain.",
-                        AppConstants.AlertType.INFO,
-                        "No",
-                        "Yes",
-                    ) {
-                        viewModel.callApiEngResolveComplaint(
-                            appPreferences.getToken(),
-                            args.data.complainId
-                        )
-                    }
-
-                AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
+                AppConstants.UserTypes.ENGINEER.name -> showAlertWithButtonConfig(
                     requireContext(),
                     "Resolve Complain ?",
                     "Do you want to close this complain.",
@@ -126,25 +108,39 @@ class ComplainChatFragment :
                     "Yes",
                 ) {
                     viewModel.callApiEngResolveComplaint(
-                        appPreferences.getToken(),
-                        args.data.complainId
+                        appPreferences.getToken(), args.data.complainId
                     )
                 }
 
-                AppConstants.UserTypes.CUSTOMER.name ->
-                    showAlertWithButtonConfig(
-                        requireContext(),
-                        "Resolve Complain ?",
-                        "Do you want to close this complain.",
-                        AppConstants.AlertType.INFO,
-                        "No",
-                        "Yes",
-                    ) {
-                        viewModel.callApiCustomerCloseComplain(
-                            appPreferences.getToken(),
-                            args.data.complainId
+                AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
+                    requireContext(),
+                    "Resolve Complain ?",
+                    "Do you want to resolve this complain.",
+                    AppConstants.AlertType.INFO,
+                    "No",
+                    "Yes",
+                ) {
+                    if (it == AppConstants.AlertResponseType.YES) {
+                        viewModel.callApiEngResolveComplaint(
+                            appPreferences.getToken(), args.data.complainId
                         )
                     }
+                }
+
+                AppConstants.UserTypes.CUSTOMER.name -> showAlertWithButtonConfig(
+                    requireContext(),
+                    "Close Complain ?",
+                    "Do you want to close this complain.",
+                    AppConstants.AlertType.INFO,
+                    "No",
+                    "Yes",
+                ) {
+                    if (it == AppConstants.AlertResponseType.YES) {
+                        viewModel.callApiCustomerCloseComplain(
+                            appPreferences.getToken(), args.data.complainId
+                        )
+                    }
+                }
             }
 
         }
@@ -210,9 +206,7 @@ class ComplainChatFragment :
         if (hasCameraPermission(requireContext())) {
             val fileName = "ymvideo_complain_reply" + System.currentTimeMillis()
             val photoUriList = Utils.setCaptureFileUri(
-                requireContext(),
-                fileName,
-                extension = MediaUtils.VIDEO_FORMAT
+                requireContext(), fileName, extension = MediaUtils.VIDEO_FORMAT
             )
             //content uri for exposed
             selectedFileUri = photoUriList?.get(1)
@@ -229,8 +223,7 @@ class ComplainChatFragment :
                 selectedFileUri?.let { loadImageOrVideoPreview(it, binding.ivPreview) }
             } else {
                 binding.root.showSnackBar(
-                    resources.getString(R.string.unable_to_process),
-                    SnackTypes.Error
+                    resources.getString(R.string.unable_to_process), SnackTypes.Error
                 )
                 selectedFileUri = null
             }
@@ -243,8 +236,7 @@ class ComplainChatFragment :
                 selectedFileUri?.let { loadImageOrVideoPreview(it, binding.ivPreview) }
             } else {
                 binding.root.showSnackBar(
-                    resources.getString(R.string.unable_to_process),
-                    SnackTypes.Error
+                    resources.getString(R.string.unable_to_process), SnackTypes.Error
                 )
                 selectedFileUri = null
             }
@@ -264,23 +256,22 @@ class ComplainChatFragment :
                 val mimeType = MediaUtils.getMimeType(requireContext(), selectedFileUri!!)
                 if (mimeType != null) {
                     if (mimeType.contains("image")) {
-                        val compressedFile =
-                            Utils.compressImageFile(
-                                File(selectedFileUri?.path!!),
-                                requireContext()
-                            )
+                        val compressedFile = Utils.compressImageFile(
+                            File(selectedFileUri?.path!!), requireContext()
+                        )
                         callApiReply(compressedFile)
                     } else {
                         startCompression(listOf(selectedFileUri!!))
                     }
                 }
             } else {
-                callApiReply(null)
+                binding.root.showSnackBar(
+                    resources.getString(R.string.please_attach_file_from_gallery), SnackTypes.Error
+                )
             }
         } catch (e: NullPointerException) {
             binding.root.showSnackBar(
-                resources.getString(R.string.please_attach_file_from_gallery),
-                SnackTypes.Error
+                resources.getString(R.string.please_attach_file_from_gallery), SnackTypes.Error
             )
         } catch (e: Exception) {
             binding.root.showSnackBar(e.message, SnackTypes.Error)
@@ -306,10 +297,7 @@ class ComplainChatFragment :
             }
 
             viewModel.callApiReplyComplaint(
-                url,
-                appPreferences.getToken(),
-                map,
-                filePart
+                url, appPreferences.getToken(), map, filePart
             )
         } catch (e: Exception) {
             logE(TAG, e.message)
@@ -334,8 +322,7 @@ class ComplainChatFragment :
         val tag = "Compress Failure"
         try {
             requireContext().toast("Please wait")
-            VideoCompressor.start(
-                context = requireContext(),
+            VideoCompressor.start(context = requireContext(),
                 uris = uriList,
                 isStreamable = true,
                 storageConfiguration = MediaUtils.getVideoCompressorStorageConfig("complain.mp4"),
@@ -389,8 +376,7 @@ class ComplainChatFragment :
                         }
                     }
 
-                }
-            )
+                })
         } catch (e: Exception) {
             logE(tag, e.message)
         }
@@ -402,8 +388,7 @@ class ComplainChatFragment :
         binding.ivPreview.visibility = View.GONE
         binding.ivPreview.setImageDrawable(
             ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.image_placeholder
+                requireContext(), R.drawable.image_placeholder
             )
         )
     }
@@ -426,8 +411,7 @@ class ComplainChatFragment :
                             }
 
                         viewModel.callApiGetComplaintById(
-                            url + args.data.complainId,
-                            appPreferences.getToken()
+                            url + args.data.complainId, appPreferences.getToken()
                         )
                         binding.root.showSnackBar(it.data.message, SnackTypes.Success)
                     } else {

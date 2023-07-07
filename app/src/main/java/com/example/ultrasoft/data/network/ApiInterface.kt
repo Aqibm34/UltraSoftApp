@@ -111,7 +111,7 @@ interface ApiInterface {
     @GET("admin/getall/category")
     suspend fun callApiGetAllAssetsCategory(): Response<AllAssetCategoryResponse>
 
-    @GET("customer/close/complaint")
+    @POST("customer/close/complaint")
     suspend fun callApiCustomerCloseComplain(
         @Header("X-AUTH-TOKEN") token: String,
         @Query("complaintId") complaintId: String

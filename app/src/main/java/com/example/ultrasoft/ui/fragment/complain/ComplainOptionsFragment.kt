@@ -19,7 +19,7 @@ class ComplainOptionsFragment :
 
     override fun setUpViews() {
         binding.tb.setUpToolbar()
-        if(appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name){
+        if(appPreferences.getRole() == AppConstants.UserTypes.ADMIN.name||appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name){
             binding.tvCreate.visibility = View.GONE
         }
         binding.tvCreate.setOnClickListener { findNavController().navigate(R.id.action_complainOptionsFragment_to_createComplainFragment) }

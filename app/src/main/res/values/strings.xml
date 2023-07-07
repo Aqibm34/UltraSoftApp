@@ -62,4 +62,6 @@
     <string name="something_went_wrong_unable_to_process_video">Somthing went wroing unable to process the video.</string>
     <string name="please_attach_file_from_gallery">Please select file from gallery</string>
     <string name="select_category">Select Category</string>
+    <string name="assign">Assign</string>
+    <string name="select_engineer">Select Engineer</string>
 </resources>

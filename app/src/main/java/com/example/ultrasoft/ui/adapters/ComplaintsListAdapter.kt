@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ultrasoft.data.model.complain.ComplainData
 import com.example.ultrasoft.databinding.ComplaintListItemBinding
+import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.Utils
 import com.example.ultrasoft.utility.capitalizeWords
@@ -14,10 +15,11 @@ import com.example.ultrasoft.utility.capitalizeWords
 class ComplaintsListAdapter(
     private val list: List<ComplainData>,
     private val context: Context,
+    private val user: String,
     private val listener: (item: ComplainData, type: ClickType) -> Unit
 ) :
     RecyclerView.Adapter<ComplaintsListAdapter.ViewHolder>() {
-    enum class ClickType { IMAGE, CHAT }
+    enum class ClickType { IMAGE, CHAT, ASSIGN }
 
     inner class ViewHolder(val binding: ComplaintListItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -47,12 +49,23 @@ class ComplaintsListAdapter(
 
         list[position].assignedByAdmin?.let {
             holder.binding.tvName.text = String.format(
-                "%s (%s)",
+                "Asn By: %s (%s)",
                 it.name?.trim()?.capitalizeWords(),
                 it.adminId
             )
+        } ?: run{
+            holder.binding.tvName.visibility = View.GONE
         }
 
+        list[position].assignedToEngineer?.let {
+            holder.binding.tvAssignedTo.text = String.format(
+                "Asn To: %s (%s)",
+                it.engineerName.trim().capitalizeWords(),
+                it.engineerId
+            )
+        } ?: run {
+            holder.binding.tvAssignedTo.visibility = View.GONE
+        }
 
         holder.binding.tvCreatedOn.text =
             String.format(
@@ -81,7 +94,8 @@ class ComplaintsListAdapter(
             holder.binding.tvSeen.visibility = View.GONE
         }
 
-        holder.binding.tvService.text = String.format("Asset Category: %s",list[position].assetCategory.assetCategoryName)
+        holder.binding.tvService.text =
+            String.format("Asset Category: %s", list[position].assetCategory.assetCategoryName)
         holder.binding.tvComplainId.text =
             String.format("Complain ID: %s", list[position].complainId)
         holder.binding.clRoot.setOnClickListener {
@@ -89,6 +103,16 @@ class ComplaintsListAdapter(
         }
         holder.binding.iv.setOnClickListener {
             listener(list[position], ClickType.IMAGE)
+        }
+
+        if (user == AppConstants.UserTypes.ADMIN.name) {
+            holder.binding.tvAssign.visibility =
+                if (list[position].assignedByAdmin == null) View.VISIBLE else View.GONE
+            holder.binding.tvAssign.setOnClickListener {
+                listener(list[position], ClickType.ASSIGN)
+            }
+        } else {
+            holder.binding.tvAssign.visibility = View.GONE
         }
 
     }

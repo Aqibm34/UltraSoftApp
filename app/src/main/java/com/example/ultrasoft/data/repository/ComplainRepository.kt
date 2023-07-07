@@ -4,6 +4,8 @@ import com.example.ultrasoft.base.BaseRepository
 import com.example.ultrasoft.data.network.ApiInterface
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Header
+import retrofit2.http.Query
 import javax.inject.Inject
 
 class ComplainRepository @Inject constructor(private val apiInterface: ApiInterface) :
@@ -52,10 +54,23 @@ class ComplainRepository @Inject constructor(private val apiInterface: ApiInterf
     suspend fun callApiGetAllAssetsCategory() = safeApiCall {
         apiInterface.callApiGetAllAssetsCategory()
     }
+
     suspend fun callApiCustomerCloseComplain(
         token: String,
         complainId: String,
     ) = safeApiCall {
         apiInterface.callApiCustomerCloseComplain(token, complainId)
     }
+
+    suspend fun callAdminApiAssignComplain(
+        token: String,
+        complainId: String,
+        engineerId: String,
+    ) = safeApiCall {
+        apiInterface.callAdminApiAssignComplain(token, complainId, engineerId)
+    }
+    suspend fun callApiGetAllEngineer(token: String) = safeApiCall {
+        apiInterface.callApiGetAllEngineer(token)
+    }
+
 }

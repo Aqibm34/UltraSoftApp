@@ -14,28 +14,29 @@
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv"
         android:layout_width="90dp"
-        android:layout_height="90dp"
+        android:layout_height="0dp"
         android:contentDescription="@string/image"
         android:scaleType="fitXY"
-        app:shapeAppearanceOverlay="@style/roundedCornersImageView"
         android:src="@drawable/image_placeholder"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
 
     <TextView
         android:id="@+id/tvCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:paddingHorizontal="@dimen/padding6dp"
-        android:textStyle="bold"
-        android:textSize="@dimen/text11sp"
-        android:gravity="center"
-        android:visibility="gone"
         android:layout_marginTop="@dimen/margin2dp"
-        android:paddingVertical="@dimen/padding1dp"
         android:background="@drawable/round_bg"
         android:backgroundTint="@color/green"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding6dp"
+        android:paddingVertical="@dimen/padding1dp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text11sp"
+        android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@id/iv"
         app:layout_constraintStart_toStartOf="@id/iv"
         app:layout_constraintTop_toBottomOf="@id/iv" />
@@ -82,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvCreatedOn" />
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvService"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin5dp"
@@ -95,12 +96,25 @@
         app:layout_constraintTop_toBottomOf="@id/tvComplainId" />
 
     <TextView
-        android:id="@+id/tvService"
+        android:id="@+id/tvName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin5dp"
         android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/primary"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvService" />
+
+    <TextView
+        android:id="@+id/tvAssignedTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:textColor="@color/text_black"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +138,22 @@
         app:drawableEndCompat="@drawable/ic_seen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv"
-        app:layout_constraintTop_toBottomOf="@id/tvService" />
+        app:layout_constraintTop_toBottomOf="@id/tvName" />
 
+    <TextView
+        android:id="@+id/tvAssign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_default_bg"
+        android:paddingHorizontal="@dimen/padding8dp"
+        android:paddingVertical="@dimen/padding3dp"
+        android:text="@string/assign"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@id/iv"
+        app:layout_constraintStart_toStartOf="@id/iv"
+        app:layout_constraintTop_toBottomOf="@id/iv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
