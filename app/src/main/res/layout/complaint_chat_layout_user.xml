@@ -45,7 +45,7 @@
         android:layout_marginHorizontal="@dimen/margin8dp"
         android:gravity="center_vertical|end"
         android:textColor="@color/text_black"
-        android:textSize="@dimen/text13sp"
+        android:textSize="@dimen/text12sp"
         android:textStyle="bold"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

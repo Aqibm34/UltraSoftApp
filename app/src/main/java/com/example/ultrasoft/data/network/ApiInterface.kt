@@ -105,7 +105,13 @@ interface ApiInterface {
     @POST("engineer/resolve/complaint")
     suspend fun callApiEngResolveComplaint(
         @Header("X-AUTH-TOKEN") token: String,
-        @Query("complaintId") complaintId: String
+        @Query("complainId") complaintId: String
+    ): Response<SingleComplainResponse>
+
+    @GET("/admin/close/admin/complaint")
+    suspend fun callApiAdminCloseComplaint(
+        @Header("X-AUTH-TOKEN") token: String,
+        @Query("complainId") complaintId: String
     ): Response<SingleComplainResponse>
 
     @GET("admin/getall/category")

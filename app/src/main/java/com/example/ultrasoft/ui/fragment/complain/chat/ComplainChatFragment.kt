@@ -114,14 +114,14 @@ class ComplainChatFragment :
 
                 AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
                     requireContext(),
-                    "Resolve Complain ?",
-                    "Do you want to resolve this complain.",
+                    "Close Complain ?",
+                    "Do you want to close this complain.",
                     AppConstants.AlertType.INFO,
                     "No",
                     "Yes",
                 ) {
                     if (it == AppConstants.AlertResponseType.YES) {
-                        viewModel.callApiEngResolveComplaint(
+                        viewModel.callApiAdminCloseComplaint(
                             appPreferences.getToken(), args.data.complainId
                         )
                     }

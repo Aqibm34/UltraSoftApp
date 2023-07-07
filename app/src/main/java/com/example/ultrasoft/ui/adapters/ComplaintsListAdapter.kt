@@ -53,7 +53,7 @@ class ComplaintsListAdapter(
                 it.name?.trim()?.capitalizeWords(),
                 it.adminId
             )
-        } ?: run{
+        } ?: run {
             holder.binding.tvName.visibility = View.GONE
         }
 
@@ -105,14 +105,17 @@ class ComplaintsListAdapter(
             listener(list[position], ClickType.IMAGE)
         }
 
-        if (user == AppConstants.UserTypes.ADMIN.name) {
+        if (user != AppConstants.UserTypes.ADMIN.name
+            || list[position].status == AppConstants.ComplaintStatus.RESOLVED.name
+            || list[position].status == AppConstants.ComplaintStatus.CLOSED.name
+        ) {
+            holder.binding.tvAssign.visibility = View.GONE
+        } else {
             holder.binding.tvAssign.visibility =
                 if (list[position].assignedByAdmin == null) View.VISIBLE else View.GONE
             holder.binding.tvAssign.setOnClickListener {
                 listener(list[position], ClickType.ASSIGN)
             }
-        } else {
-            holder.binding.tvAssign.visibility = View.GONE
         }
 
     }

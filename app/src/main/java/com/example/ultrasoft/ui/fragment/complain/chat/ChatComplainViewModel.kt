@@ -62,7 +62,8 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     ) {
         _resolveComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _resolveComplainResponse.value = repository.callApiEngResolveComplaint(token, complainId)
+            _resolveComplainResponse.value =
+                repository.callApiEngResolveComplaint(token, complainId)
         }
     }
 
@@ -72,9 +73,19 @@ class ChatComplainViewModel @Inject constructor(private val repository: Complain
     ) {
         _closeComplainResponse.value = Resource.loading()
         viewModelScope.launch {
-            _closeComplainResponse.value = repository.callApiCustomerCloseComplain(token, complainId)
+            _closeComplainResponse.value =
+                repository.callApiCustomerCloseComplain(token, complainId)
         }
     }
 
+    fun callApiAdminCloseComplaint(
+        token: String,
+        complainId: String,
+    ) {
+        _closeComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _closeComplainResponse.value = repository.callApiAdminCloseComplaint(token, complainId)
+        }
+    }
 
 }

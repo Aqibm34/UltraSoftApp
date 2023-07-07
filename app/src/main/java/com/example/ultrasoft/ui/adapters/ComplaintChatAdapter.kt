@@ -76,27 +76,38 @@ class ComplaintChatAdapter(
                         context, AppConstants.ATTACHMENT_URL + list[position].attachment,
                         holder.binding.ivAttachment
                     )
-
-                    holder.binding.tvUser.text = customerData.customerName
-                    engineerData?.let {
-
-                        if (it.engineerName.isEmpty() && it.engineerId.isEmpty()) {
-                            holder.binding.tvResolvedBy.visibility = View.GONE
-                        } else {
-                            holder.binding.tvResolvedBy.visibility = View.VISIBLE
-                            holder.binding.tvResolvedBy.text = String.format(
-                                "%s ~ %s@ultrasoft.in",
-                                it.engineerName,
-                                it.engineerId.substring(0, it.engineerId.indexOf("@"))
+                    val (name, resolvedBy) = when (list[position].role) {
+                        AppConstants.UserTypes.ADMIN.name -> {
+                            Pair(
+                                adminData?.name, String.format(
+                                    "%s ~ %s",
+                                    adminData?.emailId,
+                                    adminData?.phoneNumber
+                                )
                             )
                         }
-                    }
 
-//                    holder.binding.tvDate.text = list[position].createdDate.let {
-//                        Utils.parseDateWithTimeZone(
-//                            it
-//                        )
-//                    }
+                        AppConstants.UserTypes.ENGINEER.name -> {
+                            Pair(
+                                engineerData?.engineerName, String.format(
+                                    "%s ~ %s",
+                                    engineerData?.engineerEmailId,
+                                    engineerData?.engineerMobile
+                                )
+                            )
+                        }
+
+                        else -> Pair("NA", "NA")
+                    }
+                    holder.binding.tvUser.text = name
+                    holder.binding.tvResolvedBy.text = resolvedBy
+
+
+                    holder.binding.tvDate.text = list[position].createdDate.let {
+                        Utils.parseDateWithTimeZone(
+                            it
+                        )
+                    }
                     holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
                         if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE
@@ -115,23 +126,19 @@ class ComplaintChatAdapter(
                     )
 
                     holder.binding.tvUser.text = customerData.customerName
-                    engineerData?.let {
-                        if (it.engineerName.isEmpty() && it.engineerId.isEmpty()) {
-                            holder.binding.tvResolvedBy.visibility = View.GONE
-                        } else {
-                            holder.binding.tvResolvedBy.visibility = View.VISIBLE
-                            holder.binding.tvResolvedBy.text = String.format(
-                                "%s ~ %s",
-                                it.engineerName,
-                                it.engineerId
-                            )
-                        }
+                    holder.binding.tvResolvedBy.visibility = View.VISIBLE
+                    holder.binding.tvResolvedBy.text = String.format(
+                        "%s ~ %s",
+                        customerData.customerEmail,
+                        customerData.customerMobile
+                    )
+
+
+                    holder.binding.tvDate.text = list[position].createdDate.let {
+                        Utils.parseDateWithTimeZone(
+                            it
+                        )
                     }
-//                    holder.binding.tvDate.text = list[position].createdDate.let {
-//                        Utils.parseDateWithTimeZone(
-//                            it
-//                        )
-//                    }
                     holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
                         if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE

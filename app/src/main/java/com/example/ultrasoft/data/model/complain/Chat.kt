@@ -9,7 +9,7 @@ data class Chat(
     val remark: String,
     val attachment: String,
     val role: String,
-    val admindetails: String?,
-    val engineerDetails: String?,
+    val admindetails: AssignedByAdminData?,
+    val engineerDetails: AssignedToEngineerData?,
     val createdDate: String,
 ) : Parcelable

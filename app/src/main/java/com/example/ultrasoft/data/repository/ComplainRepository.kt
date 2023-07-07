@@ -62,6 +62,13 @@ class ComplainRepository @Inject constructor(private val apiInterface: ApiInterf
         apiInterface.callApiCustomerCloseComplain(token, complainId)
     }
 
+    suspend fun callApiAdminCloseComplaint(
+        token: String,
+        complainId: String,
+    ) = safeApiCall {
+        apiInterface.callApiAdminCloseComplaint(token, complainId)
+    }
+
     suspend fun callAdminApiAssignComplain(
         token: String,
         complainId: String,

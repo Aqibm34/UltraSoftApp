@@ -28,10 +28,12 @@ class AllComplainFragment :
     private val viewModel: AllComplainViewModel by viewModels()
     private var bottomSheet: BottomSheetDialog? = null
     private var engArray: Array<String>? = null
+    private var selectedComplainId = ""
+    private var url = ""
 
     override fun setUpViews() {
         binding.tb.setUpToolbar("All Complaints")
-        val url = when (appPreferences.getRole()) {
+         url = when (appPreferences.getRole()) {
             AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_ALL_COMPLAIN_URL
             AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_ALL_COMPLAIN_URL
             AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_ALL_COMPLAIN_URL
@@ -100,26 +102,24 @@ class AllComplainFragment :
                     }
 
                     ComplaintsListAdapter.ClickType.ASSIGN -> {
-                        assignComplain(item.complainId)
+                        selectedComplainId = item.complainId
+                        if (this.engArray.isNullOrEmpty()) {
+                            viewModel.callApiGetAllEngineer(appPreferences.getToken())
+                        }
                     }
                 }
             }
     }
 
-    private fun assignComplain(complainId: String) {
+    private fun assignComplain(complainId: String, array: Array<String>?) {
         try {
-
-
-            if (engArray.isNullOrEmpty()) {
-                viewModel.callApiGetAllEngineer(appPreferences.getToken())
-            }
             bottomSheet = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
             val dBinding = LayoutAssignComplainBinding.inflate(layoutInflater)
             bottomSheet?.setContentView(dBinding.root)
             bottomSheet?.setCancelable(true)
 
             dBinding.tilComplainId.editText?.setText(complainId)
-            engArray?.let {
+            array?.let {
                 (dBinding.tilEngineer.editText as? MaterialAutoCompleteTextView)?.setSimpleItems(it)
             }
             dBinding.tilEngineer.editText?.doAfterTextChanged {
@@ -130,7 +130,7 @@ class AllComplainFragment :
                 viewModel.callAdminApiAssignComplain(
                     appPreferences.getToken(),
                     complainId,
-                    dBinding.tilEngineer.editText?.text.toString().split("-")[1].trim()
+                    dBinding.tilEngineer.editText?.text.toString().split("~")[1].trim()
                 )
             }
             bottomSheet?.show()
@@ -172,8 +172,9 @@ class AllComplainFragment :
                     hideLoading()
                     if (response.data?.status_code == 1) {
                         engArray =
-                            response.data.data.map { it.engineerName + " ~ ${it.engineerId}" }
+                            response.data.data.map { "${it.engineerName} ~ ${it.engineerId}" }
                                 .toTypedArray()
+                        assignComplain(selectedComplainId, engArray)
                     } else {
                         binding.root.showSnackBar(response.data?.message, SnackTypes.Error)
                     }
@@ -196,6 +197,7 @@ class AllComplainFragment :
                     if (response.data?.status_code == 1) {
                         binding.root.showSnackBar(response.data.message, SnackTypes.Success)
                         bottomSheet?.dismiss()
+                        viewModel.callApiGetAllComplaint(url, appPreferences.getToken(),AppConstants.ComplaintStatus.PENDING.name)
                     } else {
                         binding.root.showSnackBar(response.data?.message, SnackTypes.Error)
                     }
