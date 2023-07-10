@@ -290,10 +290,11 @@ class ComplainChatFragment :
             map["complainId"] = createPartFromString(args.data.complainId)
 
 
-            val url = if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-                AppConstants.ENG_REPLY_COMPLAIN_URL
-            } else {
-                AppConstants.REPLY_COMPLAIN_URL
+            val url = when (appPreferences.getRole()) {
+                AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_REPLY_COMPLAIN_URL
+                AppConstants.UserTypes.CUSTOMER.name -> AppConstants.REPLY_COMPLAIN_URL
+                AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_REPLY_COMPLAIN_URL
+                else -> ""
             }
 
             viewModel.callApiReplyComplaint(
@@ -404,11 +405,13 @@ class ComplainChatFragment :
                 Resource.Status.SUCCESS -> {
                     if (it.data?.status_code == 1) {
                         val url =
-                            if (appPreferences.getRole() == AppConstants.UserTypes.ENGINEER.name) {
-                                AppConstants.ENG_COMPLAIN_BY_ID_URL
-                            } else {
-                                AppConstants.COMPLAIN_BY_ID_URL
+                            when (appPreferences.getRole()) {
+                                AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_COMPLAIN_BY_ID_URL
+                                AppConstants.UserTypes.CUSTOMER.name -> AppConstants.COMPLAIN_BY_ID_URL
+                                AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_GET_COMPLAIN_BY_ID
+                                else -> ""
                             }
+
 
                         viewModel.callApiGetComplaintById(
                             url + args.data.complainId, appPreferences.getToken()

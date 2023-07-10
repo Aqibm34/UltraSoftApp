@@ -25,7 +25,10 @@ class AppConstants {
         const val ENG_ALL_COMPLAIN_URL = BASE_URL + "engineer/get/all/complaint/pending/resolved"
         const val ENG_COMPLAIN_BY_ID_URL = BASE_URL + "engineer/get/eng/complaint/"
 
-        const val ADMIN_ALL_COMPLAIN_URL = BASE_URL + "admin/getall/admin/pending/resolved/complaint"
+        const val ADMIN_ALL_COMPLAIN_URL =
+            BASE_URL + "admin/getall/admin/pending/resolved/complaint"
+        const val ADMIN_REPLY_COMPLAIN_URL = BASE_URL + "admin/reply/admin/complaint"
+        const val ADMIN_GET_COMPLAIN_BY_ID = BASE_URL + ""
 
 
     }
