@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="UseCompatTextViewDrawableXml"
-    tools:context=".ui.fragment.dash.DashBoardFragment">
+    tools:context=".ui.fragment.dash.DashBoardFragment"
+    tools:ignore="UseCompatTextViewDrawableXml">
 
     <ImageView
         android:id="@+id/ivBg"
         android:layout_width="700dp"
-        android:layout_height="380dp"
+        android:layout_height="400dp"
         android:layout_marginTop="-200dp"
         android:layout_marginEnd="-100dp"
         android:background="@drawable/login_bg"
@@ -18,11 +18,141 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clComplain"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin10dp"
+        android:layout_marginTop="@dimen/margin5dp"
+        android:background="@drawable/card_bg"
+        android:backgroundTint="@color/primary_light"
+        android:paddingHorizontal="@dimen/padding10dp"
+        android:paddingVertical="@dimen/padding5dp"
+        app:layout_constraintEnd_toStartOf="@id/tvLogOut"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivUser">
+
+        <TextView
+            android:id="@+id/tvHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/all_complains"
+            android:textAlignment="center"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text13sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvInProcessCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/inprocess"
+            android:textColor="@color/black_d"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvInProcessCountValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeading" />
+
+        <TextView
+            android:id="@+id/tvInProcessCountValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/baseline_chevron_right"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text12sp"
+            android:textAlignment="textEnd"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvInProcessCount"
+            app:layout_constraintTop_toTopOf="@id/tvInProcessCount" />
+
+        <TextView
+            android:id="@+id/tvUnAssignCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin2dp"
+            android:text="@string/un_assinged"
+            android:textColor="@color/black_d"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvUnAssignCountValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvInProcessCount" />
+
+        <TextView
+            android:id="@+id/tvUnAssignCountValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/baseline_chevron_right"
+            android:textAlignment="textEnd"
+            android:textColor="@color/red"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvUnAssignCount"
+            app:layout_constraintTop_toTopOf="@id/tvUnAssignCount" />
+
+        <TextView
+            android:id="@+id/tvResolveCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin2dp"
+            android:text="@string/resolved"
+            android:textColor="@color/black_d"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvResolveCountValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvUnAssignCount" />
+
+        <TextView
+            android:id="@+id/tvResolveCountValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/baseline_chevron_right"
+            android:textAlignment="textEnd"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvResolveCount"
+            app:layout_constraintTop_toTopOf="@id/tvResolveCount" />
+
+        <TextView
+            android:id="@+id/tvCloseCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin2dp"
+            android:text="@string/closed"
+            android:textColor="@color/black_d"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/tvCloseCountValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvResolveCount" />
+
+        <TextView
+            android:id="@+id/tvCloseCountValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/baseline_chevron_right"
+            android:textAlignment="textEnd"
+            android:textColor="@color/green"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvCloseCount"
+            app:layout_constraintTop_toTopOf="@id/tvCloseCount" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/ivUser"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="@dimen/margin16dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="@dimen/margin10dp"
         android:contentDescription="@string/image"
         android:src="@drawable/ic_user"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,20 +170,10 @@
         app:layout_constraintTop_toTopOf="@id/ivUser" />
 
     <TextView
-        android:id="@+id/tvRole"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black_d"
-        android:textSize="@dimen/text13sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/ivUser"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
-
-    <TextView
         android:id="@+id/tvLogOut"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin12dp"
+        android:layout_marginTop="@dimen/margin6dp"
         android:layout_marginEnd="@dimen/margin_horizontal"
         android:contentDescription="@string/image"
         android:text="@string/logout"
@@ -79,7 +199,6 @@
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_rowWeight="1"
-            android:visibility="gone"
             android:layout_columnWeight="1"
             android:layout_marginVertical="@dimen/margin10dp"
             android:layout_marginStart="@dimen/margin10dp"
@@ -91,39 +210,40 @@
             android:text="@string/users"
             android:textSize="@dimen/text12sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:drawableTopCompat="@drawable/ic_user" />
 
         <TextView
             android:id="@+id/tvCreateAsset"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:visibility="gone"
             android:layout_rowWeight="1"
             android:layout_columnWeight="1"
             android:layout_marginVertical="@dimen/margin10dp"
-            android:background="@drawable/card_bg"
-            android:elevation="5dp"
             android:layout_marginStart="@dimen/margin5dp"
             android:layout_marginEnd="@dimen/margin5dp"
+            android:background="@drawable/card_bg"
+            android:elevation="5dp"
             android:gravity="center"
             android:paddingVertical="@dimen/padding16dp"
             android:text="@string/asset"
             android:textSize="@dimen/text12sp"
+            android:visibility="gone"
             app:drawableTopCompat="@drawable/ic_user" />
 
         <TextView
             android:id="@+id/tvComplain"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin5dp"
             android:layout_rowWeight="1"
+            android:layout_marginHorizontal="@dimen/margin5dp"
             android:layout_marginVertical="@dimen/margin10dp"
             android:layout_marginStart="@dimen/margin5dp"
             android:layout_marginEnd="@dimen/margin10dp"
             android:background="@drawable/card_bg"
+            android:drawableTop="@drawable/ic_complaint"
             android:elevation="5dp"
             android:gravity="center"
-            android:drawableTop="@drawable/ic_complaint"
             android:paddingVertical="@dimen/padding16dp"
             android:text="@string/complain"
             android:textSize="@dimen/text12sp" />

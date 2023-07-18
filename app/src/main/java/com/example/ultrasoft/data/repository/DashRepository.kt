@@ -12,4 +12,9 @@ class DashRepository @Inject constructor(private val apiInterface: ApiInterface)
         safeApiCall {
             apiInterface.callApiLogout(token)
         }
+
+    suspend fun callApiComplaintsCount(url: String, token: String) =
+        safeApiCall {
+            apiInterface.callApiComplaintsCount(url, token)
+        }
 }

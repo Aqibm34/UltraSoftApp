@@ -3,6 +3,7 @@ package com.example.ultrasoft.data.network
 import com.example.ultrasoft.data.model.CommonResponse
 import com.example.ultrasoft.data.model.asset.AllAssetCategoryResponse
 import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
+import com.example.ultrasoft.data.model.complain.ComplaintsCountResposne
 import com.example.ultrasoft.data.model.complain.CreateComplainResponse
 import com.example.ultrasoft.data.model.complain.SingleComplainResponse
 import com.example.ultrasoft.data.model.login.LoginRequest
@@ -130,6 +131,12 @@ interface ApiInterface {
         @Query("complainId") complainId: String,
         @Query("engineerId") engineerId: String,
     ): Response<CommonResponse>
+
+    @GET
+    suspend fun callApiComplaintsCount(
+        @Url url: String,
+        @Header("X-AUTH-TOKEN") token: String,
+    ): Response<ComplaintsCountResposne>
 
 
 }

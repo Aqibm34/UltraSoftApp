@@ -17,8 +17,9 @@
         android:layout_height="0dp"
         android:contentDescription="@string/image"
         android:scaleType="fitXY"
+        android:layout_marginVertical="@dimen/margin5dp"
         android:src="@drawable/image_placeholder"
-        app:layout_constraintBottom_toTopOf="@id/tvAssign"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedCornersImageView" />
@@ -145,17 +146,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_default_bg"
-        android:paddingHorizontal="@dimen/padding8dp"
+        android:paddingHorizontal="@dimen/padding12dp"
         android:paddingVertical="@dimen/padding3dp"
         android:text="@string/assign"
+        android:backgroundTint="@color/green"
         android:textColor="@color/white"
+        android:layout_marginTop="@dimen/margin3dp"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/iv"
-        app:layout_constraintStart_toStartOf="@id/iv"
-        app:layout_constraintTop_toBottomOf="@id/iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAssignedTo"
         app:layout_constraintVertical_bias="0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

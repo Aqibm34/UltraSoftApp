@@ -30,9 +30,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         }
     }
 
-    private fun getCheckedRole() =
-        binding.rgRole.findViewById<RadioButton>(binding.rgRole.checkedRadioButtonId).text.toString().uppercase()
-
+    private fun getCheckedRole(): String {
+        val role =
+            binding.rgRole.findViewById<RadioButton>(binding.rgRole.checkedRadioButtonId).text.toString()
+        return if (role == resources.getString(R.string.support_staff)) {
+            resources.getString(R.string.engineer).uppercase()
+        } else {
+            role.uppercase()
+        }
+    }
 
     private fun validation() {
         binding.tilUserName.editText?.doOnTextChanged { _, _, _, _ ->
@@ -77,13 +83,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     hideLoading()
                     if (it.data?.status_code == 1) {
                         appPreferences.setToken(it.data.data.authToken)
-                        appPreferences.setName(it.data.data.name)
+                        appPreferences.setName(it.data.data.name.replace("\n", ""))
                         appPreferences.setRole(it.data.data.role)
                         findNavController().navigate(R.id.action_loginFragment_to_dashBoardFragment)
                     } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }
+
                 Resource.Status.ERROR -> {
                     hideLoading()
                     showAlert(it.message, AppConstants.AlertType.ERROR) {}
@@ -95,3 +102,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
 
 }
+
+

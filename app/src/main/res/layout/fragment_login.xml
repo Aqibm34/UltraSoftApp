@@ -10,12 +10,12 @@
     <ImageView
         android:layout_width="700dp"
         android:layout_height="380dp"
-        android:layout_marginTop="-200dp"
         android:layout_marginStart="-100dp"
+        android:layout_marginTop="-200dp"
         android:background="@drawable/login_bg"
         android:contentDescription="@string/image"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -36,9 +36,9 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/login_to_continue"
         android:textColor="@color/secondary"
-        app:layout_constraintBottom_toBottomOf="@id/ivLogo"
         android:textSize="@dimen/text24sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/ivLogo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/ivLogo" />
 
@@ -62,18 +62,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin10dp"
-        android:checkedButton="@id/rbAdmin"
+        android:checkedButton="@id/rbCustomer"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/tvRole">
-
-        <RadioButton
-            android:id="@+id/rbAdmin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/admin"
-            android:textSize="@dimen/text12sp"
-            android:textStyle="bold" />
 
         <RadioButton
             android:id="@+id/rbCustomer"
@@ -89,7 +80,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/engineer"
+            android:text="@string/support_staff"
+            android:textSize="@dimen/text12sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/rbAdmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/admin"
             android:textSize="@dimen/text12sp"
             android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_horizontal"
         android:layout_marginTop="@dimen/margin10dp"
-        android:hint="@string/username"
+        android:hint="@string/mobile_number"
         app:boxCornerRadiusBottomEnd="@dimen/til_radius"
         app:boxCornerRadiusBottomStart="@dimen/til_radius"
         app:boxCornerRadiusTopEnd="@dimen/til_radius"
@@ -113,7 +113,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
-            android:inputType="textCapCharacters"
+            android:inputType="phone"
+            android:maxLength="10"
             android:textSize="@dimen/text12sp" />
 
     </com.google.android.material.textfield.TextInputLayout>

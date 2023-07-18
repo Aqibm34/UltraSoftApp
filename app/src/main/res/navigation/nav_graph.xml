@@ -46,6 +46,9 @@
             android:id="@+id/action_dashBoardFragment_to_complainOptionsFragment"
             app:destination="@id/complainOptionsFragment" />
         <action
+            android:id="@+id/action_dashBoardFragment_to_allComplainOptionsFragment"
+            app:destination="@id/allComplainFragment" />
+        <action
             android:id="@+id/action_dashBoardFragment_to_assetOptionsFragment"
             app:destination="@id/assetOptionsFragment" />
     </fragment>
@@ -109,6 +112,13 @@
         <action
             android:id="@+id/action_allComplainFragment_to_previewFragment"
             app:destination="@id/previewFragment" />
+        <argument
+            android:name="countData"
+            app:argType="com.example.ultrasoft.data.model.complain.ComplainCountData" />
+        <argument
+            android:name="status"
+            app:argType="integer" />
+
     </fragment>
     <fragment
         android:id="@+id/complainOptionsFragment"
@@ -121,6 +131,9 @@
         <action
             android:id="@+id/action_complainOptionsFragment_to_createComplainFragment"
             app:destination="@id/createComplainFragment" />
+        <argument
+            android:name="countData"
+            app:argType="com.example.ultrasoft.data.model.complain.ComplainCountData" />
     </fragment>
     <fragment
         android:id="@+id/complainChatFragment"

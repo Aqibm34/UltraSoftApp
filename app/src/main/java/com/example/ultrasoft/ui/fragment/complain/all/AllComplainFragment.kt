@@ -4,9 +4,11 @@ import android.view.View
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
+import com.example.ultrasoft.data.model.complain.ComplainCountData
 import com.example.ultrasoft.data.model.complain.ComplainData
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentAllComplainBinding
@@ -30,23 +32,28 @@ class AllComplainFragment :
     private var engArray: Array<String>? = null
     private var selectedComplainId = ""
     private var url = ""
-
+    private val args: AllComplainFragmentArgs by navArgs()
+    private val resultCountData = ComplainCountData(0, 0, 0, 0)
     override fun setUpViews() {
         binding.tb.setUpToolbar("All Complaints")
-         url = when (appPreferences.getRole()) {
+        url = when (appPreferences.getRole()) {
             AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_ALL_COMPLAIN_URL
             AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_ALL_COMPLAIN_URL
             AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_ALL_COMPLAIN_URL
             else -> ""
         }
 
-        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.pending)))
+        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.inprocess)))
+        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.un_assinged)))
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.resolved)))
+        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.closed)))
         binding.tbl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val status = when (tab?.position) {
-                    0 -> AppConstants.ComplaintStatus.PENDING.name
-                    1 -> AppConstants.ComplaintStatus.RESOLVED.name
+                    0 -> AppConstants.ComplaintStatus.IN_PROGRESS.name
+                    1 -> AppConstants.ComplaintStatus.UN_ASSIGNED.name
+                    2 -> AppConstants.ComplaintStatus.RESOLVED.name
+                    3 -> AppConstants.ComplaintStatus.CLOSED.name
                     else -> ""
                 }
                 viewModel.callApiGetAllComplaint(
@@ -62,6 +69,7 @@ class AllComplainFragment :
 
         })
 
+        binding.tbl.getTabAt(args.status)?.select()
         binding.rvComplaints.layoutManager = LinearLayoutManager(requireContext())
         viewModel.callApiGetAllComplaint(
             url,
@@ -71,6 +79,12 @@ class AllComplainFragment :
     }
 
     private fun showData(data: List<ComplainData>? = null, message: String? = null) {
+        when (binding.tbl.selectedTabPosition) {
+            0 -> resultCountData.IN_PROGRESS = data?.size ?: 0
+            1 -> resultCountData.UN_ASSIGNED = data?.size ?: 0
+            2 -> resultCountData.RESOLVED = data?.size ?: 0
+            3 -> resultCountData.CLOSED = data?.size ?: 0
+        }
         if (data.isNullOrEmpty()) {
             binding.tvNoData.visibility = View.VISIBLE
             binding.tvNoData.text = message
@@ -81,6 +95,8 @@ class AllComplainFragment :
             ) { _, _ -> }
             return
         }
+
+        setCount()
         binding.tvNoData.visibility = View.GONE
         binding.rvComplaints.adapter =
             ComplaintsListAdapter(data, requireContext(), appPreferences.getRole()) { item, type ->
@@ -109,6 +125,25 @@ class AllComplainFragment :
                     }
                 }
             }
+    }
+
+    private fun setCount() {
+        binding.tvInProcessCount.text = String.format(
+            "( %d )",
+            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
+        )
+        binding.tvUnAssignCount.text = String.format(
+            "( %d )",
+            if (resultCountData.UN_ASSIGNED == 0) args.countData.UN_ASSIGNED else resultCountData.UN_ASSIGNED
+        )
+        binding.tvResolveCount.text = String.format(
+            "( %d )",
+            if (resultCountData.RESOLVED == 0) args.countData.RESOLVED else resultCountData.RESOLVED
+        )
+        binding.tvCloseCount.text = String.format(
+            "( %d )",
+            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
+        )
     }
 
     private fun assignComplain(complainId: String, array: Array<String>?) {
@@ -197,7 +232,11 @@ class AllComplainFragment :
                     if (response.data?.status_code == 1) {
                         binding.root.showSnackBar(response.data.message, SnackTypes.Success)
                         bottomSheet?.dismiss()
-                        viewModel.callApiGetAllComplaint(url, appPreferences.getToken(),AppConstants.ComplaintStatus.PENDING.name)
+                        viewModel.callApiGetAllComplaint(
+                            url,
+                            appPreferences.getToken(),
+                            AppConstants.ComplaintStatus.PENDING.name
+                        )
                     } else {
                         binding.root.showSnackBar(response.data?.message, SnackTypes.Error)
                     }
