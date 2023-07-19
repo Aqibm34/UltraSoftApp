@@ -43,18 +43,31 @@ class AllComplainFragment :
             else -> ""
         }
 
+        var defStatus = AppConstants.ComplaintStatus.IN_PROGRESS.name
+        if (appPreferences.getRole() == AppConstants.UserTypes.ADMIN.name) {
+            defStatus = AppConstants.ComplaintStatus.UN_ASSIGNED.name
+            binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.un_assn)))
+        }
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.inprocess)))
-        binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.un_assinged)))
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.resolved)))
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.closed)))
         binding.tbl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val status = when (tab?.position) {
-                    0 -> AppConstants.ComplaintStatus.IN_PROGRESS.name
-                    1 -> AppConstants.ComplaintStatus.UN_ASSIGNED.name
-                    2 -> AppConstants.ComplaintStatus.RESOLVED.name
-                    3 -> AppConstants.ComplaintStatus.CLOSED.name
-                    else -> ""
+                val status = if (appPreferences.getRole() == AppConstants.UserTypes.ADMIN.name) {
+                    when (tab?.position) {
+                        0 -> AppConstants.ComplaintStatus.UN_ASSIGNED.name
+                        1 -> AppConstants.ComplaintStatus.IN_PROGRESS.name
+                        2 -> AppConstants.ComplaintStatus.RESOLVED.name
+                        3 -> AppConstants.ComplaintStatus.CLOSED.name
+                        else -> ""
+                    }
+                } else {
+                    when (tab?.position) {
+                        0 -> AppConstants.ComplaintStatus.IN_PROGRESS.name
+                        1 -> AppConstants.ComplaintStatus.RESOLVED.name
+                        2 -> AppConstants.ComplaintStatus.CLOSED.name
+                        else -> ""
+                    }
                 }
                 viewModel.callApiGetAllComplaint(
                     url,
@@ -71,20 +84,24 @@ class AllComplainFragment :
 
         binding.tbl.getTabAt(args.status)?.select()
         binding.rvComplaints.layoutManager = LinearLayoutManager(requireContext())
-        viewModel.callApiGetAllComplaint(
-            url,
-            appPreferences.getToken(),
-            AppConstants.ComplaintStatus.PENDING.name
-        )
+
+        if (args.status == 0) {
+            viewModel.callApiGetAllComplaint(
+                url,
+                appPreferences.getToken(),
+                defStatus
+            )
+        }
     }
 
     private fun showData(data: List<ComplainData>? = null, message: String? = null) {
         when (binding.tbl.selectedTabPosition) {
-            0 -> resultCountData.IN_PROGRESS = data?.size ?: 0
-            1 -> resultCountData.UN_ASSIGNED = data?.size ?: 0
+            0 -> resultCountData.UN_ASSIGNED = data?.size ?: 0
+            1 -> resultCountData.IN_PROGRESS = data?.size ?: 0
             2 -> resultCountData.RESOLVED = data?.size ?: 0
             3 -> resultCountData.CLOSED = data?.size ?: 0
         }
+        setCount()
         if (data.isNullOrEmpty()) {
             binding.tvNoData.visibility = View.VISIBLE
             binding.tvNoData.text = message
@@ -96,7 +113,6 @@ class AllComplainFragment :
             return
         }
 
-        setCount()
         binding.tvNoData.visibility = View.GONE
         binding.rvComplaints.adapter =
             ComplaintsListAdapter(data, requireContext(), appPreferences.getRole()) { item, type ->
@@ -128,13 +144,13 @@ class AllComplainFragment :
     }
 
     private fun setCount() {
-        binding.tvInProcessCount.text = String.format(
-            "( %d )",
-            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
-        )
         binding.tvUnAssignCount.text = String.format(
             "( %d )",
             if (resultCountData.UN_ASSIGNED == 0) args.countData.UN_ASSIGNED else resultCountData.UN_ASSIGNED
+        )
+        binding.tvInProcessCount.text = String.format(
+            "( %d )",
+            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
         )
         binding.tvResolveCount.text = String.format(
             "( %d )",
@@ -142,7 +158,7 @@ class AllComplainFragment :
         )
         binding.tvCloseCount.text = String.format(
             "( %d )",
-            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
+            if (resultCountData.IN_PROGRESS == 0) args.countData.CLOSED else resultCountData.CLOSED
         )
     }
 

@@ -67,5 +67,6 @@
     <string name="support_staff">Support Staff</string>
     <string name="closed">Closed</string>
     <string name="un_assinged">UnAssigned</string>
+    <string name="un_assn">UnAssign</string>
     <string name="inprocess">InProcess</string>
 </resources>

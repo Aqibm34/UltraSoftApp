@@ -20,19 +20,8 @@
         android:background="@color/light_gray"
         app:layout_constraintTop_toBottomOf="@id/tb"
         app:tabSelectedTextColor="@color/primary"
+        app:tabTextAppearance="@style/TabCustomTextAppearance"
         app:tabTextColor="@color/black_d" />
-
-    <TextView
-        android:id="@+id/tvInProcessCount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/tvUnAssignCount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tbl" />
 
     <TextView
         android:id="@+id/tvUnAssignCount"
@@ -42,9 +31,22 @@
         android:textColor="@color/text_black"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/tvResolveCount"
-        app:layout_constraintStart_toEndOf="@id/tvInProcessCount"
+        app:layout_constraintEnd_toStartOf="@id/tvInProcessCount"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvInProcessCount" />
+
+    <TextView
+        android:id="@+id/tvInProcessCount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="@color/text_black"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/tvResolveCount"
+        app:layout_constraintStart_toEndOf="@id/tvUnAssignCount"
+        app:layout_constraintTop_toBottomOf="@id/tbl" />
+
 
     <TextView
         android:id="@+id/tvResolveCount"
@@ -55,7 +57,7 @@
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvCloseCount"
-        app:layout_constraintStart_toEndOf="@id/tvUnAssignCount"
+        app:layout_constraintStart_toEndOf="@id/tvInProcessCount"
         app:layout_constraintTop_toTopOf="@id/tvInProcessCount" />
 
     <TextView

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ultrasoft.R
@@ -41,31 +42,55 @@ class DashBoardFragment :
                 )
             )
         }
-        binding.tvInProcessCountValue.setOnClickListener {
+
+        var minusForStatusCustAndEng = 0
+        if (appPreferences.getRole() != AppConstants.UserTypes.ADMIN.name) {
+            binding.cvUnAssign.root.visibility = View.GONE
+            minusForStatusCustAndEng = 1
+        }
+
+        binding.cvUnAssign.tvTitle.text = resources.getString(R.string.un_assinged)
+        binding.cvInProcess.tvTitle.text = resources.getString(R.string.inprocess)
+        binding.cvResolved.tvTitle.text = resources.getString(R.string.resolved)
+        binding.cvClosed.tvTitle.text = resources.getString(R.string.closed)
+        binding.cvResolved.tvValue.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.green
+            )
+        )
+        binding.cvClosed.tvValue.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                R.color.green
+            )
+        )
+
+        binding.cvUnAssign.root.setOnClickListener {
             findNavController().navigate(
                 DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 0
+                    countData, 0 -minusForStatusCustAndEng
                 )
             )
         }
-        binding.tvUnAssignCountValue.setOnClickListener {
+        binding.cvInProcess.root.setOnClickListener {
             findNavController().navigate(
                 DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 1
+                    countData, 1-minusForStatusCustAndEng
                 )
             )
         }
-        binding.tvResolveCountValue.setOnClickListener {
+        binding.cvResolved.root.setOnClickListener {
             findNavController().navigate(
                 DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 2
+                    countData, 2-minusForStatusCustAndEng
                 )
             )
         }
-        binding.tvCloseCountValue.setOnClickListener {
+        binding.cvClosed.root.setOnClickListener {
             findNavController().navigate(
                 DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 3
+                    countData, 3-minusForStatusCustAndEng
                 )
             )
         }
@@ -120,13 +145,13 @@ class DashBoardFragment :
                     hideLoading()
                     if (it.data?.status_code == 1) {
                         countData = it.data.data
-                        binding.tvInProcessCountValue.text =
-                            String.format("%d", it.data.data.IN_PROGRESS)
-                        binding.tvUnAssignCountValue.text =
+                        binding.cvUnAssign.tvValue.text =
                             String.format("%d", it.data.data.UN_ASSIGNED)
-                        binding.tvResolveCountValue.text =
+                        binding.cvInProcess.tvValue.text =
+                            String.format("%d", it.data.data.IN_PROGRESS)
+                        binding.cvResolved.tvValue.text =
                             String.format("%d", it.data.data.RESOLVED)
-                        binding.tvCloseCountValue.text =
+                        binding.cvClosed.tvValue.text =
                             String.format("%d", it.data.data.CLOSED)
                     } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
