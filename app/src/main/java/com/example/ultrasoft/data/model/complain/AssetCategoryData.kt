@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AssetCategoryData(
-    val assetCategoryId: String,
+    val assetCategoryId: String?,
     val assetCategoryName: String,
     val createdDate: String,
     val updatedDate: String

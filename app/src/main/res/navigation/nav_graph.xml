@@ -42,15 +42,30 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/slide_out"/>
+
         <action
-            android:id="@+id/action_dashBoardFragment_to_complainOptionsFragment"
-            app:destination="@id/complainOptionsFragment" />
+            android:id="@+id/action_dashBoardFragment_to_createComplainFragment"
+            app:destination="@id/createComplainFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
+
         <action
-            android:id="@+id/action_dashBoardFragment_to_allComplainOptionsFragment"
-            app:destination="@id/allComplainFragment" />
+            android:id="@+id/action_dashBoardFragment_to_allComplainFragment"
+            app:destination="@id/allComplainFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"
+            />
         <action
             android:id="@+id/action_dashBoardFragment_to_assetOptionsFragment"
-            app:destination="@id/assetOptionsFragment" />
+            app:destination="@id/assetOptionsFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
     <fragment
         android:id="@+id/allUsersFragment"
@@ -89,7 +104,11 @@
         tools:layout="@layout/fragment_asset_options" >
         <action
             android:id="@+id/action_assetOptionsFragment_to_createAssetFragment"
-            app:destination="@id/createAssetFragment" />
+            app:destination="@id/createAssetFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
     </fragment>
     <fragment
         android:id="@+id/createAssetFragment"
@@ -108,10 +127,18 @@
         tools:layout="@layout/fragment_all_complain" >
         <action
             android:id="@+id/action_allComplainFragment_to_complainChatFragment"
-            app:destination="@id/complainChatFragment" />
+            app:destination="@id/complainChatFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
         <action
             android:id="@+id/action_allComplainFragment_to_previewFragment"
-            app:destination="@id/previewFragment" />
+            app:destination="@id/previewFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out"/>
         <argument
             android:name="countData"
             app:argType="com.example.ultrasoft.data.model.complain.ComplainCountData" />
@@ -119,21 +146,6 @@
             android:name="status"
             app:argType="integer" />
 
-    </fragment>
-    <fragment
-        android:id="@+id/complainOptionsFragment"
-        android:name="com.example.ultrasoft.ui.fragment.complain.ComplainOptionsFragment"
-        android:label="fragment_complain_options"
-        tools:layout="@layout/fragment_complain_options" >
-        <action
-            android:id="@+id/action_complainOptionsFragment_to_allComplainFragment"
-            app:destination="@id/allComplainFragment" />
-        <action
-            android:id="@+id/action_complainOptionsFragment_to_createComplainFragment"
-            app:destination="@id/createComplainFragment" />
-        <argument
-            android:name="countData"
-            app:argType="com.example.ultrasoft.data.model.complain.ComplainCountData" />
     </fragment>
     <fragment
         android:id="@+id/complainChatFragment"

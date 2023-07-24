@@ -1,11 +1,6 @@
 package com.example.ultrasoft.ui.fragment.dash
 
-import android.content.Intent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -36,17 +31,21 @@ class DashBoardFragment :
         binding.tvCreateUser.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_usersFragment) }
         binding.tvCreateAsset.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_assetOptionsFragment) }
         binding.tvComplain.setOnClickListener {
+            findNavController().navigate(R.id.action_dashBoardFragment_to_createComplainFragment)
+        }
+        binding.tvViewComplain.setOnClickListener {
             findNavController().navigate(
-                DashBoardFragmentDirections.actionDashBoardFragmentToComplainOptionsFragment(
-                    countData
+                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainFragment(
+                    countData,
+                    0
                 )
             )
         }
 
-        var minusForStatusCustAndEng = 0
-        if (appPreferences.getRole() != AppConstants.UserTypes.ADMIN.name) {
-            binding.cvUnAssign.root.visibility = View.GONE
-            minusForStatusCustAndEng = 1
+        var minusForStatusEng = 1
+        if (appPreferences.getRole() != AppConstants.UserTypes.ENGINEER.name) {
+            binding.cvUnAssign.root.visibility = View.VISIBLE
+            minusForStatusEng = 0
         }
 
         binding.cvUnAssign.tvTitle.text = resources.getString(R.string.un_assinged)
@@ -68,29 +67,29 @@ class DashBoardFragment :
 
         binding.cvUnAssign.root.setOnClickListener {
             findNavController().navigate(
-                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 0 -minusForStatusCustAndEng
+                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainFragment(
+                    countData, 0 - minusForStatusEng
                 )
             )
         }
         binding.cvInProcess.root.setOnClickListener {
             findNavController().navigate(
-                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 1-minusForStatusCustAndEng
+                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainFragment(
+                    countData, 1 - minusForStatusEng
                 )
             )
         }
         binding.cvResolved.root.setOnClickListener {
             findNavController().navigate(
-                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 2-minusForStatusCustAndEng
+                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainFragment(
+                    countData, 2 - minusForStatusEng
                 )
             )
         }
         binding.cvClosed.root.setOnClickListener {
             findNavController().navigate(
-                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainOptionsFragment(
-                    countData, 3-minusForStatusCustAndEng
+                DashBoardFragmentDirections.actionDashBoardFragmentToAllComplainFragment(
+                    countData, 3 - minusForStatusEng
                 )
             )
         }

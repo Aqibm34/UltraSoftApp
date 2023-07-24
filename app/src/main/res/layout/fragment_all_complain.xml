@@ -30,6 +30,7 @@
         android:textAlignment="center"
         android:textColor="@color/text_black"
         android:textSize="@dimen/text12sp"
+        android:visibility="gone"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@id/tvInProcessCount"
         app:layout_constraintStart_toStartOf="parent"

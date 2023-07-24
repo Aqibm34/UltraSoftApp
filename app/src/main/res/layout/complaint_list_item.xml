@@ -96,18 +96,6 @@
         app:layout_constraintStart_toEndOf="@+id/iv"
         app:layout_constraintTop_toBottomOf="@id/tvComplainId" />
 
-    <TextView
-        android:id="@+id/tvName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin5dp"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textColor="@color/text_black"
-        android:textSize="@dimen/text12sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iv"
-        app:layout_constraintTop_toBottomOf="@id/tvService" />
 
     <TextView
         android:id="@+id/tvAssignedTo"
@@ -120,7 +108,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
+        app:layout_constraintTop_toBottomOf="@id/tvService" />
 
 
     <TextView
@@ -139,7 +127,7 @@
         app:drawableEndCompat="@drawable/ic_seen"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
+        app:layout_constraintTop_toBottomOf="@id/tvAssignedTo" />
 
     <TextView
         android:id="@+id/tvAssign"

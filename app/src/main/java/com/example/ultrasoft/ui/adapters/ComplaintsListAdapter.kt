@@ -47,21 +47,10 @@ class ComplaintsListAdapter(
             list[position].createdByCUstomer.customerId
         )
 
-        list[position].assignedByAdmin?.let {
-            holder.binding.tvName.text = String.format(
-                "Asn By: %s (%s)",
-                it.name?.trim()?.capitalizeWords(),
-                it.adminId
-            )
-        } ?: run {
-            holder.binding.tvName.visibility = View.GONE
-        }
-
         list[position].assignedToEngineer?.let {
             holder.binding.tvAssignedTo.text = String.format(
-                "Asn To: %s (%s)",
-                it.engineerName.trim().capitalizeWords(),
-                it.engineerId
+                "Asn To: %s",
+                it.engineerName.trim().capitalizeWords()
             )
         } ?: run {
             holder.binding.tvAssignedTo.visibility = View.GONE

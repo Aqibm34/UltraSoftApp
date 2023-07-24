@@ -17,10 +17,12 @@ import com.example.ultrasoft.ui.adapters.ComplaintsListAdapter
 import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.SnackTypes
+import com.example.ultrasoft.utility.logE
 import com.example.ultrasoft.utility.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,16 +46,17 @@ class AllComplainFragment :
         }
 
         var defStatus = AppConstants.ComplaintStatus.IN_PROGRESS.name
-        if (appPreferences.getRole() == AppConstants.UserTypes.ADMIN.name) {
+        if (appPreferences.getRole() != AppConstants.UserTypes.ENGINEER.name) {
             defStatus = AppConstants.ComplaintStatus.UN_ASSIGNED.name
             binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.un_assn)))
+            binding.tvUnAssignCount.visibility = View.VISIBLE
         }
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.inprocess)))
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.resolved)))
         binding.tbl.addTab(binding.tbl.newTab().setText(resources.getString(R.string.closed)))
         binding.tbl.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                val status = if (appPreferences.getRole() == AppConstants.UserTypes.ADMIN.name) {
+                val status = if (appPreferences.getRole() != AppConstants.UserTypes.ENGINEER.name) {
                     when (tab?.position) {
                         0 -> AppConstants.ComplaintStatus.UN_ASSIGNED.name
                         1 -> AppConstants.ComplaintStatus.IN_PROGRESS.name
@@ -95,11 +98,19 @@ class AllComplainFragment :
     }
 
     private fun showData(data: List<ComplainData>? = null, message: String? = null) {
-        when (binding.tbl.selectedTabPosition) {
-            0 -> resultCountData.UN_ASSIGNED = data?.size ?: 0
-            1 -> resultCountData.IN_PROGRESS = data?.size ?: 0
-            2 -> resultCountData.RESOLVED = data?.size ?: 0
-            3 -> resultCountData.CLOSED = data?.size ?: 0
+        if (appPreferences.getRole() != AppConstants.UserTypes.ENGINEER.name) {
+            when (binding.tbl.selectedTabPosition) {
+                0 -> resultCountData.UN_ASSIGNED = data?.size ?: 0
+                1 -> resultCountData.IN_PROGRESS = data?.size ?: 0
+                2 -> resultCountData.RESOLVED = data?.size ?: 0
+                3 -> resultCountData.CLOSED = data?.size ?: 0
+            }
+        } else {
+            when (binding.tbl.selectedTabPosition) {
+                0 -> resultCountData.IN_PROGRESS = data?.size ?: 0
+                1 -> resultCountData.RESOLVED = data?.size ?: 0
+                2 -> resultCountData.CLOSED = data?.size ?: 0
+            }
         }
         setCount()
         if (data.isNullOrEmpty()) {
@@ -158,7 +169,7 @@ class AllComplainFragment :
         )
         binding.tvCloseCount.text = String.format(
             "( %d )",
-            if (resultCountData.IN_PROGRESS == 0) args.countData.CLOSED else resultCountData.CLOSED
+            if (resultCountData.CLOSED == 0) args.countData.CLOSED else resultCountData.CLOSED
         )
     }
 

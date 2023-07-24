@@ -110,7 +110,7 @@ class ComplaintChatAdapter(
                     }
                     holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
-                        if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE
+                        if (list[position].attachment.isNullOrEmpty()) View.GONE else View.VISIBLE
                     holder.binding.ivAttachment.setOnClickListener {
                         listener(list[position])
                     }
@@ -141,7 +141,7 @@ class ComplaintChatAdapter(
                     }
                     holder.binding.tvDescription.text = list[position].remark
                     holder.binding.ivAttachment.visibility =
-                        if (list[position].attachment.isEmpty()) View.GONE else View.VISIBLE
+                        if (list[position].attachment.isNullOrEmpty()) View.GONE else View.VISIBLE
                     holder.binding.ivAttachment.setOnClickListener {
                         listener(list[position])
                     }

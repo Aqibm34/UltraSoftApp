@@ -69,4 +69,6 @@
     <string name="un_assinged">UnAssigned</string>
     <string name="un_assn">UnAssign</string>
     <string name="inprocess">InProcess</string>
+    <string name="create_complain">Create Complain</string>
+    <string name="view_complain">View Complain</string>
 </resources>

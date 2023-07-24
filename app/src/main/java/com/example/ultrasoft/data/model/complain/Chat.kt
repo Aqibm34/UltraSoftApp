@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Chat(
     val id: Int,
     val remark: String,
-    val attachment: String,
+    val attachment: String?,
     val role: String,
     val admindetails: AssignedByAdminData?,
     val engineerDetails: AssignedToEngineerData?,
