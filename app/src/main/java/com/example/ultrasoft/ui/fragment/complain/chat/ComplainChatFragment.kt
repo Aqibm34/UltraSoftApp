@@ -58,11 +58,12 @@ class ComplainChatFragment :
     override fun setUpViews() {
         binding.ivBack.setOnClickListener { findNavController().popBackStack() }
         showComplaintData()
+
         if (args.data.status == AppConstants.ComplaintStatus.RESOLVED.name || args.data.status == AppConstants.ComplaintStatus.CLOSED.name) {
             binding.etReply.visibility = View.GONE
             binding.btnSend.visibility = View.GONE
-            binding.ivClose.visibility = View.GONE
         }
+
         binding.etReply.popupListener = this
         menuKeyboard = SoftKeyBoardPopup(
             requireContext(), binding.root, binding.etReply, binding.etReply, binding.tvMenu
@@ -97,54 +98,7 @@ class ComplainChatFragment :
             toggleMenu()
             prepareFileToUpload()
         }
-        binding.ivClose.setOnClickListener {
-            when (appPreferences.getRole()) {
-                AppConstants.UserTypes.ENGINEER.name -> showAlertWithButtonConfig(
-                    requireContext(),
-                    "Resolve Complain ?",
-                    "Do you want to close this complain.",
-                    AppConstants.AlertType.INFO,
-                    "No",
-                    "Yes",
-                ) {
-                    viewModel.callApiEngResolveComplaint(
-                        appPreferences.getToken(), args.data.complainId
-                    )
-                }
-
-                AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
-                    requireContext(),
-                    "Close Complain ?",
-                    "Do you want to close this complain.",
-                    AppConstants.AlertType.INFO,
-                    "No",
-                    "Yes",
-                ) {
-                    if (it == AppConstants.AlertResponseType.YES) {
-                        viewModel.callApiAdminCloseComplaint(
-                            appPreferences.getToken(), args.data.complainId
-                        )
-                    }
-                }
-
-                AppConstants.UserTypes.CUSTOMER.name -> showAlertWithButtonConfig(
-                    requireContext(),
-                    "Close Complain ?",
-                    "Do you want to close this complain.",
-                    AppConstants.AlertType.INFO,
-                    "No",
-                    "Yes",
-                ) {
-                    if (it == AppConstants.AlertResponseType.YES) {
-                        viewModel.callApiCustomerCloseComplain(
-                            appPreferences.getToken(), args.data.complainId
-                        )
-                    }
-                }
-            }
-
-        }
-    }
+     }
 
     private fun showComplaintData() {
         try {
@@ -453,51 +407,6 @@ class ComplainChatFragment :
             }
         }
 
-        viewModel.resolveComplainResponse.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Resource.Status.LOADING -> {
-                    showLoading()
-                }
-
-                Resource.Status.SUCCESS -> {
-                    hideLoading()
-                    if (it.data?.status_code == 1) {
-                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
-                        findNavController().popBackStack()
-                    } else {
-                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
-                    }
-                }
-
-                Resource.Status.ERROR -> {
-                    hideLoading()
-                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
-                }
-            }
-        }
-
-        viewModel.closeComplainResponse.observe(viewLifecycleOwner) {
-            when (it.status) {
-                Resource.Status.LOADING -> {
-                    showLoading()
-                }
-
-                Resource.Status.SUCCESS -> {
-                    hideLoading()
-                    if (it.data?.status_code == 1) {
-                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
-                        findNavController().popBackStack()
-                    } else {
-                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
-                    }
-                }
-
-                Resource.Status.ERROR -> {
-                    hideLoading()
-                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
-                }
-            }
-        }
     }
 
 }

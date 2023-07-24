@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ultrasoft.data.model.CommonResponse
 import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
+import com.example.ultrasoft.data.model.complain.SingleComplainResponse
 import com.example.ultrasoft.data.model.user.BlockResponse
 import com.example.ultrasoft.data.model.user.engineer.AllEngineerResponse
 import com.example.ultrasoft.data.network.Resource
@@ -32,6 +33,14 @@ class AllComplainViewModel @Inject constructor(private val repository: ComplainR
     private val _allEngineerResponse = SingleLiveEvent<Resource<AllEngineerResponse>>()
     val allEngineerResponse: LiveData<Resource<AllEngineerResponse>>
         get() = _allEngineerResponse
+
+    private val _resolveComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
+    val resolveComplainResponse: LiveData<Resource<SingleComplainResponse>>
+        get() = _resolveComplainResponse
+
+    private val _closeComplainResponse = MutableLiveData<Resource<SingleComplainResponse>>()
+    val closeComplainResponse: LiveData<Resource<SingleComplainResponse>>
+        get() = _closeComplainResponse
 
 
     fun callApiGetAllComplaint(
@@ -64,4 +73,37 @@ class AllComplainViewModel @Inject constructor(private val repository: ComplainR
             _allEngineerResponse.value = repository.callApiGetAllEngineer(token)
         }
     }
+
+    fun callApiEngResolveComplaint(
+        token: String,
+        complainId: String,
+    ) {
+        _resolveComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _resolveComplainResponse.value =
+                repository.callApiEngResolveComplaint(token, complainId)
+        }
+    }
+
+    fun callApiCustomerCloseComplain(
+        token: String,
+        complainId: String,
+    ) {
+        _closeComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _closeComplainResponse.value =
+                repository.callApiCustomerCloseComplain(token, complainId)
+        }
+    }
+
+    fun callApiAdminCloseComplaint(
+        token: String,
+        complainId: String,
+    ) {
+        _closeComplainResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _closeComplainResponse.value = repository.callApiAdminCloseComplaint(token, complainId)
+        }
+    }
+
 }

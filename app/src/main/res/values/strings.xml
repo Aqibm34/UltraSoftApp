@@ -71,4 +71,6 @@
     <string name="inprocess">InProcess</string>
     <string name="create_complain">Create Complain</string>
     <string name="view_complain">View Complain</string>
+    <string name="close">Close</string>
+    <string name="resolve">Resolve</string>
 </resources>

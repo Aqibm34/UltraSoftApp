@@ -137,8 +137,8 @@
         android:paddingHorizontal="@dimen/padding12dp"
         android:paddingVertical="@dimen/padding3dp"
         android:text="@string/assign"
-        android:backgroundTint="@color/green"
-        android:textColor="@color/white"
+        android:backgroundTint="@color/yellow"
+        android:textColor="@color/black_d"
         android:layout_marginTop="@dimen/margin3dp"
         android:textSize="@dimen/text12sp"
         android:textStyle="bold"
@@ -146,5 +146,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvAssignedTo"
         app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/tvClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_default_bg"
+        android:paddingHorizontal="@dimen/padding12dp"
+        android:paddingVertical="@dimen/padding3dp"
+        android:text="@string/close"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"
+        android:layout_marginTop="@dimen/margin3dp"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAssignedTo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

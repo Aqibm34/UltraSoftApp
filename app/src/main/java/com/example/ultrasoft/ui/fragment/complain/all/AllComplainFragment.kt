@@ -18,6 +18,7 @@ import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.SnackTypes
 import com.example.ultrasoft.utility.logE
+import com.example.ultrasoft.utility.showAlertWithButtonConfig
 import com.example.ultrasoft.utility.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
@@ -150,6 +151,10 @@ class AllComplainFragment :
                             viewModel.callApiGetAllEngineer(appPreferences.getToken())
                         }
                     }
+
+                    ComplaintsListAdapter.ClickType.CLOSE -> {
+                        setCloseOrResolve(item.complainId)
+                    }
                 }
             }
     }
@@ -200,6 +205,55 @@ class AllComplainFragment :
         } catch (_: Exception) {
         }
     }
+
+    private fun setCloseOrResolve(complainId: String) {
+        when (appPreferences.getRole()) {
+            AppConstants.UserTypes.ENGINEER.name -> showAlertWithButtonConfig(
+                requireContext(),
+                "Resolve Complain ?",
+                "Do you want to close this complain.",
+                AppConstants.AlertType.INFO,
+                "No",
+                "Yes",
+            ) {
+                viewModel.callApiEngResolveComplaint(
+                    appPreferences.getToken(), complainId
+                )
+            }
+
+            AppConstants.UserTypes.ADMIN.name -> showAlertWithButtonConfig(
+                requireContext(),
+                "Close Complain ?",
+                "Do you want to close this complain.",
+                AppConstants.AlertType.INFO,
+                "No",
+                "Yes",
+            ) {
+                if (it == AppConstants.AlertResponseType.YES) {
+                    viewModel.callApiAdminCloseComplaint(
+                        appPreferences.getToken(), complainId
+                    )
+                }
+            }
+
+            AppConstants.UserTypes.CUSTOMER.name -> showAlertWithButtonConfig(
+                requireContext(),
+                "Close Complain ?",
+                "Do you want to close this complain.",
+                AppConstants.AlertType.INFO,
+                "No",
+                "Yes",
+            ) {
+                if (it == AppConstants.AlertResponseType.YES) {
+                    viewModel.callApiCustomerCloseComplain(
+                        appPreferences.getToken(), complainId
+                    )
+                }
+            }
+        }
+
+    }
+
 
     override fun observeView() {
         viewModel.allComplainResponse.observe(viewLifecycleOwner) {
@@ -272,6 +326,52 @@ class AllComplainFragment :
                 Resource.Status.ERROR -> {
                     hideLoading()
                     binding.root.showSnackBar(response.message, SnackTypes.Error)
+                }
+            }
+        }
+
+        viewModel.resolveComplainResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
+
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                        findNavController().popBackStack()
+                    } else {
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                }
+            }
+        }
+
+        viewModel.closeComplainResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> {
+                    showLoading()
+                }
+
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        binding.root.showSnackBar(it.data.message, SnackTypes.Success)
+                        findNavController().popBackStack()
+                    } else {
+                        binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
+                    }
+                }
+
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    binding.root.showSnackBar(it.data?.message, SnackTypes.Error)
                 }
             }
         }
