@@ -48,6 +48,10 @@ class DashBoardFragment :
             minusForStatusEng = 0
         }
 
+        if (appPreferences.getRole() != AppConstants.UserTypes.CUSTOMER.name) {
+            binding.tvComplain.visibility = View.GONE
+        }
+
         binding.cvUnAssign.tvTitle.text = resources.getString(R.string.un_assinged)
         binding.cvInProcess.tvTitle.text = resources.getString(R.string.inprocess)
         binding.cvResolved.tvTitle.text = resources.getString(R.string.resolved)
@@ -92,6 +96,10 @@ class DashBoardFragment :
                     countData, 3 - minusForStatusEng
                 )
             )
+        }
+
+        binding.tvChangePassword.setOnClickListener {
+            findNavController().navigate(R.id.action_dashBoardFragment_to_changePasswordFragment)
         }
 
         val url = when (appPreferences.getRole()) {

@@ -1,5 +1,6 @@
 package com.example.ultrasoft.data.network
 
+import com.example.ultrasoft.data.model.CommonMessageResponse
 import com.example.ultrasoft.data.model.CommonResponse
 import com.example.ultrasoft.data.model.asset.AllAssetCategoryResponse
 import com.example.ultrasoft.data.model.complain.AllComplaintsResponse
@@ -137,6 +138,14 @@ interface ApiInterface {
         @Url url: String,
         @Header("X-AUTH-TOKEN") token: String,
     ): Response<ComplaintsCountResposne>
+
+    @POST
+    suspend fun callApiChangePassword(
+        @Url url: String,
+        @Header("X-AUTH-TOKEN") token: String,
+        @Query("Current Password") currentPassword: String,
+        @Query("New Password") newPassword: String,
+    ): Response<CommonMessageResponse>
 
 
 }

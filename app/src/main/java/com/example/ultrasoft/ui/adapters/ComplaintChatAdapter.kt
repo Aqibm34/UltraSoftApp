@@ -17,7 +17,7 @@ import com.example.ultrasoft.utility.logE
 
 class ComplaintChatAdapter(
     private var list: MutableList<Chat>,
-    private var customerData: CreatedByCustomerData,
+    private var customerData: CreatedByCustomerData?,
     private var engineerData: AssignedToEngineerData?,
     private var adminData: AssignedByAdminData?,
     private val context: Context,
@@ -125,12 +125,12 @@ class ComplaintChatAdapter(
                         holder.binding.ivAttachment
                     )
 
-                    holder.binding.tvUser.text = customerData.customerName
+                    holder.binding.tvUser.text = customerData?.customerName
                     holder.binding.tvResolvedBy.visibility = View.VISIBLE
                     holder.binding.tvResolvedBy.text = String.format(
                         "%s ~ %s",
-                        customerData.customerEmail,
-                        customerData.customerMobile
+                        customerData?.customerEmail,
+                        customerData?.customerMobile
                     )
 
 

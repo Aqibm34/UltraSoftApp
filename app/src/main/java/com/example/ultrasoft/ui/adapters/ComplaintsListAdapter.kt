@@ -45,8 +45,8 @@ class ComplaintsListAdapter(
         )
         holder.binding.tvCreatedBy.text = String.format(
             "Created By ~ %s (%s)",
-            list[position].createdByCUstomer.customerName.trim().capitalizeWords(),
-            list[position].createdByCUstomer.customerId
+            list[position].createdByCUstomer?.customerName.toString().trim().capitalizeWords(),
+            list[position].createdByCUstomer?.customerId
         )
 
         list[position].assignedToEngineer?.let {

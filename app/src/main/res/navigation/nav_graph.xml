@@ -41,7 +41,7 @@
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_dashBoardFragment_to_createComplainFragment"
@@ -49,7 +49,7 @@
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
 
         <action
             android:id="@+id/action_dashBoardFragment_to_allComplainFragment"
@@ -57,15 +57,21 @@
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"
-            />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_dashBoardFragment_to_assetOptionsFragment"
             app:destination="@id/assetOptionsFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment"
+            app:enterAnim="@anim/slide_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/allUsersFragment"
@@ -76,21 +82,21 @@
         android:id="@+id/usersFragment"
         android:name="com.example.ultrasoft.ui.fragment.user.UsersFragment"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_users" >
+        tools:layout="@layout/fragment_users">
         <action
             android:id="@+id/action_usersFragment_to_allUsersFragment"
             app:destination="@id/allUsersFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_usersFragment_to_createUserFragment"
             app:destination="@id/createUserFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
@@ -101,14 +107,14 @@
         android:id="@+id/assetOptionsFragment"
         android:name="com.example.ultrasoft.ui.fragment.asset.AssetOptionsFragment"
         android:label="fragment_asset_options"
-        tools:layout="@layout/fragment_asset_options" >
+        tools:layout="@layout/fragment_asset_options">
         <action
             android:id="@+id/action_assetOptionsFragment_to_createAssetFragment"
             app:destination="@id/createAssetFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/createAssetFragment"
@@ -124,21 +130,21 @@
         android:id="@+id/allComplainFragment"
         android:name="com.example.ultrasoft.ui.fragment.complain.all.AllComplainFragment"
         android:label="fragment_all_complain"
-        tools:layout="@layout/fragment_all_complain" >
+        tools:layout="@layout/fragment_all_complain">
         <action
             android:id="@+id/action_allComplainFragment_to_complainChatFragment"
             app:destination="@id/complainChatFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_allComplainFragment_to_previewFragment"
             app:destination="@id/previewFragment"
             app:enterAnim="@anim/slide_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/slide_out"/>
+            app:popExitAnim="@anim/slide_out" />
         <argument
             android:name="countData"
             app:argType="com.example.ultrasoft.data.model.complain.ComplainCountData" />
@@ -151,7 +157,7 @@
         android:id="@+id/complainChatFragment"
         android:name="com.example.ultrasoft.ui.fragment.complain.chat.ComplainChatFragment"
         android:label="fragment_complain_chat"
-        tools:layout="@layout/fragment_complain_chat" >
+        tools:layout="@layout/fragment_complain_chat">
         <argument
             android:name="data"
             app:argType="com.example.ultrasoft.data.model.complain.ComplainData" />
@@ -163,11 +169,16 @@
         android:id="@+id/previewFragment"
         android:name="com.example.ultrasoft.ui.fragment.PreviewFragment"
         android:label="fragment_preview"
-        tools:layout="@layout/fragment_preview" >
+        tools:layout="@layout/fragment_preview">
 
         <argument
             android:name="url"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.ultrasoft.ui.fragment.user.password.ChangePasswordFragment"
+        android:label="fragment_change_password"
+        tools:layout="@layout/fragment_change_password" />
 
 </navigation>

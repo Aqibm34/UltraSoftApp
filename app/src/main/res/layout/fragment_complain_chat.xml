@@ -90,6 +90,8 @@
         android:paddingEnd="@dimen/padding48dp"
         android:paddingBottom="@dimen/padding12dp"
         android:scrollbars="vertical"
+        android:textColor="@color/black_d"
+        android:textColorHint="@color/black_d"
         android:textSize="@dimen/text12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivPreview"

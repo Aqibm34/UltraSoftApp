@@ -10,7 +10,7 @@ data class ComplainData(
     val assetCategory: AssetCategoryData,
     val assignedByAdmin: AssignedByAdminData?,
     val assignedToEngineer: AssignedToEngineerData?,
-    val createdByCUstomer: CreatedByCustomerData,
+    val createdByCUstomer: CreatedByCustomerData?,
     val complaintChats: List<Chat>,
     val createdDate: String,
     val ticketClosedDate: String?,

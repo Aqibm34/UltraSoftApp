@@ -73,4 +73,7 @@
     <string name="view_complain">View Complain</string>
     <string name="close">Close</string>
     <string name="resolve">Resolve</string>
+    <string name="current_password">Current Password</string>
+    <string name="new_password">New Password</string>
+    <string name="change_password">Change Password</string>
 </resources>
