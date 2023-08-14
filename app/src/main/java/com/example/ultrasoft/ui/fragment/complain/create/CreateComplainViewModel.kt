@@ -30,7 +30,7 @@ class CreateComplainViewModel @Inject constructor(private val repository: Compla
 
     fun callApiCreateComplaint(
         token: String, params: Map<String, RequestBody>,
-        file: MultipartBody.Part,
+        file: MultipartBody.Part?,
     ) {
         _createComplainResponse.value = Resource.loading()
         viewModelScope.launch {

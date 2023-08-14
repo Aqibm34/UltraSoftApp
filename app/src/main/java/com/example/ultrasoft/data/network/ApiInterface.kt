@@ -79,7 +79,7 @@ interface ApiInterface {
     suspend fun callApiCreateComplaint(
         @Header("X-AUTH-TOKEN") token: String,
         @PartMap params: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part file: MultipartBody.Part,
+        @Part file: MultipartBody.Part?,
     ): Response<CreateComplainResponse>
 
     @Multipart

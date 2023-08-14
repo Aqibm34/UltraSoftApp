@@ -219,9 +219,10 @@ class ComplainChatFragment :
                     }
                 }
             } else {
-                binding.root.showSnackBar(
-                    resources.getString(R.string.please_attach_file_from_gallery), SnackTypes.Error
-                )
+                callApiReply(null)
+//                binding.root.showSnackBar(
+//                    resources.getString(R.string.please_attach_file_from_gallery), SnackTypes.Error
+//                )
             }
         } catch (e: NullPointerException) {
             binding.root.showSnackBar(

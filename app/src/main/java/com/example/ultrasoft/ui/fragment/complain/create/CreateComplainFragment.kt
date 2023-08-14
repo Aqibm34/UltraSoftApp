@@ -75,9 +75,9 @@ class CreateComplainFragment :
             }
         }
         binding.btnSubmit.setOnClickListener {
-            if (validateFile()) {
+//            if (validateFile()) {
                 prepareFileToUpload()
-            }
+//            }
         }
 
         validation()
@@ -114,16 +114,16 @@ class CreateComplainFragment :
         binding.btnSubmit.isEnabled = validateCategory() && validateRemarks()
     }
 
-    private fun validateFile(): Boolean {
-        return if (fileUri != null) {
-            binding.tvHelper.visibility = View.GONE
-            true
-        } else {
-            binding.tvHelper.visibility = View.VISIBLE
-            binding.tvHelper.text = resources.getString(R.string.please_select_a_file_to_upload)
-            false
-        }
-    }
+//    private fun validateFile(): Boolean {
+//        return if (fileUri != null) {
+//            binding.tvHelper.visibility = View.GONE
+//            true
+//        } else {
+//            binding.tvHelper.visibility = View.VISIBLE
+//            binding.tvHelper.text = resources.getString(R.string.please_select_a_file_to_upload)
+//            false
+//        }
+//    }
 
     private fun videoIntent() {
         if (hasCameraPermission(requireContext())) {
@@ -198,6 +198,8 @@ class CreateComplainFragment :
                 } else {
                     startCompression(listOf(fileUri!!))
                 }
+            }else{
+                callApiCreateComplain(null)
             }
         } catch (e: Exception) {
             binding.root.showSnackBar(e.message, SnackTypes.Error)
@@ -270,9 +272,9 @@ class CreateComplainFragment :
         }
     }
 
-    private fun callApiCreateComplain(file: File) {
+    private fun callApiCreateComplain(file: File?) {
         try {
-            val filePart = requireContext().prepareFilePart("file", file)
+            val filePart = if (file != null)  requireContext().prepareFilePart("file", file) else null
             val map: HashMap<String, RequestBody> = HashMap()
             map["remark"] = createPartFromString(binding.tilRemarks.editText?.text.toString())
             map["complainCategory"] =

@@ -14,7 +14,7 @@ class ComplainRepository @Inject constructor(private val apiInterface: ApiInterf
     suspend fun callApiCreateComplaint(
         token: String,
         params: Map<String, RequestBody>,
-        file: MultipartBody.Part,
+        file: MultipartBody.Part?,
     ) = safeApiCall {
         apiInterface.callApiCreateComplaint(token, params, file)
     }
