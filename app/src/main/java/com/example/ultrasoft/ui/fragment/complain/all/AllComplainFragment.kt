@@ -36,7 +36,7 @@ class AllComplainFragment :
     private var selectedComplainId = ""
     private var url = ""
     private val args: AllComplainFragmentArgs by navArgs()
-    private val resultCountData = ComplainCountData(0, 0, 0, 0)
+    private val resultCountData = ComplainCountData(-1, -1, -1, -1)
     override fun setUpViews() {
         binding.tb.setUpToolbar("All Complaints")
         url = when (appPreferences.getRole()) {
@@ -162,19 +162,19 @@ class AllComplainFragment :
     private fun setCount() {
         binding.tvUnAssignCount.text = String.format(
             "( %d )",
-            if (resultCountData.UN_ASSIGNED == 0) args.countData.UN_ASSIGNED else resultCountData.UN_ASSIGNED
+            if (resultCountData.UN_ASSIGNED == -1) args.countData.UN_ASSIGNED else resultCountData.UN_ASSIGNED
         )
         binding.tvInProcessCount.text = String.format(
             "( %d )",
-            if (resultCountData.IN_PROGRESS == 0) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
+            if (resultCountData.IN_PROGRESS == -1) args.countData.IN_PROGRESS else resultCountData.IN_PROGRESS
         )
         binding.tvResolveCount.text = String.format(
             "( %d )",
-            if (resultCountData.RESOLVED == 0) args.countData.RESOLVED else resultCountData.RESOLVED
+            if (resultCountData.RESOLVED == -1) args.countData.RESOLVED else resultCountData.RESOLVED
         )
         binding.tvCloseCount.text = String.format(
             "( %d )",
-            if (resultCountData.CLOSED == 0) args.countData.CLOSED else resultCountData.CLOSED
+            if (resultCountData.CLOSED == -1) args.countData.CLOSED else resultCountData.CLOSED
         )
     }
 
@@ -316,7 +316,7 @@ class AllComplainFragment :
                         viewModel.callApiGetAllComplaint(
                             url,
                             appPreferences.getToken(),
-                            AppConstants.ComplaintStatus.PENDING.name
+                            AppConstants.ComplaintStatus.UN_ASSIGNED.name
                         )
                     } else {
                         binding.root.showSnackBar(response.data?.message, SnackTypes.Error)

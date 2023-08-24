@@ -27,9 +27,9 @@ class CreateComplainViewModel @Inject constructor(private val repository: Compla
     val allAssetCategoryResponse: LiveData<Resource<AllAssetCategoryResponse>>
         get() = _allAssetCategoryResponse
 
-
     fun callApiCreateComplaint(
-        token: String, params: Map<String, RequestBody>,
+        token: String,
+        params: Map<String, RequestBody>,
         file: MultipartBody.Part?,
     ) {
         _createComplainResponse.value = Resource.loading()
