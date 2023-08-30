@@ -28,6 +28,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 )
             )
         }
+        binding.tvForgot.setOnClickListener {
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChangePasswordFragment(false))
+        }
+
     }
 
     private fun getCheckedRole(): String {

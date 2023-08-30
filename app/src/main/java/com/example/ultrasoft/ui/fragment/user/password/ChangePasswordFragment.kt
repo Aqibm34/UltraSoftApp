@@ -1,13 +1,10 @@
 package com.example.ultrasoft.ui.fragment.user.password
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
 import com.example.ultrasoft.data.network.Resource
@@ -15,6 +12,7 @@ import com.example.ultrasoft.databinding.FragmentChangePasswordBinding
 import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.clearError
 import com.example.ultrasoft.utility.showAlert
+import com.example.ultrasoft.utility.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,9 +22,29 @@ class ChangePasswordFragment :
     private val viewModel: ChangePasswordViewModel by viewModels()
     private var isCurrentPasswordValidated = false
     private var isNewPasswordValidated = false
-
+    private val args: ChangePasswordFragmentArgs by navArgs()
     override fun setUpViews() {
-        binding.tb.setUpToolbar(resources.getString(R.string.change_password))
+        val title =
+            if (args.isReset) resources.getString(R.string.forgot_password) else resources.getString(
+                R.string.change_password
+            )
+        binding.tb.setUpToolbar(title)
+
+        if (args.isReset) {
+            binding.tilMobile.visibility = View.VISIBLE
+            binding.tilCurrentPassword.visibility = View.GONE
+            binding.tilNewPassword.visibility = View.GONE
+            binding.tilMobile.editText?.doOnTextChanged { _, _, _, _ ->
+                if (binding.tilMobile.editText?.text.toString().length < 10) {
+                    binding.tilMobile.error = resources.getString(R.string.enter_valid_mobile)
+                    binding.btnSubmit.isEnabled = false
+                } else {
+                    binding.tilMobile.clearError()
+                    binding.btnSubmit.isEnabled = true
+                }
+            }
+        }
+
 
         binding.tilCurrentPassword.editText?.doOnTextChanged { _, _, _, _ ->
             validateCurrentPassword()
@@ -36,18 +54,22 @@ class ChangePasswordFragment :
         }
 
         binding.btnSubmit.setOnClickListener {
-            val url = when (appPreferences.getRole()) {
-                AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_CHANGE_PASS_URL
-                AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_CHANGE_PASS_URL
-                AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_CHANGE_PASS_URL
-                else -> ""
+            if (args.isReset) {
+                requireContext().toast("Reset")
+            } else {
+                val url = when (appPreferences.getRole()) {
+                    AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_CHANGE_PASS_URL
+                    AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_CHANGE_PASS_URL
+                    AppConstants.UserTypes.ENGINEER.name -> AppConstants.ENG_CHANGE_PASS_URL
+                    else -> ""
+                }
+                viewModel.callApiChangePassword(
+                    url,
+                    appPreferences.getToken(),
+                    binding.tilCurrentPassword.editText?.text.toString(),
+                    binding.tilNewPassword.editText?.text.toString()
+                )
             }
-            viewModel.callApiChangePassword(
-                url,
-                appPreferences.getToken(),
-                binding.tilCurrentPassword.editText?.text.toString(),
-                binding.tilNewPassword.editText?.text.toString()
-            )
         }
     }
 
@@ -94,7 +116,7 @@ class ChangePasswordFragment :
                         showAlert(it.data.message, AppConstants.AlertType.SUCCESS) {
                             findNavController().popBackStack()
                         }
-                    }else{
+                    } else {
                         showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
                     }
                 }

@@ -51,7 +51,7 @@ class ComplaintsListAdapter(
 
         list[position].assignedToEngineer?.let {
             holder.binding.tvAssignedTo.text = String.format(
-                "Asn To: %s",
+                "Assigned To: %s",
                 it.engineerName.trim().capitalizeWords()
             )
         } ?: run {

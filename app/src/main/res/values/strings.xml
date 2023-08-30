@@ -42,9 +42,9 @@
     <string name="asset_type">Asset Type</string>
     <string name="asset_category">Asset Category</string>
     <string name="select_type">Select Type</string>
-    <string name="all_complains">All Complains</string>
+    <string name="all_complaints">All Complaints</string>
     <string name="asset">Asset</string>
-    <string name="complain">Complain</string>
+    <string name="complaint">Complaint</string>
     <string name="compressing_video">Compressing Video</string>
     <string name="remarks">Remarks</string>
     <string name="upload">Upload</string>
@@ -69,11 +69,13 @@
     <string name="un_assinged">UnAssigned</string>
     <string name="un_assn">UnAssign</string>
     <string name="inprocess">InProcess</string>
-    <string name="create_complain">Create Complain</string>
-    <string name="view_complain">View Complain</string>
+    <string name="create_complaint">Create Complaint</string>
+    <string name="view_complaint">View Complaint</string>
     <string name="close">Close</string>
     <string name="resolve">Resolve</string>
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="change_password">Change Password</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password_">Forgot Password ?</string>
 </resources>

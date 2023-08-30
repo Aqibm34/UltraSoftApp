@@ -17,13 +17,11 @@ import com.example.ultrasoft.ui.adapters.ComplaintsListAdapter
 import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.AppConstants.Companion.ATTACHMENT_URL
 import com.example.ultrasoft.utility.SnackTypes
-import com.example.ultrasoft.utility.logE
 import com.example.ultrasoft.utility.showAlertWithButtonConfig
 import com.example.ultrasoft.utility.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
-import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,7 +36,7 @@ class AllComplainFragment :
     private val args: AllComplainFragmentArgs by navArgs()
     private val resultCountData = ComplainCountData(-1, -1, -1, -1)
     override fun setUpViews() {
-        binding.tb.setUpToolbar("All Complaints")
+        binding.tb.setUpToolbar(resources.getString(R.string.all_complaints))
         url = when (appPreferences.getRole()) {
             AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_ALL_COMPLAIN_URL
             AppConstants.UserTypes.CUSTOMER.name -> AppConstants.CUST_ALL_COMPLAIN_URL

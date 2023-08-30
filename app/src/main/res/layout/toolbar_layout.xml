@@ -22,12 +22,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:textSize="@dimen/text16sp"
+        android:textSize="@dimen/text15sp"
         android:textColor="@color/black_d"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/ivBack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivBack"
+        android:layout_marginEnd="@dimen/margin24dp"
         app:layout_constraintTop_toTopOf="@id/ivBack" />
 
 

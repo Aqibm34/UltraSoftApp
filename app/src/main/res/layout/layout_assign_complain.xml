@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin16dp"
-        android:hint="@string/complain"
+        android:hint="@string/complaint"
         app:boxCornerRadiusBottomEnd="@dimen/til_radius"
         app:boxCornerRadiusBottomStart="@dimen/til_radius"
         app:boxCornerRadiusTopEnd="@dimen/til_radius"
