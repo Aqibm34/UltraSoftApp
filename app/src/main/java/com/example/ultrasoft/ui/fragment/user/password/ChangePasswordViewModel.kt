@@ -37,7 +37,7 @@ class ChangePasswordViewModel @Inject constructor(private val repository: UsersR
         }
 
     }
-    fun callApiChangePassword(
+    fun callApiResetPassword(
         url: String,
         mobile: String,
     ) {
