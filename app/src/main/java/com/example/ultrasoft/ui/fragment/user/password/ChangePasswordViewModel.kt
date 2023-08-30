@@ -20,7 +20,11 @@ class ChangePasswordViewModel @Inject constructor(private val repository: UsersR
     val changePasswordResponse: LiveData<Resource<CommonMessageResponse>>
         get() = _changePasswordResponse
 
-     fun callApiChangePassword(
+    private val _resetPasswordResponse = MutableLiveData<Resource<CommonMessageResponse>>()
+    val resetPasswordResponse: LiveData<Resource<CommonMessageResponse>>
+        get() = _resetPasswordResponse
+
+    fun callApiChangePassword(
         url: String,
         token: String,
         currentPassword: String,
@@ -30,6 +34,17 @@ class ChangePasswordViewModel @Inject constructor(private val repository: UsersR
         viewModelScope.launch {
             _changePasswordResponse.value =
                 repository.callApiChangePassword(url, token, currentPassword, newPassword)
+        }
+
+    }
+    fun callApiChangePassword(
+        url: String,
+        mobile: String,
+    ) {
+        _changePasswordResponse.value = Resource.loading()
+        viewModelScope.launch {
+            _changePasswordResponse.value =
+                repository.callApiResetPassword(url, mobile)
         }
 
     }

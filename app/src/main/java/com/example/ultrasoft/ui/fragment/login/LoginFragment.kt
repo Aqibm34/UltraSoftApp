@@ -29,7 +29,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             )
         }
         binding.tvForgot.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChangePasswordFragment(false))
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChangePasswordFragment(true))
         }
 
     }

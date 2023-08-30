@@ -127,6 +127,27 @@ class ChangePasswordFragment :
                 }
             }
         }
+
+        viewModel.resetPasswordResponse.observe(viewLifecycleOwner) {
+            when (it.status) {
+                Resource.Status.LOADING -> showLoading()
+                Resource.Status.SUCCESS -> {
+                    hideLoading()
+                    if (it.data?.status_code == 1) {
+                        showAlert(it.data.message, AppConstants.AlertType.SUCCESS) {
+                            findNavController().popBackStack()
+                        }
+                    } else {
+                        showAlert(it.data?.message, AppConstants.AlertType.ERROR) {}
+                    }
+                }
+
+                Resource.Status.ERROR -> {
+                    hideLoading()
+                    showAlert(it.message, AppConstants.AlertType.ERROR) {}
+                }
+            }
+        }
     }
 
 }
