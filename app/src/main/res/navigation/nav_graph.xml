@@ -194,6 +194,10 @@
             android:name="isReset"
             app:argType="boolean"
             android:defaultValue="false" />
+        <argument
+            android:name="role"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 
 

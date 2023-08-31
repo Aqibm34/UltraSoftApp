@@ -54,9 +54,11 @@ class UsersRepository @Inject constructor(private val apiInterface: ApiInterface
     suspend fun callApiResetPassword(
         url: String,
         mobile: String,
+        password:String,
+        role: String
     ) =
         safeApiCall {
-            apiInterface.callApiResetPassword(url,mobile)
+            apiInterface.callApiResetPassword(url,mobile,password,role)
         }
 
 }

@@ -35,6 +35,8 @@ class AppConstants {
         const val ADMIN_COMPLAIN_COUNT_URL = BASE_URL + "admin/getall/count"
         const val ADMIN_CHANGE_PASS_URL = BASE_URL + "admin/change/password"
 
+        const val RESET_PASSWORD_URL = BASE_URL + "customer/forgot/password"
+
 
     }
 

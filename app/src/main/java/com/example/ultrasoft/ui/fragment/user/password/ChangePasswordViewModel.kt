@@ -37,14 +37,17 @@ class ChangePasswordViewModel @Inject constructor(private val repository: UsersR
         }
 
     }
+
     fun callApiResetPassword(
         url: String,
         mobile: String,
+        password:String,
+        role: String
     ) {
         _changePasswordResponse.value = Resource.loading()
         viewModelScope.launch {
             _changePasswordResponse.value =
-                repository.callApiResetPassword(url, mobile)
+                repository.callApiResetPassword(url, mobile,password,role)
         }
 
     }

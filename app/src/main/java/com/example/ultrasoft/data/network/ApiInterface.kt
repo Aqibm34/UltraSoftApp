@@ -150,7 +150,10 @@ interface ApiInterface {
     @POST
     suspend fun callApiResetPassword(
         @Url url: String,
-        @Query("Mobile") currentPassword: String,
+        @Query("mobileNumber") currentPassword: String,
+        @Query("password") password: String,
+        @Query("role") role: String,
+
     ): Response<CommonMessageResponse>
 
 

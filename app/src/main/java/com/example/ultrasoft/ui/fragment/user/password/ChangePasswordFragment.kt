@@ -55,8 +55,12 @@ class ChangePasswordFragment :
 
         binding.btnSubmit.setOnClickListener {
             if (args.isReset) {
-                requireContext().toast("Reset")
-                viewModel.callApiResetPassword("", binding.tilMobile.editText?.text.toString())
+                viewModel.callApiResetPassword(
+                    url = AppConstants.RESET_PASSWORD_URL,
+                    mobile = binding.tilMobile.editText?.text.toString(),
+                    password = binding.tilMobile.editText?.text.toString(),
+                    role = args.role
+                )
             } else {
                 val url = when (appPreferences.getRole()) {
                     AppConstants.UserTypes.ADMIN.name -> AppConstants.ADMIN_CHANGE_PASS_URL
