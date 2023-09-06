@@ -9,6 +9,7 @@ class AppConstants {
 
 
     companion object {
+        var FCM_TOKEN_REFRESHED: String = "NA"
         const val ymSecret = "yourmudrasuperadmin"
         const val ymId = "yourmudrasuperadmin"
         const val WALLET_IMAGES_URL = "https://images.yourmudra.com/"

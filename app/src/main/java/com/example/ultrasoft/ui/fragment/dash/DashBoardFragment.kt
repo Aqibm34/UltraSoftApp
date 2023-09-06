@@ -11,8 +11,12 @@ import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentDashBoardBinding
 import com.example.ultrasoft.utility.AppConstants
 import com.example.ultrasoft.utility.capitalizeWords
+import com.example.ultrasoft.utility.logE
 import com.example.ultrasoft.utility.showAlert
 import com.example.ultrasoft.utility.toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -109,6 +113,7 @@ class DashBoardFragment :
             else -> ""
         }
         viewModel.callApiComplaintsCount(url, appPreferences.getToken())
+        sendFcmToken()
     }
 
     private fun logOut() {
@@ -172,5 +177,27 @@ class DashBoardFragment :
             }
         }
     }
+
+    private fun sendFcmToken() {
+        if (AppConstants.FCM_TOKEN_REFRESHED != "NA") {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task: Task<String?> ->
+                if (!task.isSuccessful) {
+                    logE(
+                        "FCM", "Fetching FCM registration token failed :" + task.exception
+                    )
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                logE("FCM Token", token)
+                appPreferences.setFcmToken(token)
+                callApiSaveFcmToken(token)
+            })
+        }
+    }
+
+    private fun callApiSaveFcmToken(token: String?) {
+
+    }
+
 
 }

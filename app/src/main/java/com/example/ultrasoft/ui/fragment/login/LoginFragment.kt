@@ -1,16 +1,22 @@
 package com.example.ultrasoft.ui.fragment.login
 
-import android.util.Log
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.RadioButton
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.ultrasoft.BuildConfig
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseFragment
 import com.example.ultrasoft.data.model.login.LoginRequest
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentLoginBinding
 import com.example.ultrasoft.utility.*
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,9 +35,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             )
         }
         binding.tvForgot.setOnClickListener {
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToChangePasswordFragment(true,getCheckedRole()))
+            findNavController().navigate(
+                LoginFragmentDirections.actionLoginFragmentToChangePasswordFragment(
+                    true,
+                    getCheckedRole()
+                )
+            )
         }
 
+        if(Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU)
+        if(!hasNotificationPermission(requireContext())){
+            permissionsResultCallback.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        subscribeFcmTopic()
     }
 
     private fun getCheckedRole(): String {
@@ -103,8 +119,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
         }
     }
-
-
+    private fun subscribeFcmTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic("ulAll")
+            .addOnCompleteListener { task: Task<Void?> ->
+                var msg = "Subscribed"
+                if (!task.isSuccessful) {
+                    msg = "Subscribe failed"
+                }
+                logE("FCM TOPIC", msg)
+            }
+    }
 }
 
 

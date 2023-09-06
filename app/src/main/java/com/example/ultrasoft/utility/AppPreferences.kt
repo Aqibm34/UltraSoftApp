@@ -51,6 +51,7 @@ class AppPreferences(context: Context) {
     private val defaultValue = "NA"
     private val name = "name"
     private val role = "role"
+    private val fcmToken = "fcmToken"
 
 
     fun clearPreferences() {
@@ -86,5 +87,14 @@ class AppPreferences(context: Context) {
 
     fun getRole(): String {
         return mPreferences.getString(role, defaultValue)!!
+    }
+
+    fun setFcmToken(value: String?) {
+        mEditor?.putString(fcmToken, value)
+        mEditor?.apply()
+    }
+
+    fun getFcmToken(): String {
+        return mPreferences.getString(fcmToken, defaultValue)!!
     }
 }
