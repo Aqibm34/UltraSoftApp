@@ -2,6 +2,7 @@ package com.example.ultrasoft
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
@@ -10,10 +11,14 @@ import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.example.ultrasoft.data.model.NotificationData
+import com.example.ultrasoft.ui.activity.MainActivity
 import com.example.ultrasoft.utility.AppConstants
+import com.example.ultrasoft.utility.AppPreferences
 import com.example.ultrasoft.utility.logE
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import org.json.JSONArray
 import java.io.IOException
 import java.net.URL
@@ -41,27 +46,46 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        if (message.data.isNotEmpty()) {
-            logE("FCM Payload", message.data.toString())
+        try {
+
+            if (message.data.isNotEmpty()) {
+                logE("FCM Payload", message.data.toString())
+            }
+            val appPreferences = AppPreferences.getInstance(applicationContext)
+            val list = appPreferences.getNotificationList()
+            list.add(
+                0, NotificationData(
+                    message.data[fcmTitle].toString(),
+                    message.data[fcmText].toString(),
+                    message.data[fcmPicture].toString()
+                )
+            )
+            appPreferences.addDataInNotificationList(list)
+            logE("xxx", Gson().toJson(list))
+            showNotification(message)
+
+        } catch (e: Exception) {
+            logE("onMessageReceived", e.message)
         }
-        showNotification(message)
     }
 
     private fun showNotification(message: RemoteMessage) {
-//        val intent = Intent(this, LoginActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-
 //        val bundle = Bundle()
 //        bundle.putString(fcmParam, data[fcmParam])
-//        val intent = Intent(this, WelcomeScreenActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
 //        intent.putExtras(bundle)
-//        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//            PendingIntent.FLAG_MUTABLE
-//        } else {
-//            PendingIntent.FLAG_ONE_SHOT
-//        }
-//        val pendingIntent = PendingIntent.getActivity(this, 0, intent,
-//            flag)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_MUTABLE
+        } else {
+            PendingIntent.FLAG_ONE_SHOT
+        }
+        val pendingIntent = PendingIntent.getActivity(
+            this, 0, intent,
+            flag
+        )
 
 //        val resourceId = R.raw.noti
 //        val soundTrackUri = Uri.Builder()
@@ -79,8 +103,8 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
 //            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 //            .setSound(soundTrackUri)
             .setNumber(numMessages)
-//          .setContentIntent(pendingIntent)
-//          .setContentInfo("YourMudra")
+            .setContentIntent(pendingIntent)
+            .setContentInfo("Ultrasoft")
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
 //          .setColor(getColor(R.color.blue))
 //          .setLights(Color.RED, 1000, 300)
@@ -99,9 +123,9 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
                 it.canShowBadge()
                 it.enableVibration(true)
 //            it.vibrationPattern = longArrayOf(100, 200, 300, 400, 500)
-                val audioAttribute = AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build()
+//                val audioAttribute = AudioAttributes.Builder()
+//                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//                    .build()
 //                it.setSound(soundTrackUri, audioAttribute)
             }
 
@@ -120,6 +144,7 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
                             )
                         }
                     }
+
                     Style.BigText.name -> {
                         notificationBuilder.setStyle(
                             NotificationCompat.BigTextStyle()

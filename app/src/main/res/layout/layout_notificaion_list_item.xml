@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/margin10dp"
+    android:layout_marginVertical="@dimen/margin5dp"
+    android:background="@drawable/card_bg"
+    android:backgroundTint="@color/primary_light"
+    android:paddingHorizontal="@dimen/margin10dp"
+    android:paddingVertical="@dimen/padding16dp">
+
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="70dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/image"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:textColor="@color/black_d"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv"
+        app:layout_constraintTop_toTopOf="@id/iv" />
+
+    <TextView
+        android:id="@+id/tvText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin5dp"
+        android:textColor="#4C4B4B"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/iv"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin2dp"
+        android:background="@drawable/card_bg"
+        android:backgroundTint="@color/red"
+        android:drawablePadding="@dimen/padding5dp"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/padding6dp"
+        android:paddingVertical="2dp"
+        android:text="@string/delete"
+        android:elevation="5dp"
+        android:textColor="@color/white_d"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        app:drawableEndCompat="@drawable/ic_close_complain"
+        app:drawableTint="@color/white_d"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

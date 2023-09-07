@@ -17,6 +17,7 @@ class AppConstants {
 
         const val ATTACHMENT_URL = "https://complaintsimages.ultrasoftsys.com/upload/"
         const val BASE_URL = "https://complaints.ultrasoftsys.com/"
+//        const val BASE_URL = "https://4764-122-160-63-37.ngrok-free.app/"
 
         const val REPLY_COMPLAIN_URL = BASE_URL + "customer/reply/complaint"
         const val CUST_ALL_COMPLAIN_URL = BASE_URL + "customer/getall/complaint/bystatus"

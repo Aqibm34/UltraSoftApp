@@ -15,6 +15,7 @@ import com.example.ultrasoft.data.model.login.LoginRequest
 import com.example.ultrasoft.data.network.Resource
 import com.example.ultrasoft.databinding.FragmentLoginBinding
 import com.example.ultrasoft.utility.*
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModels()
     override fun setUpViews() {
+        saveFcmToken()
         validation()
         binding.btnLogin.setOnClickListener {
             viewModel.callApiLogin(
@@ -32,7 +34,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                     binding.tilPassword.editText?.text.toString(),
                     getCheckedRole()
                 )
-            )
+                ,appPreferences.getFcmToken())
         }
         binding.tvForgot.setOnClickListener {
             findNavController().navigate(
@@ -119,6 +121,21 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             }
         }
     }
+    private fun saveFcmToken() {
+//        if (AppConstants.FCM_TOKEN_REFRESHED != "NA") {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task: Task<String?> ->
+                if (!task.isSuccessful) {
+                    logE(
+                        "FCM", "Fetching FCM registration token failed :" + task.exception
+                    )
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                logE("FCM Token", token)
+                appPreferences.setFcmToken(token)
+            })
+        }
+//    }
     private fun subscribeFcmTopic() {
         FirebaseMessaging.getInstance().subscribeToTopic("ulAll")
             .addOnCompleteListener { task: Task<Void?> ->
@@ -129,6 +146,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 logE("FCM TOPIC", msg)
             }
     }
+
 }
 
 

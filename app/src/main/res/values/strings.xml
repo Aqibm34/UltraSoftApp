@@ -78,4 +78,9 @@
     <string name="change_password">Change Password</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="forgot_password_">Forgot Password ?</string>
+    <string name="clear_all">Clear All</string>
+    <string name="delete_all">Delete All</string>
+    <string name="delete">Delete</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

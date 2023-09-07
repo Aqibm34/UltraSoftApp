@@ -22,10 +22,10 @@ class LoginViewModel @Inject constructor(private val repository: LoginRepository
     val loginResponse: LiveData<Resource<LoginResponse>>
         get() = _loginResponse
 
-    fun callApiLogin(body:LoginRequest) {
+    fun callApiLogin(body:LoginRequest,fcmToken:String) {
         _loginResponse.value = Resource.loading()
         viewModelScope.launch {
-            _loginResponse.value = repository.callApiLogin(body)
+            _loginResponse.value = repository.callApiLogin(body,fcmToken)
         }
     }
 }

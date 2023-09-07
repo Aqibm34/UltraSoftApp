@@ -7,11 +7,12 @@
     tools:context=".ui.fragment.dash.DashBoardFragment"
     tools:ignore="UseCompatTextViewDrawableXml">
 
+
     <ImageView
         android:id="@+id/ivBg"
         android:layout_width="700dp"
         android:layout_height="390dp"
-        android:layout_marginTop="-200dp"
+        android:layout_marginTop="-190dp"
         android:layout_marginEnd="-100dp"
         android:background="@drawable/login_bg"
         android:contentDescription="@string/image"
@@ -19,12 +20,37 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/ivNotification"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="@dimen/margin5dp"
+        android:src="@drawable/ic_notifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image" />
+    <TextView
+        android:id="@+id/tvNotiCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/white_d"
+        android:textSize="@dimen/text12sp"
+        android:textStyle="bold"
+        android:layout_marginStart="-8dp"
+        android:paddingHorizontal="@dimen/padding4dp"
+        android:text="1"
+        android:background="@drawable/round_bg"
+        app:layout_constraintStart_toEndOf="@id/ivNotification"
+        app:layout_constraintTop_toTopOf="@id/ivNotification" />
+
+    <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/image" />
 
     <include
         android:id="@+id/cvUnAssign"
@@ -92,21 +118,16 @@
         app:layout_constraintStart_toEndOf="@id/ivUser"
         app:layout_constraintTop_toTopOf="@id/ivUser" />
 
-    <TextView
+    <ImageView
         android:id="@+id/tvLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginHorizontal="@dimen/margin5dp"
-        android:layout_marginTop="@dimen/margin10dp"
+        android:layout_marginTop="@dimen/margin5dp"
         android:contentDescription="@string/image"
-        android:text="@string/logout"
-        android:textColor="@color/black_d"
-        android:textSize="@dimen/text13sp"
-        android:textStyle="bold"
-        app:drawableEndCompat="@drawable/ic_log_out"
-        app:layout_constraintStart_toStartOf="@id/ivUser"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_goneMarginTop="@dimen/margin10dp" />
+        android:src="@drawable/ic_log_out"
+        app:layout_constraintStart_toEndOf="@id/tvNotiCount"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView

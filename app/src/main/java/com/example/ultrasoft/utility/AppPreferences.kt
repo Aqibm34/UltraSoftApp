@@ -5,8 +5,13 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.ultrasoft.data.model.NotificationData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import java.io.IOException
+import java.lang.reflect.Type
 import java.security.GeneralSecurityException
+
 
 class AppPreferences(context: Context) {
     private val appPrefsName = "app_prefs_ultrasoft"
@@ -52,6 +57,7 @@ class AppPreferences(context: Context) {
     private val name = "name"
     private val role = "role"
     private val fcmToken = "fcmToken"
+    private val notificationList = "notiList"
 
 
     fun clearPreferences() {
@@ -96,5 +102,20 @@ class AppPreferences(context: Context) {
 
     fun getFcmToken(): String {
         return mPreferences.getString(fcmToken, defaultValue)!!
+    }
+
+    fun addDataInNotificationList(list: MutableList<NotificationData>) {
+        mEditor?.putString(notificationList, Gson().toJson(list))
+        mEditor?.apply()
+    }
+
+    fun getNotificationList(): MutableList<NotificationData> {
+        val obj = mPreferences.getString(notificationList, null)
+        val type: Type = object : TypeToken<MutableList<NotificationData?>?>() {}.type
+        return if (obj != null) {
+            Gson().fromJson(obj, type)
+        } else {
+            ArrayList()
+        }
     }
 }

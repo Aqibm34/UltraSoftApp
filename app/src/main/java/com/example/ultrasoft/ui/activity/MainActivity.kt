@@ -5,6 +5,11 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.ultrasoft.R
 import com.example.ultrasoft.base.BaseActivity
 import com.example.ultrasoft.databinding.ActivityMainBinding
+import com.example.ultrasoft.utility.AppConstants
+import com.example.ultrasoft.utility.logE
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +32,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             graph.setStartDestination(R.id.dashBoardFragment)
         }
         navHostFragment.navController.graph = graph
-
 //        navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->     }
     }
+
+
 }

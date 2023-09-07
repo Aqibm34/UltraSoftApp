@@ -8,8 +8,8 @@ import javax.inject.Inject
 class LoginRepository @Inject constructor(private val apiInterface: ApiInterface) :
     BaseRepository() {
 
-    suspend fun callApiLogin(body: LoginRequest) =
+    suspend fun callApiLogin(body: LoginRequest,fcmToken:String) =
         safeApiCall {
-            apiInterface.callApiLogin(body)
+            apiInterface.callApiLogin(body,fcmToken)
         }
 }

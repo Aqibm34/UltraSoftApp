@@ -29,7 +29,7 @@ import retrofit2.http.*
 interface ApiInterface {
 
     @POST("user/login")
-    suspend fun callApiLogin(@Body body: LoginRequest): Response<LoginResponse>
+    suspend fun callApiLogin(@Body body: LoginRequest,@Query("notificationId") fcmToken:String): Response<LoginResponse>
 
     @GET("user/logout")
     suspend fun callApiLogout(@Header("X-AUTH-TOKEN") token: String): Response<LogoutResponse>

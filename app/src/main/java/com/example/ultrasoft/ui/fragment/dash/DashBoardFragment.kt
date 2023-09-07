@@ -31,7 +31,12 @@ class DashBoardFragment :
             appPreferences.getName().capitalizeWords(),
             appPreferences.getRole().capitalizeWords()
         )
+        binding.tvNotiCount.text = appPreferences.getNotificationList().size.toString()
         binding.tvLogOut.setOnClickListener { logOut() }
+
+        binding.ivNotification.setOnClickListener {
+            findNavController().navigate(R.id.action_dashBoardFragment_to_notificationFragment)
+        }
         binding.tvCreateUser.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_usersFragment) }
         binding.tvCreateAsset.setOnClickListener { findNavController().navigate(R.id.action_dashBoardFragment_to_assetOptionsFragment) }
         binding.tvComplain.setOnClickListener {
@@ -113,7 +118,6 @@ class DashBoardFragment :
             else -> ""
         }
         viewModel.callApiComplaintsCount(url, appPreferences.getToken())
-        sendFcmToken()
     }
 
     private fun logOut() {
@@ -176,27 +180,6 @@ class DashBoardFragment :
                 }
             }
         }
-    }
-
-    private fun sendFcmToken() {
-        if (AppConstants.FCM_TOKEN_REFRESHED != "NA") {
-            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task: Task<String?> ->
-                if (!task.isSuccessful) {
-                    logE(
-                        "FCM", "Fetching FCM registration token failed :" + task.exception
-                    )
-                    return@OnCompleteListener
-                }
-                val token = task.result
-                logE("FCM Token", token)
-                appPreferences.setFcmToken(token)
-                callApiSaveFcmToken(token)
-            })
-        }
-    }
-
-    private fun callApiSaveFcmToken(token: String?) {
-
     }
 
 

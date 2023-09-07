@@ -280,9 +280,10 @@ class Utils {
                 .placeholder(R.drawable.image_placeholder).into(iv)
         }
 
-        fun loadPicture(context: Context, url: String?, iv: ImageView) {
+        fun loadPicture(context: Context, url: String?, iv: ImageView,placeHolder:Int?=null) {
+            val plholder = placeHolder ?: R.drawable.image_placeholder
             Glide.with(context).load(url)
-                .placeholder(R.drawable.image_placeholder).into(iv)
+                .placeholder(plholder).into(iv)
         }
 
         fun Int.toPx() = (this * Resources.getSystem().displayMetrics.density).toInt()
