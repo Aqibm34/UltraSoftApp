@@ -44,7 +44,7 @@ class NotificarionRvAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.tvTitle.text = list[position].title
         holder.binding.tvText.text = list[position].body
-        Utils.loadPicture(context, list[position].image, holder.binding.iv, R.drawable.ic_info)
+//        Utils.loadPicture(context, list[position].image, holder.binding.iv, R.drawable.ic_info)
         holder.binding.tvDelete.setOnClickListener {
             listener(position)
         }

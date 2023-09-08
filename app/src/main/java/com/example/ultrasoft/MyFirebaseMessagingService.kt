@@ -1,5 +1,6 @@
 package com.example.ultrasoft
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -33,7 +34,7 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
     private val channelName = "FCM"
     private val channelDsc = "Firebase Cloud Messaging"
     private var numMessages = 0
-    private val channelId = "YM Channel"
+    private val channelId = "UL Channel"
 
     private enum class Style { BigText, BigPicture, Inbox }
 
@@ -61,7 +62,6 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
                 )
             )
             appPreferences.addDataInNotificationList(list)
-            logE("xxx", Gson().toJson(list))
             showNotification(message)
 
         } catch (e: Exception) {
@@ -87,29 +87,17 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
             flag
         )
 
-//        val resourceId = R.raw.noti
-//        val soundTrackUri = Uri.Builder()
-//            .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
-//            .authority(resources.getResourcePackageName(resourceId))
-//            .appendPath(resources.getResourceTypeName(resourceId))
-//            .appendPath(resources.getResourceEntryName(resourceId))
-//            .build()
-
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(message.data[fcmTitle])
             .setContentText(message.data[fcmText])
             .setAutoCancel(true)
-//            .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-//            .setSound(soundTrackUri)
             .setNumber(numMessages)
             .setContentIntent(pendingIntent)
             .setContentInfo("Ultrasoft")
             .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-//          .setColor(getColor(R.color.blue))
-//          .setLights(Color.RED, 1000, 300)
-//          .setDefaults(Notification.DEFAULT_VIBRATE)
-//          .setSmallIcon(R.drawable.del_icon)
+            .setAutoCancel(false)
+            .setPriority(Notification.PRIORITY_MAX)
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -122,54 +110,49 @@ class MyFireBaseMessagingService : FirebaseMessagingService() {
                 it.setShowBadge(true)
                 it.canShowBadge()
                 it.enableVibration(true)
-//            it.vibrationPattern = longArrayOf(100, 200, 300, 400, 500)
-//                val audioAttribute = AudioAttributes.Builder()
-//                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-//                    .build()
-//                it.setSound(soundTrackUri, audioAttribute)
             }
-
-            try {
-                when (message.data[fcmStyle]) {
-                    Style.BigPicture.name -> {
-                        val picture = message.data[fcmPicture]
-                        if (!picture.isNullOrEmpty()) {
-                            val url = URL(picture)
-                            val bigPicture =
-                                BitmapFactory.decodeStream(url.openConnection().getInputStream())
-                            notificationBuilder.setLargeIcon(bigPicture)
-                            notificationBuilder.setStyle(
-                                NotificationCompat.BigPictureStyle().bigPicture(bigPicture)
-                                    .setSummaryText(message.data[fcmText])
-                            )
-                        }
-                    }
-
-                    Style.BigText.name -> {
-                        notificationBuilder.setStyle(
-                            NotificationCompat.BigTextStyle()
-                                .setBigContentTitle(message.data[fcmTitle])
-                                .bigText(message.data[fcmText])
-                        )
-                    }
-
-                    Style.Inbox.name -> {
-                        val list = JSONArray(message.data["list"])
-                        val style = NotificationCompat.InboxStyle()
-                        for (i in 0 until list.length()) {
-                            style.addLine(list.getString(i))
-                        }
-                        notificationBuilder.setStyle(style)
-                    }
-                }
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
             notificationManager.createNotificationChannel(channel)
             notificationBuilder.setChannelId(channelId)
         }
+
+        try {
+            when (message.data[fcmStyle]) {
+                Style.BigPicture.name -> {
+                    val picture = message.data[fcmPicture]
+                    if (!picture.isNullOrEmpty()) {
+                        val url = URL(picture)
+                        val bigPicture =
+                            BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                        notificationBuilder.setLargeIcon(bigPicture)
+                        notificationBuilder.setStyle(
+                            NotificationCompat.BigPictureStyle().bigPicture(bigPicture)
+                                .setSummaryText(message.data[fcmText])
+                        )
+                    }
+                }
+
+                Style.BigText.name -> {
+                    notificationBuilder.setStyle(
+                        NotificationCompat.BigTextStyle()
+                            .setBigContentTitle(message.data[fcmTitle])
+                            .bigText(message.data[fcmText])
+                    )
+                }
+
+                Style.Inbox.name -> {
+                    val list = JSONArray(message.data["list"])
+                    val style = NotificationCompat.InboxStyle()
+                    for (i in 0 until list.length()) {
+                        style.addLine(list.getString(i))
+                    }
+                    notificationBuilder.setStyle(style)
+                }
+            }
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
         notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
 
